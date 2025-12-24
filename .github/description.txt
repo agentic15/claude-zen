@@ -1,0 +1,1 @@
+Structured AI-assisted development framework for Claude Code with enforced quality standards, automated testing, and production-ready workflows
