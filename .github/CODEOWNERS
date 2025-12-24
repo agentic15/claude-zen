@@ -1,0 +1,38 @@
+# CODEOWNERS file for agentic15-claude-zen
+#
+# This file defines individuals or teams responsible for code review
+# in specific parts of the repository.
+#
+# More info: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owners for everything in the repo
+# These owners will be requested for review when someone opens a pull request
+*       @agentic15
+
+# Package source code
+/packages/create-agentic15-claude-zen/src/     @agentic15
+/packages/create-agentic15-claude-zen/bin/     @agentic15
+
+# Build and configuration
+/packages/create-agentic15-claude-zen/esbuild.config.js    @agentic15
+/packages/create-agentic15-claude-zen/package.json         @agentic15
+
+# Templates and hooks
+/packages/create-agentic15-claude-zen/templates/   @agentic15
+/packages/create-agentic15-claude-zen/dist/        @agentic15
+
+# Tests
+/packages/create-agentic15-claude-zen/test/    @agentic15
+
+# Documentation
+/docs/              @agentic15
+*.md                @agentic15
+/README.md          @agentic15
+/CONTRIBUTING.md    @agentic15
+
+# GitHub configuration
+/.github/           @agentic15
+
+# License and legal
+/LICENSE            @agentic15
+/NOTICE             @agentic15

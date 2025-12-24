@@ -45,6 +45,28 @@ Violations may be reported to conduct@agentic15.com. All complaints will be revi
 
 ---
 
+## Maintainers & Code Ownership
+
+### Current Maintainers
+
+**agentic15.com team** maintains this project and has the following responsibilities:
+
+- Review and approve all pull requests
+- Manage releases and versioning
+- Respond to security issues
+- Guide project direction and roadmap
+- Ensure code quality standards
+
+**GitHub Organization:** [@agentic15](https://github.com/agentic15)
+
+### Code Owners
+
+This repository uses a CODEOWNERS file to automatically request reviews from the appropriate maintainers when PRs are opened. The agentic15.com team is the default owner for all code.
+
+See [`.github/CODEOWNERS`](.github/CODEOWNERS) for detailed ownership assignments.
+
+---
+
 ## Getting Started
 
 ### Ways to Contribute
@@ -252,7 +274,7 @@ git push origin feature/your-feature-name
 **Example:**
 ```javascript
 /**
- * Copyright 2024-2025 Agentic15
+ * Copyright 2024-2025 agentic15.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -314,7 +336,7 @@ class TaskManager {
 
 ```javascript
 /**
- * Copyright 2024-2025 Agentic15
+ * Copyright 2024-2025 agentic15.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -502,10 +524,14 @@ Relates to #456
 ### Review Process
 
 1. **Automated checks run** (tests, linting, build)
-2. **Maintainer reviews** code and design
+2. **agentic15.com team reviews** code and design
 3. **Feedback provided** - address comments
-4. **Approval** - maintainer approves
+4. **Approval** - agentic15.com maintainer approves
 5. **Merge** - squash and merge to main
+
+**Current Maintainers:**
+- agentic15.com team (https://github.com/agentic15)
+- All PRs require approval from agentic15.com maintainers before merging
 
 ### After Merge
 
@@ -513,6 +539,30 @@ Relates to #456
 - Mentioned in CHANGELOG.md
 - Added to contributors list
 - Announced in release notes
+
+### Branch Protection Rules
+
+The `main` branch is protected with the following rules:
+
+**Required checks:**
+- ✅ All tests must pass
+- ✅ Build must succeed
+- ✅ No merge conflicts
+- ✅ Code review approval required from agentic15.com maintainers
+
+**Restrictions:**
+- Direct commits to `main` are not allowed
+- Force pushes are disabled
+- Branch deletions are disabled
+- All changes must come through pull requests
+
+**Automatic actions:**
+- PRs are automatically checked for:
+  - Code style compliance
+  - Test coverage
+  - Breaking changes
+  - Documentation updates
+  - Copyright headers
 
 ---
 
@@ -646,9 +696,9 @@ See [LICENSE](LICENSE) for full text.
 
 Your contributions make Agentic15 Claude Zen better for everyone. We appreciate your time and effort!
 
-**"Code with Intelligence, Ship with Confidence"** - Agentic15
+**"Code with Intelligence, Ship with Confidence"** - agentic15.com
 
 ---
 
-**Copyright 2024-2025 Agentic15**
+**Copyright 2024-2025 agentic15.com**
 Licensed under the Apache License, Version 2.0
