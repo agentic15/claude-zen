@@ -1,0 +1,617 @@
+{
+  "metadata": {
+    "planId": "PLAN-001-REBRAND",
+    "title": "Complete Agentic15 Claude Zen Rebrand and Restructure",
+    "description": "Professional rebrand from gl-life-claude-zen to agentic15-claude-zen with SOLID refactoring, comprehensive documentation, and Apache 2.0 licensing",
+    "created": "2025-12-24T18:45:00Z",
+    "version": "1.0.0",
+    "estimatedHours": 24,
+    "priority": "critical"
+  },
+  "structure": "hierarchical",
+  "hierarchy": {
+    "project": {
+      "id": "PROJ-001",
+      "title": "Agentic15 Claude Zen Launch",
+      "description": "Complete rebrand, restructure, and launch of professional framework",
+      "subprojects": [
+        {
+          "id": "SUB-001",
+          "title": "Foundation & Documentation",
+          "description": "Legal foundation, branding, and comprehensive documentation",
+          "estimatedHours": 8,
+          "milestones": [
+            {
+              "id": "MILE-001",
+              "title": "Legal & Branding",
+              "description": "Copyright, licensing, and trademark protection",
+              "estimatedHours": 2,
+              "tasks": [
+                {
+                  "id": "TASK-001",
+                  "title": "Create Apache 2.0 LICENSE file",
+                  "description": "Full Apache 2.0 license with Agentic15 copyright",
+                  "phase": "design",
+                  "estimatedHours": 0.25,
+                  "status": "completed",
+                  "completionCriteria": [
+                    "LICENSE file exists",
+                    "Copyright 2024-2025 Agentic15",
+                    "Apache 2.0 full text included"
+                  ]
+                },
+                {
+                  "id": "TASK-002",
+                  "title": "Create NOTICE file with trademark protection",
+                  "description": "Trademark notice for Agentic15 and tagline protection",
+                  "phase": "design",
+                  "estimatedHours": 0.25,
+                  "status": "completed",
+                  "dependencies": ["TASK-001"],
+                  "completionCriteria": [
+                    "NOTICE file with trademark info",
+                    "Tagline 'Code with Intelligence, Ship with Confidence' protected",
+                    "Contact information included"
+                  ]
+                },
+                {
+                  "id": "TASK-003",
+                  "title": "Create main README.md with branding",
+                  "description": "Professional README with tagline, features, quick start",
+                  "phase": "design",
+                  "estimatedHours": 1,
+                  "status": "completed",
+                  "dependencies": ["TASK-001"],
+                  "completionCriteria": [
+                    "Tagline prominently displayed",
+                    "Feature overview complete",
+                    "Quick start section",
+                    "Links to documentation",
+                    "Badges and shields"
+                  ]
+                },
+                {
+                  "id": "TASK-004",
+                  "title": "Create CONTRIBUTING.md",
+                  "description": "Contribution guidelines and code of conduct",
+                  "phase": "design",
+                  "estimatedHours": 0.5,
+                  "status": "pending",
+                  "dependencies": ["TASK-003"],
+                  "completionCriteria": [
+                    "How to contribute section",
+                    "Code style guidelines",
+                    "PR process documented",
+                    "Issue templates referenced"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MILE-002",
+              "title": "Complete Documentation Suite",
+              "description": "All user-facing and technical documentation",
+              "estimatedHours": 6,
+              "tasks": [
+                {
+                  "id": "TASK-005",
+                  "title": "Create documentation index (docs/README.md)",
+                  "description": "Navigation hub for all documentation",
+                  "phase": "design",
+                  "estimatedHours": 0.5,
+                  "status": "completed",
+                  "completionCriteria": [
+                    "Clear navigation structure",
+                    "Links to all doc sections",
+                    "Use case quick links"
+                  ]
+                },
+                {
+                  "id": "TASK-006",
+                  "title": "Create installation guide",
+                  "description": "Complete installation and setup documentation",
+                  "phase": "design",
+                  "estimatedHours": 1,
+                  "status": "completed",
+                  "dependencies": ["TASK-005"],
+                  "completionCriteria": [
+                    "All installation methods covered",
+                    "Prerequisites listed",
+                    "Troubleshooting section",
+                    "Framework-specific setup"
+                  ]
+                },
+                {
+                  "id": "TASK-007",
+                  "title": "Create quick start guide",
+                  "description": "5-minute walkthrough for first-time users",
+                  "phase": "design",
+                  "estimatedHours": 1,
+                  "status": "completed",
+                  "dependencies": ["TASK-006"],
+                  "completionCriteria": [
+                    "Complete workflow in 10 steps",
+                    "Code examples for each step",
+                    "Expected outputs shown",
+                    "Common questions answered"
+                  ]
+                },
+                {
+                  "id": "TASK-008",
+                  "title": "Create user workflow guide",
+                  "description": "Complete guide for humans using the framework",
+                  "phase": "design",
+                  "estimatedHours": 2,
+                  "status": "completed",
+                  "dependencies": ["TASK-007"],
+                  "completionCriteria": [
+                    "All workflow phases documented",
+                    "UI component workflow covered",
+                    "Testing strategies explained",
+                    "Advanced workflows included"
+                  ]
+                },
+                {
+                  "id": "TASK-009",
+                  "title": "Create agent workflow guide",
+                  "description": "Complete guide for Claude Code AI agents",
+                  "phase": "design",
+                  "estimatedHours": 1.5,
+                  "status": "pending",
+                  "dependencies": ["TASK-008"],
+                  "completionCriteria": [
+                    "Agent responsibilities clear",
+                    "Mandatory workflows documented",
+                    "What agents can/cannot do",
+                    "Hook interaction explained"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "SUB-002",
+          "title": "Code Restructure & SOLID Refactoring",
+          "description": "Restructure codebase following SOLID principles",
+          "estimatedHours": 10,
+          "milestones": [
+            {
+              "id": "MILE-003",
+              "title": "Package Structure",
+              "description": "Create professional package structure",
+              "estimatedHours": 2,
+              "tasks": [
+                {
+                  "id": "TASK-010",
+                  "title": "Create packages/ directory structure",
+                  "description": "Set up monorepo-style package organization",
+                  "phase": "implementation",
+                  "estimatedHours": 0.5,
+                  "status": "pending",
+                  "completionCriteria": [
+                    "packages/create-agentic15-claude-zen/ created",
+                    "src/, dist/, test/ subdirectories",
+                    "package.json with correct naming"
+                  ]
+                },
+                {
+                  "id": "TASK-011",
+                  "title": "Create SOLID core modules",
+                  "description": "Refactor init.js into single-responsibility classes",
+                  "phase": "implementation",
+                  "estimatedHours": 1.5,
+                  "status": "pending",
+                  "dependencies": ["TASK-010"],
+                  "completionCriteria": [
+                    "ProjectInitializer class",
+                    "TemplateManager class",
+                    "HookInstaller class",
+                    "Dependency injection pattern",
+                    "Each class has single responsibility"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MILE-004",
+              "title": "Rebrand All Code",
+              "description": "Replace all gl-life-claude references with agentic15",
+              "estimatedHours": 3,
+              "tasks": [
+                {
+                  "id": "TASK-012",
+                  "title": "Copy templates from gl-life-claude",
+                  "description": "Copy all template files to new structure",
+                  "phase": "implementation",
+                  "estimatedHours": 0.5,
+                  "status": "pending",
+                  "dependencies": ["TASK-010"],
+                  "completionCriteria": [
+                    "All .claude/ templates copied",
+                    "All Agent/ structure copied",
+                    "All scripts/ copied",
+                    "test-site/ copied",
+                    "Config files copied"
+                  ]
+                },
+                {
+                  "id": "TASK-013",
+                  "title": "Rebrand package names",
+                  "description": "Replace gl-life-claude with agentic15 in all files",
+                  "phase": "implementation",
+                  "estimatedHours": 1,
+                  "status": "pending",
+                  "dependencies": ["TASK-012"],
+                  "completionCriteria": [
+                    "package.json: agentic15-claude-zen",
+                    "Binary: create-agentic15-claude-zen",
+                    "All file paths: .agentic15/",
+                    "All imports updated",
+                    "No references to gl-life remain"
+                  ]
+                },
+                {
+                  "id": "TASK-014",
+                  "title": "Add copyright headers to all source files",
+                  "description": "Apache 2.0 header to every .js file",
+                  "phase": "implementation",
+                  "estimatedHours": 1,
+                  "status": "pending",
+                  "dependencies": ["TASK-013"],
+                  "completionCriteria": [
+                    "All .js files have copyright header",
+                    "Copyright 2024-2025 Agentic15",
+                    "Apache 2.0 license reference",
+                    "Consistent formatting"
+                  ]
+                },
+                {
+                  "id": "TASK-015",
+                  "title": "Update all documentation references",
+                  "description": "Change all links, emails, URLs to agentic15.com",
+                  "phase": "implementation",
+                  "estimatedHours": 0.5,
+                  "status": "pending",
+                  "dependencies": ["TASK-014"],
+                  "completionCriteria": [
+                    "All URLs point to agentic15.com",
+                    "Email addresses use @agentic15.com",
+                    "GitHub links to agentic15/claude-zen",
+                    "No old branding remains"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MILE-005",
+              "title": "Hooks & Scripts Refactor",
+              "description": "Refactor hooks and scripts with SOLID principles",
+              "estimatedHours": 5,
+              "tasks": [
+                {
+                  "id": "TASK-016",
+                  "title": "Refactor hooks to use base classes",
+                  "description": "Create abstract base hook classes",
+                  "phase": "implementation",
+                  "estimatedHours": 2,
+                  "status": "pending",
+                  "dependencies": ["TASK-011"],
+                  "completionCriteria": [
+                    "BaseHook abstract class",
+                    "ValidatorHook extends BaseHook",
+                    "FormatterHook extends BaseHook",
+                    "All hooks use inheritance",
+                    "Interface segregation applied"
+                  ]
+                },
+                {
+                  "id": "TASK-017",
+                  "title": "Refactor scripts to use managers",
+                  "description": "Create PlanManager, TaskManager classes",
+                  "phase": "implementation",
+                  "estimatedHours": 2,
+                  "status": "pending",
+                  "dependencies": ["TASK-011"],
+                  "completionCriteria": [
+                    "PlanManager class (all plan operations)",
+                    "TaskManager class (all task operations)",
+                    "FileSystemUtil class",
+                    "GitUtil class",
+                    "Single responsibility enforced"
+                  ]
+                },
+                {
+                  "id": "TASK-018",
+                  "title": "Create utility modules",
+                  "description": "Extract reusable utilities",
+                  "phase": "implementation",
+                  "estimatedHours": 1,
+                  "status": "pending",
+                  "dependencies": ["TASK-016", "TASK-017"],
+                  "completionCriteria": [
+                    "logger.js module",
+                    "file-system.js module",
+                    "git.js module",
+                    "validator.js module",
+                    "DRY principle applied"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "SUB-003",
+          "title": "Testing & Quality Assurance",
+          "description": "Comprehensive testing and validation",
+          "estimatedHours": 4,
+          "milestones": [
+            {
+              "id": "MILE-006",
+              "title": "Black Box Testing",
+              "description": "Test complete package from user perspective",
+              "estimatedHours": 3,
+              "tasks": [
+                {
+                  "id": "TASK-019",
+                  "title": "Black box test: React project",
+                  "description": "Full workflow test with React todo app",
+                  "phase": "testing",
+                  "estimatedHours": 1,
+                  "status": "pending",
+                  "dependencies": ["TASK-015"],
+                  "completionCriteria": [
+                    "npx create-agentic15-claude-zen works",
+                    "Plan generation works",
+                    "Task workflow works",
+                    "Tests run and pass",
+                    "Hooks validate correctly",
+                    "UI component workflow works"
+                  ]
+                },
+                {
+                  "id": "TASK-020",
+                  "title": "Black box test: Vue project",
+                  "description": "Test with Vue framework",
+                  "phase": "testing",
+                  "estimatedHours": 0.5,
+                  "status": "pending",
+                  "dependencies": ["TASK-019"],
+                  "completionCriteria": [
+                    "Vue components render",
+                    "Tests pass with Vue",
+                    "Babel config works"
+                  ]
+                },
+                {
+                  "id": "TASK-021",
+                  "title": "Black box test: Large codebase (43k lines)",
+                  "description": "Validate smart testing on large project",
+                  "phase": "testing",
+                  "estimatedHours": 1,
+                  "status": "pending",
+                  "dependencies": ["TASK-019"],
+                  "completionCriteria": [
+                    "Changed-file testing works",
+                    "Commits complete in < 5 seconds",
+                    "Full test suite runs manually",
+                    "No infinite loops"
+                  ]
+                },
+                {
+                  "id": "TASK-022",
+                  "title": "Documentation review and validation",
+                  "description": "Verify all documentation is accurate",
+                  "phase": "testing",
+                  "estimatedHours": 0.5,
+                  "status": "pending",
+                  "dependencies": ["TASK-009"],
+                  "completionCriteria": [
+                    "All workflows documented",
+                    "All use cases covered",
+                    "Examples work correctly",
+                    "Links all valid",
+                    "No references to old branding"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MILE-007",
+              "title": "Quality Checks",
+              "description": "Final quality validation",
+              "estimatedHours": 1,
+              "tasks": [
+                {
+                  "id": "TASK-023",
+                  "title": "Verify all copyright headers",
+                  "description": "Scan all files for copyright compliance",
+                  "phase": "testing",
+                  "estimatedHours": 0.25,
+                  "status": "pending",
+                  "dependencies": ["TASK-014"],
+                  "completionCriteria": [
+                    "All .js files have headers",
+                    "Copyright year correct",
+                    "License reference correct"
+                  ]
+                },
+                {
+                  "id": "TASK-024",
+                  "title": "Run complete test suite",
+                  "description": "All unit tests, integration tests pass",
+                  "phase": "testing",
+                  "estimatedHours": 0.25,
+                  "status": "pending",
+                  "dependencies": ["TASK-021"],
+                  "completionCriteria": [
+                    "All tests pass",
+                    "Coverage > 80%",
+                    "No console errors"
+                  ]
+                },
+                {
+                  "id": "TASK-025",
+                  "title": "Build package and verify dist/",
+                  "description": "Build and verify bundled package",
+                  "phase": "testing",
+                  "estimatedHours": 0.25,
+                  "status": "pending",
+                  "dependencies": ["TASK-024"],
+                  "completionCriteria": [
+                    "npm run build succeeds",
+                    "dist/ contains all files",
+                    "Obfuscation works",
+                    "Package size reasonable"
+                  ]
+                },
+                {
+                  "id": "TASK-026",
+                  "title": "Final security audit",
+                  "description": "Check for vulnerabilities and secrets",
+                  "phase": "testing",
+                  "estimatedHours": 0.25,
+                  "status": "pending",
+                  "dependencies": ["TASK-025"],
+                  "completionCriteria": [
+                    "npm audit shows no vulnerabilities",
+                    "No secrets in code",
+                    "No sensitive data in templates",
+                    "SECURITY.md created"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "SUB-004",
+          "title": "Publication & Launch",
+          "description": "Publish to npm and GitHub, announce launch",
+          "estimatedHours": 2,
+          "milestones": [
+            {
+              "id": "MILE-008",
+              "title": "Repository Setup",
+              "description": "Configure GitHub repository",
+              "estimatedHours": 1,
+              "tasks": [
+                {
+                  "id": "TASK-027",
+                  "title": "Create GitHub repository agentic15/claude-zen",
+                  "description": "Initialize public repository",
+                  "phase": "deployment",
+                  "estimatedHours": 0.25,
+                  "status": "pending",
+                  "dependencies": ["TASK-026"],
+                  "completionCriteria": [
+                    "Repository created",
+                    "README visible on GitHub",
+                    "License file visible",
+                    "Topics/tags configured"
+                  ]
+                },
+                {
+                  "id": "TASK-028",
+                  "title": "Configure branch protection and CI/CD",
+                  "description": "Set up GitHub Actions and protection rules",
+                  "phase": "deployment",
+                  "estimatedHours": 0.5,
+                  "status": "pending",
+                  "dependencies": ["TASK-027"],
+                  "completionCriteria": [
+                    "Main branch protected",
+                    "CI runs tests on PR",
+                    "Auto-publish on tag",
+                    "Issue templates created"
+                  ]
+                },
+                {
+                  "id": "TASK-029",
+                  "title": "Push all code to GitHub",
+                  "description": "Initial push with complete history",
+                  "phase": "deployment",
+                  "estimatedHours": 0.25,
+                  "status": "pending",
+                  "dependencies": ["TASK-028"],
+                  "completionCriteria": [
+                    "All code pushed",
+                    "All documentation visible",
+                    "Clean git history",
+                    "v1.0.0 tag created"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MILE-009",
+              "title": "NPM Publication",
+              "description": "Publish to npm registry",
+              "estimatedHours": 1,
+              "tasks": [
+                {
+                  "id": "TASK-030",
+                  "title": "Publish v1.0.0 to npm",
+                  "description": "First public release",
+                  "phase": "deployment",
+                  "estimatedHours": 0.25,
+                  "status": "pending",
+                  "dependencies": ["TASK-029"],
+                  "completionCriteria": [
+                    "npm publish succeeds",
+                    "Package visible on npmjs.com",
+                    "npx create-agentic15-claude-zen works",
+                    "Package description correct"
+                  ]
+                },
+                {
+                  "id": "TASK-031",
+                  "title": "Verify npm package installation",
+                  "description": "Test package from npm registry",
+                  "phase": "deployment",
+                  "estimatedHours": 0.25,
+                  "status": "pending",
+                  "dependencies": ["TASK-030"],
+                  "completionCriteria": [
+                    "Fresh install works",
+                    "All files present",
+                    "Dependencies install correctly",
+                    "Package metadata correct"
+                  ]
+                },
+                {
+                  "id": "TASK-032",
+                  "title": "Create launch announcement",
+                  "description": "Blog post, social media, community announcement",
+                  "phase": "deployment",
+                  "estimatedHours": 0.5,
+                  "status": "pending",
+                  "dependencies": ["TASK-031"],
+                  "completionCriteria": [
+                    "Announcement post written",
+                    "Posted to GitHub Discussions",
+                    "Shared on relevant communities",
+                    "agentic15.com updated"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "summary": {
+    "totalTasks": 32,
+    "completedTasks": 8,
+    "pendingTasks": 24,
+    "totalEstimatedHours": 24,
+    "phases": {
+      "design": 8,
+      "implementation": 11,
+      "testing": 8,
+      "deployment": 5
+    }
+  }
+}
