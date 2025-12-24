@@ -28,8 +28,8 @@ const __dirname = dirname(__filename);
  */
 export class TemplateManager {
   constructor() {
-    this.templatesDir = join(__dirname, '..', '..', 'templates');
-    this.distDir = join(__dirname, '..', '..', 'dist');
+    this.templatesDir = join(__dirname, '..', 'templates');
+    this.distDir = join(__dirname, '.');
   }
 
   /**
