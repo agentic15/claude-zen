@@ -22,7 +22,7 @@ const __dirname = dirname(__filename);
 let PortManager;
 try {
   // Check if running from installed package
-  const parentPackagePath = join(__dirname, '../../node_modules/.gl-life-claude/utils/port-manager.js');
+  const parentPackagePath = join(__dirname, '../../node_modules/.agentic15-claude-zen/utils/port-manager.js');
   if (existsSync(parentPackagePath)) {
     const module = await import(parentPackagePath);
     PortManager = module.PortManager;

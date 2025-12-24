@@ -1,0 +1,30 @@
+{
+  "name": "agentic15-claude-zen",
+  "version": "1.0.0",
+  "description": "Structured AI-assisted development framework for Claude Code with enforced quality standards",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=packages/create-agentic15-claude-zen",
+    "test": "npm run test --workspace=packages/create-agentic15-claude-zen"
+  },
+  "keywords": [
+    "agentic15",
+    "claude-code",
+    "claude-zen",
+    "ai-assisted-development",
+    "monorepo"
+  ],
+  "author": "Agentic15 <developers@agentic15.com>",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/agentic15/claude-zen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agentic15/claude-zen.git"
+  },
+  "bugs": {
+    "url": "https://github.com/agentic15/claude-zen/issues"
+  }
+}

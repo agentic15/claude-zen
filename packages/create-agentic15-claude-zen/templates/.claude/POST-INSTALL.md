@@ -1,7 +1,7 @@
 # 🎯 POST-INSTALL INSTRUCTIONS FOR CLAUDE
 **Version:** 1.4.4
 **Last Updated:** 2025-12-24
-**Package:** gl-life-claude-zen
+**Package:** agentic15-claude-zen
 
 **CRITICAL: Claude MUST follow these exact steps after package installation**
 

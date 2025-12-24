@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * E2E Verification Test for gl-life-claude-zen v1.1.0
+ * E2E Verification Test for agentic15-claude-zen v1.1.0
  *
  * Tests the published package by:
  * 1. Creating a fresh project with npx
@@ -45,7 +45,7 @@ function createProject() {
   try {
     // Use the local built package for testing
     const packagePath = path.join(__dirname, '..');
-    execSync(`node ${path.join(packagePath, 'bin', 'create-gl-life-claude.js')} e2e-test-project`, {
+    execSync(`node ${path.join(packagePath, 'bin', 'create-agentic15-claude-zen.js')} e2e-test-project`, {
       cwd: path.join(TEST_DIR, '..'),
       stdio: 'inherit'
     });
@@ -140,7 +140,7 @@ function verifyUITestingConfig() {
 function verifyHooksInstalled() {
   log('\n🔍 Verifying hooks installed...', 'blue');
 
-  const hooksDir = path.join(TEST_DIR, 'node_modules', '.gl-life-claude', 'hooks');
+  const hooksDir = path.join(TEST_DIR, 'node_modules', '.agentic15-claude-zen', 'hooks');
 
   if (!fs.existsSync(hooksDir)) {
     log('  ❌ Hooks directory not found', 'red');
@@ -263,7 +263,7 @@ function verifyCLAUDEmdDocumentation() {
 // Main test execution
 async function runTests() {
   log('═══════════════════════════════════════════════════', 'blue');
-  log('  E2E Verification Test - gl-life-claude-zen v1.1.0', 'blue');
+  log('  E2E Verification Test - agentic15-claude-zen v1.1.0', 'blue');
   log('═══════════════════════════════════════════════════', 'blue');
 
   const results = {

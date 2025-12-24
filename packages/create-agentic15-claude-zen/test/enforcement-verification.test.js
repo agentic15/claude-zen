@@ -156,10 +156,10 @@ test('README documents npx usage correctly', () => {
   assert(fs.existsSync(readmePath), 'README.md not found');
 
   const content = fs.readFileSync(readmePath, 'utf8');
-  assert(content.includes('npx gl-life-claude-zen'), 'README does not show npx usage');
+  assert(content.includes('npx agentic15-claude-zen'), 'README does not show npx usage');
 
   // Check it doesn't mention npm create (which doesn't work)
-  const npmCreateMatches = content.match(/npm create gl-life-claude/g);
+  const npmCreateMatches = content.match(/npm create agentic15-claude-zen/g);
   assert(!npmCreateMatches || npmCreateMatches.length === 0, 'README still mentions npm create (which does not work)');
 });
 

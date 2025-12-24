@@ -1,6 +1,6 @@
 # {{PROJECT_NAME}}
 
-Project initialized with [GL.Life Claude Code Framework](https://github.com/ajayhanda/gl-life-claude)
+Project initialized with [Agentic15 Claude Code Framework](https://github.com/ajayhanda/agentic15-claude-zen)
 
 ## Structured Development Workflow
 
@@ -69,7 +69,7 @@ Configuration files are in [.claude/](.claude/):
 
 ### Framework Updates
 
-See the [gl-life-claude-zen CHANGELOG](https://github.com/ajayhanda/gl-life-claude/blob/main/create-gl-life-claude/CHANGELOG.md) for framework version history and breaking changes.
+See the [agentic15-claude-zen CHANGELOG](https://github.com/ajayhanda/agentic15-claude-zen/blob/main/create-agentic15-claude-zen/CHANGELOG.md) for framework version history and breaking changes.
 
 ## Development
 

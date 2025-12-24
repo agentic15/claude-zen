@@ -3,7 +3,7 @@
  * Configures testing environment for UI components
  *
  * @version 1.4.4
- * @package gl-life-claude-zen
+ * @package agentic15-claude-zen
  */
 
 // Import jest-dom matchers for better assertions

@@ -31,7 +31,7 @@ try {
 // RULE 1: BLOCK branch creation (direct main workflow only)
 if (command.includes('git checkout -b') || command.includes('git branch ') && !command.includes('git branch --show-current')) {
   console.error('\n❌ BLOCKED: Branch creation is NOT allowed');
-  console.error('   gl-life-claude-zen uses DIRECT MAIN WORKFLOW');
+  console.error('   agentic15-claude-zen uses DIRECT MAIN WORKFLOW');
   console.error('   All work happens on main branch');
   console.error('   Command blocked: ' + command);
   console.error('\n   ✅ Correct workflow:');
@@ -45,7 +45,7 @@ if (command.includes('git checkout -b') || command.includes('git branch ') && !c
 // RULE 2: BLOCK merges (no branching = no merging)
 if (command.includes('git merge')) {
   console.error('\n❌ BLOCKED: Git merge is NOT allowed');
-  console.error('   gl-life-claude-zen uses DIRECT MAIN WORKFLOW');
+  console.error('   agentic15-claude-zen uses DIRECT MAIN WORKFLOW');
   console.error('   No branching = no merging needed');
   console.error('   All work happens on main branch');
   console.error('\n   ✅ Correct workflow:');
@@ -58,7 +58,7 @@ if (command.includes('git merge')) {
 if (currentBranch !== 'main' && command.includes('git commit')) {
   console.error('\n❌ BLOCKED: Commits only allowed on main branch');
   console.error('   Current branch: ' + currentBranch);
-  console.error('   gl-life-claude-zen requires direct main workflow');
+  console.error('   agentic15-claude-zen requires direct main workflow');
   console.error('\n   ✅ Switch to main:');
   console.error('   git checkout main\n');
   process.exit(2);

@@ -1,7 +1,7 @@
 # Structured Coding Project
 **Version:** 1.4.0
 **Last Updated:** 2025-12-23
-**Package:** gl-life-claude-zen
+**Package:** agentic15-claude-zen
 
 ## Communication Protocol
 - Keep responses under 10 lines (brief summaries only)

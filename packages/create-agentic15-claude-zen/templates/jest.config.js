@@ -3,7 +3,7 @@
  * Framework-agnostic configuration supporting React, Vue, Angular, Svelte
  *
  * @version 1.4.4
- * @package gl-life-claude-zen
+ * @package agentic15-claude-zen
  */
 
 module.exports = {

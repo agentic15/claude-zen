@@ -1,7 +1,7 @@
 # 🎯 CRITICAL: READ THIS FIRST
 **Version:** 1.4.2
 **Last Updated:** 2025-12-24
-**Package:** gl-life-claude-zen
+**Package:** agentic15-claude-zen
 
 ## Your Environment Structure
 
@@ -15,7 +15,7 @@ project-root/
 │   └── hooks/                 ← NOT PRESENT (hooks are in node_modules)
 │
 ├── node_modules/
-│   └── .gl-life-claude/
+│   └── .agentic15-claude-zen/
 │       ├── scripts/           ← 17 WORKFLOW SCRIPTS (bundled, protected)
 │       └── hooks/             ← 28 ENFORCEMENT HOOKS (bundled, protected)
 │

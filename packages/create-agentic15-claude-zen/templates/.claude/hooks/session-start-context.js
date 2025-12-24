@@ -9,7 +9,7 @@
  * - Project structure
  * - Workflow reminder
  *
- * This hook FORCES Claude to acknowledge the gl-life-claude-zen workflow
+ * This hook FORCES Claude to acknowledge the agentic15-claude-zen workflow
  */
 
 const fs = require('fs');
@@ -78,7 +78,7 @@ if (activePlan && tracker) {
 
 } else {
   log('❌ NO ACTIVE PROJECT PLAN', 'red');
-  log('\n   You MUST work within the gl-life-claude-zen framework.', 'yellow');
+  log('\n   You MUST work within the agentic15-claude-zen framework.', 'yellow');
   log('   Create a plan first:', 'yellow');
   log('   1. npm run plan:generate "Your requirements"', 'yellow');
   log('   2. Create PROJECT-PLAN.json from requirements', 'yellow');
@@ -103,7 +103,7 @@ console.log('─'.repeat(70));
 log('   ./Agent/                    # Your workspace (EDIT HERE)', 'green');
 log('   ./scripts/                  # Your scripts (EDIT HERE)', 'green');
 log('   ./.claude/                  # Framework files (READ ONLY)', 'yellow');
-log('   ./node_modules/.gl-life-claude/  # Bundled scripts & hooks', 'yellow');
+log('   ./node_modules/.agentic15-claude-zen/  # Bundled scripts & hooks', 'yellow');
 
 console.log('\n' + '─'.repeat(70));
 log('📋 AVAILABLE COMMANDS:', 'bold');

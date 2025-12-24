@@ -137,11 +137,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/session-start-context.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/session-start-context.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/detect-pending-reviews.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/detect-pending-reviews.js"
           }
         ]
       }
@@ -152,19 +152,19 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/enforce-hard-requirements.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/enforce-hard-requirements.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/prevent-read-bypass.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/prevent-read-bypass.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/enforce-structured-development.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/enforce-structured-development.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/enforce-plan-template.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/enforce-plan-template.js"
           }
         ]
       },
@@ -173,11 +173,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/validate-git-workflow.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-git-workflow.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/validate-task-completion.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-task-completion.js"
           }
         ]
       }
@@ -188,51 +188,51 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/enforce-structured-development.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/enforce-structured-development.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/auto-format.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/auto-format.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/validate-ui-syntax.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-ui-syntax.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/validate-ui-runtime.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-ui-runtime.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/validate-ui-visual-native.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-ui-visual-native.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/validate-component-contract.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-component-contract.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/validate-test-quality.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-test-quality.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/validate-ui-integration.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-ui-integration.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/validate-integration-site.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-integration-site.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/validate-database-changes.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-database-changes.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/validate-migration-impact.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-migration-impact.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/validate-visual-regression.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-visual-regression.js"
           }
         ]
       },
@@ -241,19 +241,19 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/validate-test-results.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-test-results.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/validate-e2e-coverage.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-e2e-coverage.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/enforce-test-pyramid.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/enforce-test-pyramid.js"
           },
           {
             "type": "command",
-            "command": "node node_modules/.gl-life-claude/hooks/enforce-migration-workflow.js"
+            "command": "node node_modules/.agentic15-claude-zen/hooks/enforce-migration-workflow.js"
           }
         ]
       }

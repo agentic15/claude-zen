@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Integration Tests for create-gl-life-claude
+ * Integration Tests for create-agentic15-claude-zen
  *
  * Tests package initialization and verifies:
  * - Project structure creation
@@ -20,7 +20,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const PKG_ROOT = join(__dirname, '..');
-const CLI_PATH = join(PKG_ROOT, 'bin', 'create-gl-life-claude.js');
+const CLI_PATH = join(PKG_ROOT, 'bin', 'create-agentic15-claude-zen.js');
 const TEST_DIR = join(PKG_ROOT, 'test-output');
 const TEST_PROJECT = 'test-project';
 const TEST_PATH = join(TEST_DIR, TEST_PROJECT);
@@ -83,20 +83,20 @@ try {
 
   // Test 3: Bundled files extraction
   console.log('\n📋 Test 3: Bundled files extraction');
-  testFileExists('node_modules/.gl-life-claude/scripts', 'Scripts bundle directory exists');
-  testFileExists('node_modules/.gl-life-claude/hooks', 'Hooks bundle directory exists');
-  testFileExists('node_modules/.gl-life-claude/scripts/task-start.js', 'task-start.js extracted');
-  testFileExists('node_modules/.gl-life-claude/scripts/task-done.js', 'task-done.js extracted');
-  testFileExists('node_modules/.gl-life-claude/scripts/task-next.js', 'task-next.js extracted');
-  testFileExists('node_modules/.gl-life-claude/scripts/plan-init.js', 'plan-init.js extracted');
-  testFileExists('node_modules/.gl-life-claude/hooks/enforce-structured-development.js', 'Hook extracted');
+  testFileExists('node_modules/.agentic15-claude-zen/scripts', 'Scripts bundle directory exists');
+  testFileExists('node_modules/.agentic15-claude-zen/hooks', 'Hooks bundle directory exists');
+  testFileExists('node_modules/.agentic15-claude-zen/scripts/task-start.js', 'task-start.js extracted');
+  testFileExists('node_modules/.agentic15-claude-zen/scripts/task-done.js', 'task-done.js extracted');
+  testFileExists('node_modules/.agentic15-claude-zen/scripts/task-next.js', 'task-next.js extracted');
+  testFileExists('node_modules/.agentic15-claude-zen/scripts/plan-init.js', 'plan-init.js extracted');
+  testFileExists('node_modules/.agentic15-claude-zen/hooks/enforce-structured-development.js', 'Hook extracted');
 
   // Test 4: Configuration correctness
   console.log('\n📋 Test 4: Configuration verification');
   testFileContains('package.json', TEST_PROJECT, 'Project name interpolated in package.json');
-  testFileContains('package.json', 'node_modules/.gl-life-claude/scripts', 'Scripts reference bundled path');
+  testFileContains('package.json', 'node_modules/.agentic15-claude-zen/scripts', 'Scripts reference bundled path');
   testFileContains('README.md', TEST_PROJECT, 'Project name interpolated in README');
-  testFileContains('.claude/settings.json', 'node_modules/.gl-life-claude/hooks', 'Hooks reference bundled path');
+  testFileContains('.claude/settings.json', 'node_modules/.agentic15-claude-zen/hooks', 'Hooks reference bundled path');
 
   // Test 5: Script executability
   console.log('\n📋 Test 5: npm scripts availability');

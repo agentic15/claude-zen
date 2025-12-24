@@ -268,4 +268,4 @@ If your components can't be imported:
 
 ## License
 
-This template is part of the gl-life-claude-zen package and follows the same license as the parent project.
+This template is part of the agentic15-claude-zen package and follows the same license as the parent project.
