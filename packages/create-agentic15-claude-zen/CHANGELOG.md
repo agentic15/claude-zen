@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Copyright 2024-2025 agentic15.com
 
+## [1.0.1] - 2025-12-24
+
+### Changed
+- Updated package name to @agentic15.com/agentic15-claude-zen
+- Updated bin command to agentic15-claude-zen
+- Removed obfuscation, now using standard minification with sourcemaps
+- Updated all copyright references from "Agentic15" to "agentic15.com"
+- Added complete package documentation (README.md, CHANGELOG.md, LICENSE)
+- Added npm package link to README
+
+### Fixed
+- Package now includes README.md, LICENSE, and CHANGELOG.md files
+
 ## [1.0.0] - 2025-12-24
 
 ### Added
