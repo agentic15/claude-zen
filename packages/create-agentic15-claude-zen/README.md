@@ -38,15 +38,15 @@ npm run plan:generate "Build a todo app with React"
 
 ## 📚 Documentation
 
-Comprehensive documentation is organized by role and use case:
+Comprehensive documentation is available in the [GitHub repository](https://github.com/agentic15/claude-zen):
 
-- **[Getting Started](docs/getting-started/README.md)** - Installation, configuration, quick start
-- **[User Workflows](docs/workflows/user-workflow.md)** - How humans interact with the framework
-- **[Agent Workflows](docs/workflows/agent-workflow.md)** - How Claude Code operates within the framework
-- **[Plan Management](docs/workflows/plan-management.md)** - Creating, locking, and amending plans
-- **[Task Management](docs/workflows/task-management.md)** - Starting, tracking, and completing tasks
-- **[Test Execution](docs/workflows/test-execution.md)** - Smart testing strategies for all project sizes
-- **[Architecture](docs/architecture/README.md)** - Design principles, SOLID patterns, directory structure
+- **[Getting Started](https://github.com/agentic15/claude-zen/blob/main/docs/getting-started/README.md)** - Installation, configuration, quick start
+- **[User Workflows](https://github.com/agentic15/claude-zen/blob/main/docs/workflows/user-workflow.md)** - How humans interact with the framework
+- **[Agent Workflows](https://github.com/agentic15/claude-zen/blob/main/docs/workflows/agent-workflow.md)** - How Claude Code operates within the framework
+- **[Plan Management](https://github.com/agentic15/claude-zen/blob/main/docs/workflows/plan-management.md)** - Creating, locking, and amending plans
+- **[Task Management](https://github.com/agentic15/claude-zen/blob/main/docs/workflows/task-management.md)** - Starting, tracking, and completing tasks
+- **[Test Execution](https://github.com/agentic15/claude-zen/blob/main/docs/workflows/test-execution.md)** - Smart testing strategies for all project sizes
+- **[Architecture](https://github.com/agentic15/claude-zen/blob/main/docs/architecture/README.md)** - Design principles, SOLID patterns, directory structure
 
 ## ✨ Key Features
 
@@ -146,18 +146,9 @@ Every UI component requires 3 files:
 
 Git hooks BLOCK commits missing any of these files.
 
-## 📖 Examples
-
-See [examples/](examples/) directory for complete project examples:
-
-- **React Todo App** - Full-featured todo application
-- **Vue Dashboard** - Analytics dashboard with charts
-- **Angular Forms** - Complex form validation
-- **Svelte Portfolio** - Personal portfolio site
-
 ## 🤝 Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+We welcome contributions! Please see [CONTRIBUTING.md](https://github.com/agentic15/claude-zen/blob/main/CONTRIBUTING.md) for guidelines.
 
 ### Development Setup
 
@@ -180,7 +171,7 @@ npm run build
 
 For security vulnerabilities, please email security@agentic15.com
 
-See [SECURITY.md](SECURITY.md) for our security policy.
+See [SECURITY.md](https://github.com/agentic15/claude-zen/blob/main/SECURITY.md) for our security policy.
 
 ## 📄 License
 
@@ -198,7 +189,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-See [LICENSE](LICENSE) for full text.
+See [LICENSE](https://github.com/agentic15/claude-zen/blob/main/LICENSE) for full text.
 
 ## 🏢 About agentic15.com
 

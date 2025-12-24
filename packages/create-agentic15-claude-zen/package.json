@@ -1,15 +1,15 @@
 {
-  "name": "create-agentic15-claude-zen",
+  "name": "@agentic15.com/agentic15-claude-zen",
   "version": "1.0.0",
   "description": "Structured AI-assisted development framework for Claude Code with enforced quality standards",
   "main": "dist/index.js",
   "bin": {
-    "create-agentic15-claude-zen": "./bin/create-agentic15-claude-zen.js"
+    "agentic15-claude-zen": "./bin/create-agentic15-claude-zen.js"
   },
   "type": "module",
   "scripts": {
     "build": "node esbuild.config.js",
-    "test": "node test/bundle-protection.test.js && node test/integration.test.js",
+    "test": "node test/integration.test.js",
     "test:e2e": "node test/e2e-verification.test.js",
     "test:site": "node test/verify-test-site.js",
     "prepublishOnly": "npm run build"
@@ -37,6 +37,9 @@
   "bugs": {
     "url": "https://github.com/agentic15/claude-zen/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "bin/",
     "src/",
@@ -53,7 +56,6 @@
   "devDependencies": {
     "@playwright/test": "^1.57.0",
     "esbuild": "^0.20.0",
-    "javascript-obfuscator": "^5.1.0",
     "playwright": "^1.57.0"
   }
 }

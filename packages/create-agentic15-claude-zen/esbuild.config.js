@@ -1,15 +1,9 @@
 /**
- * Copyright 2024-2025 Agentic15
+ * Copyright 2024-2025 agentic15.com
  */
 
 import * as esbuild from 'esbuild';
 import * as fs from 'fs';
-import * as path from 'path';
-import { fileURLToPath } from 'url';
-import JavaScriptObfuscator from 'javascript-obfuscator';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 /**
  * Bundle main entry point
@@ -24,8 +18,8 @@ async function bundleMain() {
     target: 'node18',
     format: 'esm',
     outfile: 'dist/index.js',
-    minify: false,
-    sourcemap: false,
+    minify: true,
+    sourcemap: true,
     treeShaking: true,
   });
 
