@@ -1,0 +1,25 @@
+{
+  "name": "integration-test-site",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Integration test website for stakeholder validation of UI components",
+  "scripts": {
+    "dev": "node server.js",
+    "dev:simple": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && npx gh-pages -d dist"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.1",
+    "gh-pages": "^6.1.1",
+    "vite": "^5.0.8"
+  }
+}

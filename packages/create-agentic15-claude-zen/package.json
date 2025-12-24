@@ -1,0 +1,59 @@
+{
+  "name": "create-agentic15-claude-zen",
+  "version": "1.0.0",
+  "description": "Structured AI-assisted development framework for Claude Code with enforced quality standards",
+  "main": "dist/index.js",
+  "bin": {
+    "create-agentic15-claude-zen": "./bin/create-agentic15-claude-zen.js"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "node esbuild.config.js",
+    "test": "node test/bundle-protection.test.js && node test/integration.test.js",
+    "test:e2e": "node test/e2e-verification.test.js",
+    "test:site": "node test/verify-test-site.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "agentic15",
+    "claude-code",
+    "claude-zen",
+    "ai-assisted-development",
+    "project-scaffold",
+    "workflow-enforcement",
+    "task-tracking",
+    "development-framework",
+    "quality-automation",
+    "git-hooks",
+    "test-driven-development"
+  ],
+  "author": "Agentic15 <developers@agentic15.com>",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/agentic15/claude-zen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agentic15/claude-zen.git"
+  },
+  "bugs": {
+    "url": "https://github.com/agentic15/claude-zen/issues"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "dist/",
+    "templates/",
+    "templates/.gitignore",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "esbuild": "^0.20.0",
+    "javascript-obfuscator": "^5.1.0",
+    "playwright": "^1.57.0"
+  }
+}

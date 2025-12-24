@@ -1,0 +1,130 @@
+.app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.app-header {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.app-header h1 {
+  font-size: 3em;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.app-header p {
+  font-size: 1.2em;
+  color: #888;
+}
+
+.app-main {
+  text-align: left;
+}
+
+.demo-section,
+.instructions,
+.component-list {
+  margin-bottom: 3rem;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.demo-section h2,
+.instructions h2,
+.component-list h2 {
+  margin-top: 0;
+  font-size: 1.8em;
+}
+
+.demo-description {
+  color: #888;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.component-placeholder {
+  padding: 3rem;
+  border: 2px dashed #646cff;
+  border-radius: 8px;
+  text-align: center;
+  background: rgba(100, 108, 255, 0.05);
+}
+
+.component-placeholder p {
+  font-size: 1.2em;
+  margin-bottom: 1rem;
+  color: #888;
+}
+
+.component-placeholder code {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.result-display {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(100, 108, 255, 0.1);
+  border-radius: 8px;
+  border-left: 4px solid #646cff;
+}
+
+.result-display h3 {
+  margin: 0 0 1rem 0;
+}
+
+.result-display pre {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: 0.9em;
+}
+
+.instructions h3 {
+  margin-top: 2rem;
+  font-size: 1.3em;
+}
+
+.instructions ol {
+  line-height: 2;
+}
+
+.instructions code {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+.code-example {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.9em;
+  line-height: 1.6;
+  margin-top: 1rem;
+}
+
+.component-list ul {
+  line-height: 2;
+}
+
+.app-footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid #ccc;
+  color: #888;
+  font-size: 0.9em;
+  text-align: center;
+}

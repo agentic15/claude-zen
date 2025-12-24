@@ -1,0 +1,40 @@
+{
+  "name": "{{PROJECT_NAME}}",
+  "version": "1.0.0",
+  "description": "Project with Claude Code structured development framework",
+  "type": "commonjs",
+  "scripts": {
+    "test": "jest",
+    "help": "node node_modules/.gl-life-claude/scripts/help.js",
+    "plan:generate": "node node_modules/.gl-life-claude/scripts/plan-generate.js",
+    "plan:create": "node node_modules/.gl-life-claude/scripts/plan-create.js",
+    "plan:init": "node node_modules/.gl-life-claude/scripts/plan-init.js",
+    "plan:manager": "node node_modules/.gl-life-claude/scripts/plan-manager.js",
+    "plan:amend": "node node_modules/.gl-life-claude/scripts/plan-amend.js",
+    "plan:help": "node node_modules/.gl-life-claude/scripts/plan-help.js",
+    "task:start": "node node_modules/.gl-life-claude/scripts/task-start.js",
+    "task:done": "node node_modules/.gl-life-claude/scripts/task-done.js",
+    "task:next": "node node_modules/.gl-life-claude/scripts/task-next.js",
+    "task:status": "node node_modules/.gl-life-claude/scripts/task-status.js",
+    "task:merge": "node node_modules/.gl-life-claude/scripts/task-merge.js",
+    "setup:git-hooks": "node node_modules/.gl-life-claude/scripts/setup-git-hooks.js"
+  },
+  "keywords": [
+    "claude-code",
+    "structured-development",
+    "task-tracking"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^30.2.0",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/user-event": "^14.5.2",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.26.3",
+    "babel-jest": "^30.0.0",
+    "jest-environment-jsdom": "^30.0.0",
+    "prop-types": "^15.8.1",
+    "identity-obj-proxy": "^3.0.0"
+  }
+}

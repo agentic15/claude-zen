@@ -1,0 +1,262 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(**)",
+      "Glob",
+      "Grep",
+      "Bash(npm run *)",
+      "Bash(git status*)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(git branch*)",
+      "Bash(git checkout main)",
+      "Bash(git add *)",
+      "Bash(git commit*)",
+      "Bash(git push*)",
+      "Edit(./Agent/**)",
+      "Write(./Agent/**)",
+      "Edit(./scripts/**)",
+      "Write(./scripts/**)",
+      "Write(./.claude/PROJECT-PLAN.json)"
+    ],
+    "ask": [
+      "Edit(./package.json)",
+      "Edit(./tsconfig.json)",
+      "Edit(./jest.config.*)",
+      "Write(./config/**)"
+    ],
+    "deny": [
+      "Edit(**/*.md)",
+      "Write(**/*.md)",
+      "Edit(./docs/**)",
+      "Write(./docs/**)",
+      "Edit(./README.md)",
+      "Edit(./CHANGELOG.md)",
+      "Edit(./.env*)",
+      "Write(./.env*)",
+      "Edit(./.claude/PROJECT-PLAN.json)",
+      "Edit(./.claude/settings.json)",
+      "Edit(./.claude/hooks/**)",
+      "Write(./.claude/hooks/**)",
+      "Edit(./.claude/CLAUDE.md)",
+      "Edit(./.claude/TASK-TRACKER.json)",
+      "Bash(curl*)",
+      "Bash(wget*)",
+      "Bash(rm -rf*)",
+      "Bash(sudo*)",
+      "Bash(npm install*)",
+      "Bash(npm publish*)",
+      "Bash(git push --force*)",
+      "Bash(git merge*)",
+      "Bash(psql*)",
+      "Bash(mysql*)",
+      "Bash(sqlite3*)",
+      "Bash(mongosh*)",
+      "Bash(redis-cli*)",
+      "Bash(node ./scripts/**)",
+      "Bash(node ./Agent/db/**)",
+      "Bash(bash ./scripts/**)",
+      "Bash(sh ./scripts/**)",
+      "Bash(git checkout -b *)",
+      "WebFetch",
+      "WebSearch"
+    ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "allowUnsandboxedCommands": false
+  },
+  "env": {
+    "DISABLE_PROMPT_CACHING": "0",
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "8192",
+    "DISABLE_NON_ESSENTIAL_MODEL_CALLS": "1"
+  },
+  "testing": {
+    "ui": {
+      "strictMode": true,
+      "requireTestFile": true,
+      "requireImport": true,
+      "requireRender": true,
+      "requireProps": true,
+      "requireEventTests": true,
+      "requireApiMocking": true,
+      "requireStateTests": true,
+      "requireFormTests": true,
+      "requireConditionalTests": true,
+      "requireIntegrationSite": true,
+      "integrationSiteDir": "test-site",
+      "conditionalThreshold": 3,
+      "requireVisualCheck": true,
+      "requireContract": false,
+      "comment": "⚠️  ALL UI testing requirements are HARD REQUIREMENTS (cannot be disabled). Commits will be blocked if any requirement is violated."
+    },
+    "visual": {
+      "enabled": true,
+      "strictMode": false,
+      "autoApprove": false,
+      "requireBaseline": true,
+      "pixelMatchThreshold": 0.1,
+      "diffThreshold": 1.0,
+      "browsers": ["chromium"],
+      "viewports": [
+        {
+          "name": "desktop",
+          "width": 1920,
+          "height": 1080,
+          "deviceScaleFactor": 1
+        },
+        {
+          "name": "tablet",
+          "width": 768,
+          "height": 1024,
+          "deviceScaleFactor": 2
+        },
+        {
+          "name": "mobile",
+          "width": 375,
+          "height": 667,
+          "deviceScaleFactor": 2
+        }
+      ],
+      "excludePatterns": [
+        "**/node_modules/**",
+        "**/dist/**",
+        "**/build/**"
+      ],
+      "baselineDir": ".claude/visual-baselines",
+      "diffDir": ".claude/visual-diffs",
+      "tempDir": ".claude/visual-temp",
+      "comment": "Visual regression testing configuration. Triggers on UI component changes (.tsx, .jsx, .vue, .svelte). Set enabled:false to disable."
+    }
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/session-start-context.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/detect-pending-reviews.js"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/enforce-hard-requirements.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/prevent-read-bypass.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/enforce-structured-development.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/enforce-plan-template.js"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/validate-git-workflow.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/validate-task-completion.js"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/enforce-structured-development.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/auto-format.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/validate-ui-syntax.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/validate-ui-runtime.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/validate-ui-visual-native.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/validate-component-contract.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/validate-test-quality.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/validate-ui-integration.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/validate-integration-site.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/validate-database-changes.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/validate-migration-impact.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/validate-visual-regression.js"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/validate-test-results.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/validate-e2e-coverage.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/enforce-test-pyramid.js"
+          },
+          {
+            "type": "command",
+            "command": "node node_modules/.gl-life-claude/hooks/enforce-migration-workflow.js"
+          }
+        ]
+      }
+    ]
+  }
+}
