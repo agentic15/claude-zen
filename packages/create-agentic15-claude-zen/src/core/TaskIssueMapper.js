@@ -1,0 +1,137 @@
+/**
+ * Copyright 2024-2025 agentic15.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * TaskIssueMapper - Maps task data to GitHub issue format
+ *
+ * Single Responsibility: Convert between task and issue representations
+ *
+ * This class provides static methods for mapping task JSON structure
+ * to GitHub issue format (title, body, labels).
+ */
+export class TaskIssueMapper {
+  /**
+   * Generate GitHub issue title from task
+   *
+   * @param {Object} task - Task object
+   * @returns {string} Issue title
+   */
+  static taskToIssueTitle(task) {
+    return `[${task.id}] ${task.title}`;
+  }
+
+  /**
+   * Generate GitHub issue body from task
+   *
+   * @param {Object} task - Task object
+   * @returns {string} Issue body in markdown format
+   */
+  static taskToIssueBody(task) {
+    let body = `## Task: ${task.title}\n\n`;
+
+    if (task.description) {
+      body += `${task.description}\n\n`;
+    }
+
+    if (task.phase) {
+      body += `**Phase:** ${task.phase}\n`;
+    }
+
+    if (task.estimatedHours) {
+      body += `**Estimated Hours:** ${task.estimatedHours}h\n`;
+    }
+
+    if (task.completionCriteria && task.completionCriteria.length > 0) {
+      body += `\n### Completion Criteria\n\n`;
+      task.completionCriteria.forEach(criteria => {
+        body += `- [ ] ${criteria}\n`;
+      });
+    }
+
+    if (task.dependencies && task.dependencies.length > 0) {
+      body += `\n### Dependencies\n\n`;
+      task.dependencies.forEach(dep => {
+        body += `- ${dep}\n`;
+      });
+    }
+
+    if (task.testCases && task.testCases.length > 0) {
+      body += `\n### Test Cases\n\n`;
+      task.testCases.forEach(test => {
+        body += `- ${test}\n`;
+      });
+    }
+
+    body += `\n---\n*Auto-created by Agentic15 Claude Zen*`;
+
+    return body;
+  }
+
+  /**
+   * Map task status and phase to GitHub labels
+   *
+   * @param {string} status - Task status (pending, in_progress, completed, blocked)
+   * @param {string|null} phase - Task phase (design, implementation, testing, etc.)
+   * @returns {string[]} Array of label names
+   */
+  static taskStatusToLabels(status, phase = null) {
+    const labels = [];
+
+    // Status labels
+    switch (status) {
+      case 'pending':
+        labels.push('status: pending');
+        break;
+      case 'in_progress':
+        labels.push('status: in-progress');
+        break;
+      case 'completed':
+        labels.push('status: completed');
+        break;
+      case 'blocked':
+        labels.push('status: blocked');
+        break;
+    }
+
+    // Phase labels
+    if (phase) {
+      const phaseLabel = this.phaseToLabel(phase);
+      if (phaseLabel) {
+        labels.push(phaseLabel);
+      }
+    }
+
+    return labels;
+  }
+
+  /**
+   * Convert phase name to GitHub label
+   *
+   * @param {string} phase - Phase name
+   * @returns {string} Label name
+   */
+  static phaseToLabel(phase) {
+    const phaseLabels = {
+      'design': 'phase: design',
+      'implementation': 'phase: implementation',
+      'testing': 'phase: testing',
+      'deployment': 'phase: deployment',
+      'documentation': 'phase: documentation'
+    };
+
+    return phaseLabels[phase] || `phase: ${phase}`;
+  }
+}
