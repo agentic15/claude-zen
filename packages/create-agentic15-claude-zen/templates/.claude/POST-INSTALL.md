@@ -222,7 +222,14 @@ Priority: Environment Variables > settings.local.json > settings.json > auto-det
 
 ### PR Workflow (Recommended)
 
-**Enable branch protection to require PRs:**
+**STEP 1: Enable automatic branch deletion (prevents clutter):**
+
+1. GitHub → Settings → General
+2. Scroll to "Pull Requests" section
+3. ✅ Check "Automatically delete head branches"
+4. Save changes
+
+**STEP 2: Enable branch protection to require PRs:**
 
 1. GitHub → Settings → Branches → Add rule
 2. Branch name: `main`
@@ -248,6 +255,7 @@ gh pr create --title "[TASK-001] Description" --body "Closes #123"
 
 # After approval and merge to main
 # Post-merge hook automatically closes GitHub issue #123
+# GitHub automatically deletes the feature branch (if enabled in settings)
 ```
 
 ### More Information

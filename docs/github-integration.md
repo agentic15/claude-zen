@@ -289,6 +289,60 @@ When rotating tokens:
 3. Test with a task start
 4. Revoke old token on GitHub
 
+## Branch Management
+
+### Automatic Branch Deletion
+
+To prevent branch clutter after merging PRs, enable GitHub's automatic branch deletion:
+
+**Setup (One-time):**
+1. Go to GitHub → Your Repository → Settings
+2. Click **General** (left sidebar)
+3. Scroll to **Pull Requests** section
+4. ✅ Check **Automatically delete head branches**
+5. Click **Save** (if button appears)
+
+**What happens:**
+- When a PR is merged to main, GitHub automatically deletes the feature branch
+- Keeps repository clean and prevents stale branches
+- Recommended for ALL projects using PR workflow
+
+**Example:**
+```bash
+# Create and push feature branch
+git checkout -b feature/task-001
+git push -u origin feature/task-001
+
+# Create PR and merge
+gh pr create --title "[TASK-001] Feature" --body "Closes #123"
+# ... get approval, merge PR ...
+
+# After merge:
+# ✓ GitHub issue #123 closed automatically (via post-merge hook)
+# ✓ feature/task-001 branch deleted automatically (via GitHub setting)
+```
+
+**Manual cleanup (if not enabled):**
+```bash
+# Delete local branch
+git branch -d feature/task-001
+
+# Delete remote branch
+git push origin --delete feature/task-001
+```
+
+**Bulk cleanup of merged branches:**
+```bash
+# List merged branches
+git branch --merged main
+
+# Delete all merged branches locally
+git branch --merged main | grep -v "main" | xargs git branch -d
+
+# Prune remote tracking branches
+git remote prune origin
+```
+
 ## Advanced Usage
 
 ### Custom Labels

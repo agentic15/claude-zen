@@ -9,6 +9,7 @@ Branch protection prevents direct commits to `main`, requiring all changes to go
 - Automated tests run on all changes
 - GitHub issues auto-close when PRs merge
 - Clean, auditable commit history
+- Automatic branch cleanup after merge
 
 ## Prerequisites
 
@@ -18,6 +19,19 @@ Branch protection prevents direct commits to `main`, requiring all changes to go
 - At least one collaborator (for PR approvals)
 
 ## Step-by-Step Setup
+
+### 0. Enable Automatic Branch Deletion (Recommended First)
+
+**IMPORTANT: Do this BEFORE setting up branch protection to avoid clutter from merged PRs.**
+
+1. Go to your repository on GitHub
+2. Click **Settings** (top navigation)
+3. Click **General** (left sidebar)
+4. Scroll to **Pull Requests** section
+5. ✅ Check **Automatically delete head branches**
+6. Click **Save** (if button appears)
+
+**What this does**: When a PR is merged, GitHub automatically deletes the feature branch. This keeps your repository clean and prevents branch clutter.
 
 ### 1. Navigate to Branch Protection
 
