@@ -10,7 +10,13 @@ AI-Assisted Development Framework with Automated Workflows
 ## Quick Start
 
 ```bash
+# Bash/Mac/Linux
 npx @agentic15.com/agentic15-claude-zen my-project
+
+# PowerShell (Windows)
+npx "@agentic15.com/agentic15-claude-zen" my-project
+
+# Then
 cd my-project
 npx agentic15 auth
 npx agentic15 plan "Build a todo app"
