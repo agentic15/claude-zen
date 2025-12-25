@@ -1,9 +1,11 @@
 # 🎯 POST-INSTALL INSTRUCTIONS FOR CLAUDE
-**Version:** 1.4.4
-**Last Updated:** 2025-12-24
+**Version:** 1.1.0
+**Last Updated:** 2025-12-25
 **Package:** agentic15-claude-zen
 
 **CRITICAL: Claude MUST follow these exact steps after package installation**
+
+**🔗 NEW in v1.1.0:** GitHub Issues integration is now available! See section below for auto-create, auto-update, and auto-close features.
 
 ## ✅ 6-Step Setup Workflow
 
