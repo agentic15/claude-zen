@@ -1,306 +1,184 @@
 # Agentic15 Claude Zen
 
-> **Code with Intelligence, Ship with Confidence**
+> **AI-Assisted Development Framework with Automated Workflows**
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![npm version](https://badge.fury.io/js/@agentic15.com%2Fagentic15-claude-zen.svg)](https://www.npmjs.com/package/@agentic15.com/agentic15-claude-zen)
-[![GitHub stars](https://img.shields.io/github/stars/agentic15/claude-zen.svg)](https://github.com/agentic15/claude-zen/stargazers)
 
-**Agentic15 Claude Zen** is a professional, enterprise-grade framework for structured AI-assisted software development with Claude Code. It enforces quality standards, automates testing, and ensures every commit meets production requirements.
-
-## 🎯 What is Agentic15 Claude Zen?
-
-A comprehensive development framework that transforms Claude Code into a disciplined, production-ready development environment through:
-
-- **Structured Project Management**: Hierarchical plans, task tracking, and progress monitoring
-- **Automated Quality Enforcement**: Git hooks that validate tests, code quality, and UI components
-- **Smart Testing**: Only test changed files (perfect for 43,000+ line codebases)
-- **UI Component Workflows**: Enforced 3-file pattern (component, test, integration site)
-- **Framework Agnostic**: Works with React, Vue, Angular, Svelte, and more
-
-## 🚀 Quick Start
-
-Install from [npm](https://www.npmjs.com/package/@agentic15.com/agentic15-claude-zen):
-
-```bash
-# Create a new project
-npx @agentic15.com/agentic15-claude-zen my-project
-cd my-project
-
-# Configure GitHub
-npx agentic15 auth
-
-# Create your first plan
-npx agentic15 plan "Build a todo app with React"
-
-# That's it! See QUICK-START.md for the complete workflow
-```
-
-## 📚 Documentation
-
-**NEW v2.0 Workflow Guides:**
-
-- **[QUICK-START.md](QUICK-START.md)** - ⚡ One-page cheat sheet with all commands
-- **[WORKFLOW-COMMANDS.md](WORKFLOW-COMMANDS.md)** - 📋 Complete step-by-step workflows with examples
-- **[VISUAL-TESTING-WORKFLOW.md](VISUAL-TESTING-WORKFLOW.md)** - 🎨 UI testing and Claude feedback loop
-
-**Legacy Documentation (v1.x):**
-
-- **[Getting Started](docs/getting-started/README.md)** - Installation, configuration (outdated)
-- **[User Workflows](docs/workflows/user-workflow.md)** - npm run commands (deprecated)
-- **[Agent Workflows](docs/workflows/agent-workflow.md)** - How Claude Code operates
-- **[Plan Management](docs/workflows/plan-management.md)** - Plan structure and schemas
-- **[Task Management](docs/workflows/task-management.md)** - Task lifecycle (outdated)
-- **[Test Execution](docs/workflows/test-execution.md)** - Smart testing strategies
-- **[Architecture](docs/architecture/README.md)** - Design principles, SOLID patterns
-
-## ✨ Key Features
-
-### 📋 Structured Development
-- Hierarchical project planning (Project → Subproject → Milestone → Task)
-- Immutable plans with audit trail for amendments
-- Dependency tracking and validation
-- Progress monitoring and time estimation
-
-### 🔒 Quality Enforcement
-- **Pre-commit hooks** validate tests, code quality, and UI components
-- **Smart testing** runs only changed files during commits
-- **Test quality validation** blocks empty tests, missing assertions
-- **UI integration validation** enforces component + test + integration site pattern
-
-### ⚡ Performance
-- Token-optimized with prompt caching
-- Smart file change detection for testing
-- Minified and bundled hooks for fast execution
-- Scales to projects with 43,000+ lines of code
-
-### 🎨 UI Development
-- Framework-agnostic (React, Vue, Angular, Svelte)
-- Complete Jest + Babel configuration included
-- Testing Library integration
-- Integration site for stakeholder previews
-
-## 🏗️ Directory Structure
-
-```
-your-project/
-├── .claude/              # Framework configuration (DO NOT EDIT)
-│   ├── hooks/            # Git hooks for enforcement
-│   ├── plans/            # Project plans and task tracking
-│   ├── CLAUDE.md         # Instructions for Claude Code
-│   ├── POST-INSTALL.md   # Setup guide
-│   └── settings.json     # Claude Code hook configuration
-├── Agent/                # Your workspace (EDIT HERE)
-│   ├── src/              # Source code
-│   ├── tests/            # Test files
-│   └── db/               # Database scripts
-├── scripts/              # Build and deployment scripts
-├── test-site/            # Integration testing site (UI projects)
-├── jest.config.js        # Test configuration
-├── .babelrc              # Transpiler configuration
-└── package.json          # Project dependencies
-```
-
-## 🔧 Core Workflows
-
-### For Project Owners (Humans)
-
-1. **Create a plan**: `npm run plan:generate "Your project description"`
-2. **Review and approve**: Claude creates `PROJECT-PLAN.json`
-3. **Lock the plan**: `npm run plan:init`
-4. **Start a task**: `npm run task:start TASK-001`
-5. **Monitor progress**: `npm run task:status`
-6. **Complete task**: `npm run task:done TASK-001`
-
-### For AI Agents (Claude Code)
-
-1. **Read task requirements**: `.claude/plans/*/tasks/TASK-XXX.json`
-2. **Write code** in `Agent/` directory
-3. **Write tests** with real assertions
-4. **Run tests**: `npm test` (must pass)
-5. **Commit**: Git hooks validate automatically
-6. **Mark complete**: After all criteria met
-
-## 🧪 Smart Testing
-
-**Problem**: Large codebases with 43,000+ lines take too long to test on every commit.
-
-**Solution**: Git hooks test ONLY changed files:
-
-- Detects staged files
-- Maps source files to test files
-- Runs related tests only
-- Manual `npm test` still runs full suite
-
-```bash
-# During git commit (fast - changed files only)
-git commit -m "Fix bug"
-# → Tests 3 files in 2 seconds
-
-# Manual full test suite (slower - all files)
-npm test
-# → Tests 500 files in 45 seconds
-```
-
-## 🎨 UI Component Workflow
-
-Every UI component requires 3 files:
-
-1. **Component**: `Agent/src/components/Button.jsx`
-2. **Test**: `Agent/tests/components/Button.test.jsx`
-3. **Integration**: `test-site/src/components/Button.jsx`
-
-Git hooks BLOCK commits missing any of these files.
-
-## 🔗 GitHub Integration (Optional)
-
-**Automatically sync tasks with GitHub Issues for team collaboration and PR workflows.**
-
-### Features
-
-- **Auto-Create Issues**: When tasks start, GitHub issues are created automatically
-- **Auto-Update Status**: Task status changes sync to GitHub issue labels
-- **Auto-Close on Merge**: Issues close when PRs merge to main branch
-- **Graceful Degradation**: System works fully without GitHub (100% optional)
-
-### Quick Setup
-
-```bash
-# 1. Create GitHub Personal Access Token
-# Go to: https://github.com/settings/tokens
-# Scopes needed: repo
-
-# 2. Configure locally
-cat > .claude/settings.local.json << 'EOF'
-{
-  "github": {
-    "enabled": true,
-    "token": "ghp_your_token_here",
-    "owner": "your-username",
-    "repo": "your-repo-name"
-  }
-}
-EOF
-
-# 3. Start using tasks - GitHub issues created automatically
-npm run task:start TASK-001
-# ✓ Created GitHub issue #123
-```
-
-### PR Workflow (Recommended)
-
-Enable branch protection on GitHub to require pull requests:
-
-```bash
-# Create feature branch
-git checkout -b feature/task-001
-
-# Work on task
-npm run task:start TASK-001
-# ✓ Created GitHub issue #123
-
-# Make changes, test, commit
-npm test
-git commit -m "[TASK-001] Implement feature"
-git push -u origin feature/task-001
-
-# Create PR
-gh pr create --title "[TASK-001] Implement feature" --body "Closes #123"
-
-# After approval and merge
-# → Post-merge hook automatically closes issue #123
-```
-
-### Configuration Options
-
-```json
-{
-  "github": {
-    "enabled": true,      // Enable GitHub integration
-    "autoCreate": true,   // Auto-create issues on task start
-    "autoUpdate": true,   // Auto-update issue status
-    "autoClose": true     // Auto-close on merge to main
-  }
-}
-```
-
-### Documentation
-
-- **[GitHub Integration Guide](docs/github-integration.md)** - Complete setup and usage
-- **[Branch Protection Setup](docs/github-setup.md)** - Configure PR-only workflow
-
-### Why Use GitHub Integration?
-
-- **Team Visibility**: Stakeholders see progress via GitHub Issues
-- **PR Workflow**: Enforce code review before merging
-- **Audit Trail**: Track what was done and when
-- **Auto-Close**: Issues close automatically when merged
-- **Optional**: System works 100% without GitHub
-
-## 📖 Examples
-
-See [examples/](examples/) directory for complete project examples:
-
-- **React Todo App** - Full-featured todo application
-- **Vue Dashboard** - Analytics dashboard with charts
-- **Angular Forms** - Complex form validation
-- **Svelte Portfolio** - Personal portfolio site
-
-## 🤝 Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-### Development Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/agentic15/claude-zen.git
-cd claude-zen
-
-# Install dependencies
-npm install
-
-# Run tests
-npm test
-
-# Build package
-npm run build
-```
-
-## 🔐 Security
-
-For security vulnerabilities, please email security@agentic15.com
-
-See [SECURITY.md](SECURITY.md) for our security policy.
-
-## 📄 License
-
-Copyright 2024-2025 agentic15.com
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-See [LICENSE](LICENSE) for full text.
-
-## 🏢 About agentic15.com
-
-**agentic15.com** is a software development company specializing in AI-assisted development tools and frameworks.
-
-- **Website**: https://agentic15.com
-- **Documentation**: https://docs.agentic15.com
-- **GitHub**: https://github.com/agentic15
-- **Twitter**: https://twitter.com/agentic15
-- **Email**: hello@agentic15.com
+Task-driven development framework for Claude Code with automated testing, commits, and pull requests.
 
 ---
 
-**"Code with Intelligence, Ship with Confidence"** - agentic15.com
+## Quick Start
+
+```bash
+# Create project
+npx @agentic15.com/agentic15-claude-zen my-project
+cd my-project
+
+# Setup GitHub
+npx agentic15 auth
+
+# Start building
+npx agentic15 plan "Build a todo app"
+```
+
+**See [WORKFLOWS.md](WORKFLOWS.md) for complete step-by-step workflows with diagrams.**
+
+---
+
+## What You Get
+
+### Human Commands (5 total)
+- `npx agentic15 plan` - Generate and lock plans
+- `npx agentic15 task next` - Start next task
+- `npx agentic15 commit` - Test + commit + push + PR
+- `npx agentic15 status` - Check progress
+- `npm test` - Run tests
+
+### Claude Writes Code
+- Reads task requirements from `.claude/plans/`
+- Writes code in `Agent/src/`
+- Writes tests in `Agent/tests/`
+- That's it - no git commands, no CLI
+
+### CLI Automates Everything Else
+- Creates feature branches (`feature/task-001`)
+- Generates commit messages (`[TASK-001] Task title`)
+- Pushes to GitHub
+- Creates pull requests
+- Updates GitHub issues
+
+---
+
+## Complete Workflow (9 Steps)
+
+```mermaid
+graph TD
+    A[npx agentic15 plan description] --> B[Tell Claude: Create plan]
+    B --> C[npx agentic15 plan]
+    C --> D[npx agentic15 task next]
+    D --> E[Tell Claude: Write code]
+    E --> F[npm test]
+    F --> G{Pass?}
+    G -->|No| E
+    G -->|Yes| H[npx agentic15 commit]
+    H --> I[Merge PR on GitHub]
+    I --> J{More?}
+    J -->|Yes| D
+    J -->|No| K[Done]
+```
+
+1. `npx agentic15 plan "Build feature"`
+2. Tell Claude: "Create the project plan"
+3. `npx agentic15 plan`
+4. `npx agentic15 task next`
+5. Tell Claude: "Write code for TASK-001"
+6. `npm test`
+7. `npx agentic15 commit`
+8. Merge PR on GitHub
+9. Repeat 4-8 for each task
+
+**See [WORKFLOWS.md](WORKFLOWS.md) for UI testing and bug fix workflows.**
+
+---
+
+## Visual Testing (Optional)
+
+UI projects get automated visual regression testing:
+
+```bash
+# Setup (first time)
+npm install --save-dev @playwright/test
+npx playwright install chromium
+
+# Test UI
+npx playwright test
+
+# If tests fail
+node .claude/hooks/post-visual-test.js
+# Tell Claude: "Read visual test report and fix"
+# Repeat until passing
+```
+
+Claude sees screenshots and fixes UI issues automatically.
+
+---
+
+## Project Structure
+
+```
+my-project/
+├── .claude/              # Framework config
+│   ├── plans/            # Project plans and tasks
+│   ├── hooks/            # Automation hooks
+│   └── settings.json     # Claude permissions
+├── Agent/                # Your workspace
+│   ├── src/              # Source code
+│   └── tests/            # Test files
+├── package.json
+└── README.md
+```
+
+---
+
+## Clear Responsibilities
+
+| Who | Does What |
+|-----|-----------|
+| **Human** | Runs `npx agentic15` commands<br>Runs `npm test`<br>Merges PRs on GitHub |
+| **Claude** | Reads task files<br>Writes code in `Agent/`<br>Writes tests<br>Fixes bugs |
+| **CLI** | Creates branches<br>Generates commits<br>Pushes to GitHub<br>Creates PRs<br>Updates issues |
+
+---
+
+## Features
+
+✅ **Zero Config** - Just provide GitHub token once
+✅ **Auto-Generated Commits** - `[TASK-001] Task title` format
+✅ **Feature Branch Workflow** - PRs required, no direct-to-main
+✅ **Visual Testing Feedback** - Claude sees screenshots and fixes UI
+✅ **Framework Agnostic** - React, Vue, Angular, Svelte, etc.
+✅ **GitHub Integration** - Auto-creates issues and PRs
+
+---
+
+## Documentation
+
+- **[WORKFLOWS.md](WORKFLOWS.md)** - Complete workflows with mermaid diagrams
+- **[CHANGELOG.md](CHANGELOG.md)** - Version history and release notes
+
+---
+
+## Requirements
+
+- Node.js 18+
+- Git installed
+- GitHub account (for PR workflow)
+- GitHub CLI (`gh`) for PR creation
+
+---
+
+## Contributing
+
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+---
+
+## License
+
+Copyright 2024-2025 agentic15.com
+
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for full text.
+
+---
+
+## Support
+
+- **Issues**: https://github.com/agentic15/claude-zen/issues
+- **Email**: support@agentic15.com
+- **Website**: https://agentic15.com
+
+---
+
+**"AI-Assisted Development That Just Works"**
