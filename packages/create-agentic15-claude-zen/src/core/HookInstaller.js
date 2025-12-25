@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-import { writeFileSync } from 'fs';
-import { join } from 'path';
+import { writeFileSync, readFileSync, existsSync, chmodSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 /**
  * HookInstaller - Installs git hooks
@@ -32,6 +33,7 @@ export class HookInstaller {
     console.log('\n🔗 Setting up Git hooks...');
     try {
       const gitHooksDir = join(targetDir, '.git', 'hooks');
+      const claudeHooksDir = join(targetDir, '.claude', 'hooks');
 
       // Create pre-commit hook (reminder that hooks run via Claude Code)
       const preCommitHook = `#!/bin/sh
@@ -45,7 +47,22 @@ exit 0
 `;
 
       writeFileSync(join(gitHooksDir, 'pre-commit'), preCommitHook, { mode: 0o755 });
-      console.log('✅ Git hooks configured');
+
+      // Install post-merge hook for GitHub issue auto-close
+      const postMergeSource = join(claudeHooksDir, 'post-merge.js');
+      if (existsSync(postMergeSource)) {
+        const postMergeContent = readFileSync(postMergeSource, 'utf8');
+        const postMergeHook = join(gitHooksDir, 'post-merge');
+        writeFileSync(postMergeHook, postMergeContent, { mode: 0o755 });
+        try {
+          chmodSync(postMergeHook, 0o755);
+        } catch (chmodError) {
+          // chmod might fail on some systems, but file should still be executable
+        }
+        console.log('✅ Git hooks configured (including post-merge for GitHub integration)');
+      } else {
+        console.log('✅ Git hooks configured');
+      }
     } catch (error) {
       console.log('⚠️  Warning: Git hooks setup failed');
       console.log(`   Error: ${error.message}`);
