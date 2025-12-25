@@ -251,12 +251,75 @@ Closes #45"
 # Push to your fork
 git push origin feature/your-feature-name
 
-# Create Pull Request on GitHub
+# Create Pull Request on GitHub using gh CLI
+gh pr create \
+  --title "[CATEGORY] Brief description" \
+  --body "Detailed description
+
+## Type of Change
+- [x] Bug fix / New feature / Documentation update
+
+## Related Issues
+Fixes #123
+
+## Testing
+- [x] Unit tests added
+- [x] All tests pass
+- [x] Manual testing completed
+
+## Checklist
+- [x] Code follows style guide
+- [x] Documentation updated
+- [x] Copyright headers added"
+
+# Or create PR via GitHub web interface
 # - Use descriptive title
 # - Reference related issues
 # - Describe changes and rationale
 # - Add screenshots if UI changes
 ```
+
+### 6. GitHub Integration Workflow (Optional)
+
+**If the repository has GitHub Issues integration enabled, the workflow changes slightly:**
+
+```bash
+# 1. Create feature branch
+git checkout -b feature/add-authentication
+
+# 2. Start working on associated task (creates GitHub issue automatically)
+npm run task:start TASK-001
+# ✓ Created GitHub issue #42
+
+# 3. Make changes and commit
+# ... write code, tests, docs ...
+npm test
+git commit -m "[TASK-001] Add authentication feature"
+
+# 4. Push feature branch
+git push origin feature/add-authentication
+
+# 5. Create PR referencing the GitHub issue
+gh pr create --title "[TASK-001] Add authentication" --body "Closes #42"
+
+# 6. After PR review and approval, merge to main
+# The post-merge hook automatically closes issue #42
+
+# 7. Mark task as complete
+npm run task:done TASK-001
+# ✓ Updated GitHub issue #42 to completed
+```
+
+**Benefits of GitHub integration:**
+- Auto-creates issues when tasks start
+- Syncs task status to GitHub issue labels
+- Auto-closes issues when PRs merge to main
+- Provides team visibility and audit trail
+- 100% optional - framework works without it
+
+**See documentation:**
+- [GitHub Integration Guide](docs/github-integration.md)
+- [Branch Protection Setup](docs/github-setup.md)
 
 ---
 

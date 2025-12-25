@@ -142,6 +142,125 @@ git commit -m "[TASK-XXX] Add Button component with tests"
 - Visual regression baseline
 - Component showcase
 
+## 🔗 GITHUB INTEGRATION (Optional)
+
+**Automatically sync tasks with GitHub Issues for team collaboration and PR workflows.**
+
+### Quick Setup (3 Steps)
+
+**1. Create GitHub Personal Access Token**
+- Go to: https://github.com/settings/tokens
+- Click "Generate new token (classic)"
+- Scopes needed: `repo` (Full control of private repositories)
+- Copy the token (starts with `ghp_` or `github_pat_`)
+
+**2. Configure Locally**
+```bash
+# Create local settings file (gitignored)
+cat > .claude/settings.local.json << 'EOF'
+{
+  "github": {
+    "enabled": true,
+    "autoCreate": true,
+    "autoUpdate": true,
+    "autoClose": true,
+    "token": "YOUR_GITHUB_TOKEN_HERE",
+    "owner": "your-github-username",
+    "repo": "your-repo-name"
+  }
+}
+EOF
+```
+
+**3. Verify Configuration**
+```bash
+# Check if GitHub integration is active
+cat .claude/settings.local.json
+```
+
+### What Gets Automated
+
+✅ **Auto-Create Issues** - When you run `npm run task:start TASK-001`, creates GitHub issue #123
+✅ **Auto-Update Status** - When you run `npm run task:done TASK-001`, updates issue labels
+✅ **Auto-Close on Merge** - When PR merges to main, closes associated issues
+
+### Configuration Options
+
+**Disable Specific Features:**
+```json
+{
+  "github": {
+    "enabled": true,
+    "autoCreate": true,    // Create issues on task start
+    "autoUpdate": false,   // Don't update issues (manual control)
+    "autoClose": true      // Close issues when merged
+  }
+}
+```
+
+**Completely Disable GitHub:**
+```json
+{
+  "github": {
+    "enabled": false
+  }
+}
+```
+
+### Environment Variables (Alternative)
+
+For CI/CD or temporary use:
+```bash
+export GITHUB_TOKEN="ghp_your_token_here"
+export GITHUB_OWNER="your-username"
+export GITHUB_REPO="your-repo-name"
+```
+
+Priority: Environment Variables > settings.local.json > settings.json > auto-detect
+
+### PR Workflow (Recommended)
+
+**Enable branch protection to require PRs:**
+
+1. GitHub → Settings → Branches → Add rule
+2. Branch name: `main`
+3. ✅ Require pull request before merging
+4. ✅ Require approvals: 1
+5. ✅ Require status checks to pass
+6. Save changes
+
+**Modified Workflow with PRs:**
+```bash
+# Create feature branch
+git checkout -b feature/task-001
+
+# Work on task
+npm run task:start TASK-001
+# ... make changes ...
+npm test
+git commit -m "[TASK-001] Description"
+git push -u origin feature/task-001
+
+# Create PR
+gh pr create --title "[TASK-001] Description" --body "Closes #123"
+
+# After approval and merge to main
+# Post-merge hook automatically closes GitHub issue #123
+```
+
+### More Information
+
+📖 **Full Guide:** See `docs/github-integration.md`
+📖 **Branch Protection:** See `docs/github-setup.md`
+
+### Graceful Degradation
+
+**GitHub integration is OPTIONAL:**
+- System works fully without GitHub
+- If token missing/invalid, logs warning and continues
+- Network failures don't block task workflow
+- All GitHub operations fail gracefully
+
 ## 🚨 HARD RULES (Enforced by Hooks)
 
 1. **NO work without active task**
