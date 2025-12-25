@@ -1,76 +1,73 @@
 # {{PROJECT_NAME}}
 
-Project initialized with [Agentic15 Claude Code Framework](https://github.com/ajayhanda/agentic15-claude-zen)
+Created with [Agentic15 Claude Zen](https://github.com/agentic15/claude-zen)
 
-## Structured Development Workflow
+## Quick Start
 
-This project uses the Claude Code enforcement framework for task-based development with built-in guardrails.
+```bash
+# Setup authentication
+npx agentic15 auth
 
-### Quick Start
+# Create plan
+npx agentic15 plan "Build your feature"
 
-1. **Create a project plan:**
-   ```bash
-   npm run plan:create
-   ```
+# Tell Claude to create plan, then lock it
+npx agentic15 plan
 
-2. **Initialize the plan:**
-   ```bash
-   npm run plan:init
-   ```
+# Start first task
+npx agentic15 task next
 
-3. **Start the next available task (recommended):**
-   ```bash
-   npm run task:next
-   ```
+# Tell Claude to write code
 
-   Or manually start a specific task:
-   ```bash
-   npm run task:start TASK-001
-   ```
+# Test and commit
+npm test
+npx agentic15 commit
 
-4. **Check task status:**
-   ```bash
-   npm run task:status
-   ```
+# Merge PR on GitHub
 
-5. **Complete a task:**
-   ```bash
-   npm run task:done TASK-001
-   ```
+# Repeat
+npx agentic15 task next
+```
 
-### Available Commands
+## Commands
 
-- `npm run help` - Show all available commands
-- `npm run plan:create` - Create a new project plan
-- `npm run plan:init` - Initialize and lock the plan
-- `npm run plan:manager` - Manage plans (switch, archive, delete)
-- `npm run plan:amend` - Amend locked plan with audit trail
-- `npm run task:next` - Start next available task (auto-picks based on dependencies)
-- `npm run task:start TASK-XXX` - Start a specific task
-- `npm run task:done TASK-XXX` - Complete a task
-- `npm run task:status` - View task status
-- `npm run task:merge TASK-XXX` - Merge completed task to main
+- `npx agentic15 auth` - Setup GitHub authentication
+- `npx agentic15 plan "description"` - Generate plan requirements
+- `npx agentic15 plan` - Lock plan and create tasks
+- `npx agentic15 task next` - Start next task
+- `npx agentic15 task start TASK-XXX` - Start specific task
+- `npx agentic15 commit` - Test, commit, push, create PR
+- `npx agentic15 status` - Check progress
+- `npm test` - Run tests
 
-### Framework Features
+## Workflow
 
-- **Task-Based Development** - Structured workflow with dependencies
-- **Git Workflow Enforcement** - Automatic branch management
-- **Pre-commit Hooks** - Code quality and test validation
-- **Project Plan Management** - Hierarchical plans with milestones
-- **Task Tracking** - Automatic progress tracking and time estimates
+1. **Plan** → `npx agentic15 plan "description"`
+2. **Create** → Tell Claude: "Create the project plan"
+3. **Lock** → `npx agentic15 plan`
+4. **Task** → `npx agentic15 task next`
+5. **Code** → Tell Claude: "Write code for TASK-XXX"
+6. **Test** → `npm test`
+7. **Ship** → `npx agentic15 commit`
+8. **Repeat** → Steps 4-7 for each task
 
-### Documentation
+## Directory Structure
 
-Configuration files are in [.claude/](.claude/):
-- `CLAUDE.md` - Complete framework documentation
-- `settings.json` - Permissions and hook configuration
-- `PLAN-SCHEMA.json` - Project plan schema
-- `PROJECT-PLAN-TEMPLATE.json` - Plan template
+```
+.
+├── .claude/              # Framework config
+│   ├── plans/            # Project plans and tasks
+│   └── settings.json     # Claude permissions
+├── Agent/                # Your code
+│   ├── src/              # Source files
+│   └── tests/            # Test files
+└── package.json
+```
 
-### Framework Updates
+## Documentation
 
-See the [agentic15-claude-zen CHANGELOG](https://github.com/ajayhanda/agentic15-claude-zen/blob/main/create-agentic15-claude-zen/CHANGELOG.md) for framework version history and breaking changes.
+See [WORKFLOWS.md](https://github.com/agentic15/claude-zen/blob/main/WORKFLOWS.md) for complete workflows with diagrams.
 
-## Development
+## Your Code
 
-Your code goes here!
+Write your source code in `Agent/src/` and tests in `Agent/tests/`.
