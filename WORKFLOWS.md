@@ -14,10 +14,10 @@ npx agentic15 auth
 
 ```mermaid
 graph TD
-    A[npx agentic15 plan "description"] --> B[Tell Claude: Create plan]
+    A[npx agentic15 plan description] --> B[Tell Claude: Create plan]
     B --> C[npx agentic15 plan]
     C --> D[npx agentic15 task next]
-    D --> E[Tell Claude: Write code for TASK-XXX]
+    D --> E[Tell Claude: Write code]
     E --> F[npm test]
     F --> G{Tests Pass?}
     G -->|No| E
@@ -29,15 +29,15 @@ graph TD
 ```
 
 **Commands:**
-1. `npx agentic15 plan "Build todo app"` - Generate requirements
+1. `npx agentic15 plan "Build todo app"`
 2. Tell Claude: "Create the project plan"
-3. `npx agentic15 plan` - Lock plan, create tasks
-4. `npx agentic15 task next` - Start first task
+3. `npx agentic15 plan`
+4. `npx agentic15 task next`
 5. Tell Claude: "Write code for TASK-001"
-6. `npm test` - Verify tests pass
-7. `npx agentic15 commit` - Commit, push, create PR
+6. `npm test`
+7. `npx agentic15 commit`
 8. Merge PR on GitHub
-9. Repeat steps 4-8 for each task
+9. Repeat 4-8 for each task
 
 ---
 
@@ -60,16 +60,15 @@ graph TD
 ```
 
 **Commands:**
-1. `npx agentic15 task next` - Start UI task
+1. `npx agentic15 task next`
 2. Tell Claude: "Write code for TASK-XXX"
-3. `npm test` - Run unit tests
-4. `npx playwright test` - Run visual tests
-5. If tests fail:
-   - `node .claude/hooks/post-visual-test.js` - Process failures
-   - Tell Claude: "Read visual test report and fix"
-   - Repeat step 4
-6. `npx agentic15 commit` - Commit when passing
-7. Merge PR on GitHub
+3. `npm test`
+4. `npx playwright test`
+5. If fail: `node .claude/hooks/post-visual-test.js`
+6. Tell Claude: "Read visual test report and fix"
+7. Repeat 4-6 until pass
+8. `npx agentic15 commit`
+9. Merge PR on GitHub
 
 ---
 
@@ -86,10 +85,10 @@ graph TD
 ```
 
 **Commands:**
-1. `npx agentic15 task start TASK-007` - Start bug fix task
+1. `npx agentic15 task start TASK-007`
 2. Tell Claude: "Fix the bug in TASK-007"
-3. `npm test` - Verify fix
-4. `npx agentic15 commit` - Commit fix
+3. `npm test`
+4. `npx agentic15 commit`
 5. Merge PR on GitHub
 
 ---
