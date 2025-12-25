@@ -2,18 +2,16 @@
   "name": "@agentic15.com/agentic15-claude-zen",
   "version": "2.0.7",
   "description": "Structured AI-assisted development framework for Claude Code with enforced quality standards",
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "bin": {
     "agentic15-claude-zen": "./bin/create-agentic15-claude-zen.js",
     "agentic15": "./bin/agentic15.js"
   },
   "type": "module",
   "scripts": {
-    "build": "node esbuild.config.js",
     "test": "node test/integration.test.js",
     "test:e2e": "node test/e2e-verification.test.js",
-    "test:site": "node test/verify-test-site.js",
-    "prepublishOnly": "npm run build"
+    "test:site": "node test/verify-test-site.js"
   },
   "keywords": [
     "agentic15",
@@ -44,7 +42,6 @@
   "files": [
     "bin/",
     "src/",
-    "dist/",
     "templates/",
     "templates/.gitignore",
     "README.md",
