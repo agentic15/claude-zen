@@ -146,6 +146,91 @@ Every UI component requires 3 files:
 
 Git hooks BLOCK commits missing any of these files.
 
+## 🔗 GitHub Integration (Optional)
+
+**Automatically sync tasks with GitHub Issues for team collaboration and PR workflows.**
+
+### Features
+
+- **Auto-Create Issues**: When tasks start, GitHub issues are created automatically
+- **Auto-Update Status**: Task status changes sync to GitHub issue labels
+- **Auto-Close on Merge**: Issues close when PRs merge to main branch
+- **Graceful Degradation**: System works fully without GitHub (100% optional)
+
+### Quick Setup
+
+```bash
+# 1. Create GitHub Personal Access Token
+# Go to: https://github.com/settings/tokens
+# Scopes needed: repo
+
+# 2. Configure locally
+cat > .claude/settings.local.json << 'EOF'
+{
+  "github": {
+    "enabled": true,
+    "token": "ghp_your_token_here",
+    "owner": "your-username",
+    "repo": "your-repo-name"
+  }
+}
+EOF
+
+# 3. Start using tasks - GitHub issues created automatically
+npm run task:start TASK-001
+# ✓ Created GitHub issue #123
+```
+
+### PR Workflow (Recommended)
+
+Enable branch protection on GitHub to require pull requests:
+
+```bash
+# Create feature branch
+git checkout -b feature/task-001
+
+# Work on task
+npm run task:start TASK-001
+# ✓ Created GitHub issue #123
+
+# Make changes, test, commit
+npm test
+git commit -m "[TASK-001] Implement feature"
+git push -u origin feature/task-001
+
+# Create PR
+gh pr create --title "[TASK-001] Implement feature" --body "Closes #123"
+
+# After approval and merge
+# → Post-merge hook automatically closes issue #123
+```
+
+### Configuration Options
+
+```json
+{
+  "github": {
+    "enabled": true,      // Enable GitHub integration
+    "autoCreate": true,   // Auto-create issues on task start
+    "autoUpdate": true,   // Auto-update issue status
+    "autoClose": true     // Auto-close on merge to main
+  }
+}
+```
+
+### Documentation
+
+- **[GitHub Integration Guide](docs/github-integration.md)** - Complete setup and usage
+- **[Branch Protection Setup](docs/github-setup.md)** - Configure PR-only workflow
+
+### Why Use GitHub Integration?
+
+- **Team Visibility**: Stakeholders see progress via GitHub Issues
+- **PR Workflow**: Enforce code review before merging
+- **Audit Trail**: Track what was done and when
+- **Auto-Close**: Issues close automatically when merged
+- **Optional**: System works 100% without GitHub
+
 ## 📖 Examples
 
 See [examples/](examples/) directory for complete project examples:

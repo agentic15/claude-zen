@@ -1,0 +1,11 @@
+{
+  "github": {
+    "enabled": true,
+    "autoCreate": true,
+    "autoUpdate": true,
+    "autoClose": true,
+    "token": "ghp_YOUR_GITHUB_TOKEN_HERE",
+    "owner": "your-github-username",
+    "repo": "your-repo-name"
+  }
+}

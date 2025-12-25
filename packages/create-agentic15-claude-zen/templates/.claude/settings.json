@@ -72,6 +72,16 @@
     "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "8192",
     "DISABLE_NON_ESSENTIAL_MODEL_CALLS": "1"
   },
+  "github": {
+    "enabled": true,
+    "autoCreate": true,
+    "autoUpdate": true,
+    "autoClose": true,
+    "token": null,
+    "owner": null,
+    "repo": null,
+    "comment": "GitHub Issues integration. Configure in .claude/settings.local.json or via environment variables (GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO). Owner/repo auto-detected from git remote if not set."
+  },
   "testing": {
     "ui": {
       "strictMode": true,
