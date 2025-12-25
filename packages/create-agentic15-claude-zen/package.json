@@ -1,10 +1,11 @@
 {
   "name": "@agentic15.com/agentic15-claude-zen",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "Structured AI-assisted development framework for Claude Code with enforced quality standards",
   "main": "dist/index.js",
   "bin": {
-    "agentic15-claude-zen": "./bin/create-agentic15-claude-zen.js"
+    "agentic15-claude-zen": "./bin/create-agentic15-claude-zen.js",
+    "agentic15": "./bin/agentic15.js"
   },
   "type": "module",
   "scripts": {
@@ -46,7 +47,6 @@
     "dist/",
     "templates/",
     "templates/.gitignore",
-    "docs/",
     "README.md",
     "CHANGELOG.md",
     "LICENSE"
@@ -55,7 +55,8 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@octokit/rest": "^20.0.2"
+    "@octokit/rest": "^20.0.2",
+    "commander": "^12.1.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.57.0",

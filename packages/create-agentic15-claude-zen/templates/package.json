@@ -4,20 +4,7 @@
   "description": "Project with Claude Code structured development framework",
   "type": "commonjs",
   "scripts": {
-    "test": "jest",
-    "help": "node node_modules/.agentic15-claude-zen/scripts/help.js",
-    "plan:generate": "node node_modules/.agentic15-claude-zen/scripts/plan-generate.js",
-    "plan:create": "node node_modules/.agentic15-claude-zen/scripts/plan-create.js",
-    "plan:init": "node node_modules/.agentic15-claude-zen/scripts/plan-init.js",
-    "plan:manager": "node node_modules/.agentic15-claude-zen/scripts/plan-manager.js",
-    "plan:amend": "node node_modules/.agentic15-claude-zen/scripts/plan-amend.js",
-    "plan:help": "node node_modules/.agentic15-claude-zen/scripts/plan-help.js",
-    "task:start": "node node_modules/.agentic15-claude-zen/scripts/task-start.js",
-    "task:done": "node node_modules/.agentic15-claude-zen/scripts/task-done.js",
-    "task:next": "node node_modules/.agentic15-claude-zen/scripts/task-next.js",
-    "task:status": "node node_modules/.agentic15-claude-zen/scripts/task-status.js",
-    "task:merge": "node node_modules/.agentic15-claude-zen/scripts/task-merge.js",
-    "setup:git-hooks": "node node_modules/.agentic15-claude-zen/scripts/setup-git-hooks.js"
+    "test": "jest"
   },
   "keywords": [
     "claude-code",
@@ -25,6 +12,9 @@
     "task-tracking"
   ],
   "license": "MIT",
+  "dependencies": {
+    "@agentic15.com/agentic15-claude-zen": "^2.0.0"
+  },
   "devDependencies": {
     "jest": "^30.2.0",
     "@testing-library/react": "^16.1.0",
@@ -35,6 +25,7 @@
     "babel-jest": "^30.0.0",
     "jest-environment-jsdom": "^30.0.0",
     "prop-types": "^15.8.1",
-    "identity-obj-proxy": "^3.0.0"
+    "identity-obj-proxy": "^3.0.0",
+    "@playwright/test": "^1.41.0"
   }
 }

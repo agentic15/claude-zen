@@ -25,28 +25,34 @@ Install from [npm](https://www.npmjs.com/package/@agentic15.com/agentic15-claude
 ```bash
 # Create a new project
 npx @agentic15.com/agentic15-claude-zen my-project
-
-# Navigate to project
 cd my-project
 
-# Read the post-install guide
-cat .claude/POST-INSTALL.md
+# Configure GitHub
+npx agentic15 auth
 
-# Start developing
-npm run plan:generate "Build a todo app with React"
+# Create your first plan
+npx agentic15 plan "Build a todo app with React"
+
+# That's it! See QUICK-START.md for the complete workflow
 ```
 
 ## 📚 Documentation
 
-Comprehensive documentation is organized by role and use case:
+**NEW v2.0 Workflow Guides:**
 
-- **[Getting Started](docs/getting-started/README.md)** - Installation, configuration, quick start
-- **[User Workflows](docs/workflows/user-workflow.md)** - How humans interact with the framework
-- **[Agent Workflows](docs/workflows/agent-workflow.md)** - How Claude Code operates within the framework
-- **[Plan Management](docs/workflows/plan-management.md)** - Creating, locking, and amending plans
-- **[Task Management](docs/workflows/task-management.md)** - Starting, tracking, and completing tasks
-- **[Test Execution](docs/workflows/test-execution.md)** - Smart testing strategies for all project sizes
-- **[Architecture](docs/architecture/README.md)** - Design principles, SOLID patterns, directory structure
+- **[QUICK-START.md](QUICK-START.md)** - ⚡ One-page cheat sheet with all commands
+- **[WORKFLOW-COMMANDS.md](WORKFLOW-COMMANDS.md)** - 📋 Complete step-by-step workflows with examples
+- **[VISUAL-TESTING-WORKFLOW.md](VISUAL-TESTING-WORKFLOW.md)** - 🎨 UI testing and Claude feedback loop
+
+**Legacy Documentation (v1.x):**
+
+- **[Getting Started](docs/getting-started/README.md)** - Installation, configuration (outdated)
+- **[User Workflows](docs/workflows/user-workflow.md)** - npm run commands (deprecated)
+- **[Agent Workflows](docs/workflows/agent-workflow.md)** - How Claude Code operates
+- **[Plan Management](docs/workflows/plan-management.md)** - Plan structure and schemas
+- **[Task Management](docs/workflows/task-management.md)** - Task lifecycle (outdated)
+- **[Test Execution](docs/workflows/test-execution.md)** - Smart testing strategies
+- **[Architecture](docs/architecture/README.md)** - Design principles, SOLID patterns
 
 ## ✨ Key Features
 
