@@ -59,8 +59,7 @@ export class PlanCommand {
     return new Promise((resolve) => {
       const rl = readline.createInterface({
         input: process.stdin,
-        output: process.stdout,
-        terminal: false
+        output: process.stdout
       });
 
       let lines = [];

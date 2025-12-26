@@ -43,7 +43,14 @@
       "Bash(npx agentic15 status)",
       "Bash(npx agentic15 auth)",
       "Bash(npx agentic15 plan \"Build a simple todo app with add, remove, and list tasks\")",
-      "Bash(npx agentic15:*)"
+      "Bash(npx agentic15:*)",
+      "Bash(dir \"c:\\\\Agentic15\\\\public\\\\agentic15-claude-zen\\\\packages\\\\create-agentic15-claude-zen\\\\templates\" /s /b)",
+      "Bash(git remote add:*)",
+      "Bash(npx --help:*)",
+      "Bash(npx \"@agentic15.com/agentic15-claude-zen\" plan \"Build a simple calculator with add and subtract functions\")",
+      "Bash(npx --package=@agentic15.com/agentic15-claude-zen agentic15:*)",
+      "Bash(./node_modules/.bin/agentic15:*)",
+      "Bash(tar:*)"
     ]
   }
 }

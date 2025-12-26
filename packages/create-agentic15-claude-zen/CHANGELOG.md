@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Copyright 2024-2025 agentic15.com
 
+## [3.0.3] - 2025-12-25
+
+### Summary
+Critical bug fix for interactive requirements mode.
+
+### Fixed
+- Fixed interactive mode not detecting Ctrl+D/Ctrl+Z - removed `terminal: false` from readline configuration to properly detect EOF signals in terminal environments
+
 ## [3.0.2] - 2025-12-25
 
 ### Summary
