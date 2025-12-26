@@ -1,0 +1,223 @@
+{
+  "version": "2.0",
+  "project": {
+    "id": "PROJ-001",
+    "name": "E-commerce Platform",
+    "description": "Full-featured online store with payment processing",
+    "status": "planning",
+    "createdAt": "2025-12-18T00:00:00.000Z",
+    "createdBy": "human",
+    "locked": false,
+    "subprojects": [
+      {
+        "id": "SUB-001",
+        "name": "User Management System",
+        "description": "Authentication, authorization, and user profiles",
+        "status": "pending",
+        "dependencies": [],
+        "milestones": [
+          {
+            "id": "MILE-001",
+            "name": "Core Authentication",
+            "description": "Basic login/logout functionality",
+            "status": "pending",
+            "dependencies": [],
+            "tasks": [
+              {
+                "id": "TASK-001",
+                "title": "Design user database schema",
+                "description": "Create ERD for users, roles, sessions",
+                "status": "pending",
+                "phase": "design",
+                "dependencies": [],
+                "estimatedHours": 4,
+                "completionCriteria": [
+                  "ERD diagram completed",
+                  "Schema reviewed by team",
+                  "Migration scripts ready"
+                ],
+                "artifacts": {
+                  "design": ["./Agent/db/schema/users.sql"],
+                  "code": [],
+                  "tests": [],
+                  "documentation": ["./docs/database-design.md"]
+                }
+              },
+              {
+                "id": "TASK-002",
+                "title": "Implement user registration API",
+                "description": "POST /api/auth/register endpoint",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-001"],
+                "estimatedHours": 6,
+                "completionCriteria": [
+                  "Email validation implemented",
+                  "Password hashing with bcrypt",
+                  "Duplicate email check",
+                  "Returns JWT token"
+                ],
+                "testCases": [
+                  "Valid registration succeeds",
+                  "Invalid email rejected",
+                  "Weak password rejected",
+                  "Duplicate email rejected"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [
+                    "./Agent/src/controllers/authController.js",
+                    "./Agent/src/services/userService.js"
+                  ],
+                  "tests": ["./Agent/tests/auth.test.js"],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-003",
+                "title": "Write unit tests for registration",
+                "description": "Test all registration edge cases",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-002"],
+                "estimatedHours": 3,
+                "completionCriteria": [
+                  "100% code coverage for registration",
+                  "All edge cases tested",
+                  "Integration tests pass"
+                ],
+                "artifacts": {
+                  "code": [],
+                  "tests": [
+                    "./Agent/tests/auth.test.js",
+                    "./Agent/tests/integration/register.test.js"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": "MILE-002",
+            "name": "User Profile Management",
+            "description": "Profile viewing and editing",
+            "status": "pending",
+            "dependencies": ["MILE-001"],
+            "tasks": [
+              {
+                "id": "TASK-004",
+                "title": "Create profile update API",
+                "description": "PATCH /api/users/:id endpoint",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-003"],
+                "estimatedHours": 5,
+                "completionCriteria": [
+                  "Can update name, email, avatar",
+                  "Email uniqueness validated",
+                  "Authorization checked"
+                ],
+                "artifacts": {
+                  "code": ["./Agent/src/controllers/userController.js"],
+                  "tests": ["./Agent/tests/userProfile.test.js"]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "SUB-002",
+        "name": "Product Catalog System",
+        "description": "Product listings, search, and categories",
+        "status": "pending",
+        "dependencies": [],
+        "milestones": [
+          {
+            "id": "MILE-003",
+            "name": "Basic Product CRUD",
+            "description": "Create, read, update, delete products",
+            "status": "pending",
+            "dependencies": [],
+            "tasks": [
+              {
+                "id": "TASK-005",
+                "title": "Design product database schema",
+                "description": "Tables for products, categories, images",
+                "status": "pending",
+                "phase": "design",
+                "dependencies": [],
+                "estimatedHours": 3,
+                "completionCriteria": [
+                  "Schema supports multiple categories",
+                  "Image URLs stored properly",
+                  "Price and inventory tracked"
+                ],
+                "artifacts": {
+                  "design": ["./Agent/db/schema/products.sql"]
+                }
+              },
+              {
+                "id": "TASK-006",
+                "title": "Implement product listing API",
+                "description": "GET /api/products with pagination",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-005"],
+                "estimatedHours": 4,
+                "completionCriteria": [
+                  "Pagination works (limit/offset)",
+                  "Filtering by category",
+                  "Sorting by price, name, date"
+                ],
+                "artifacts": {
+                  "code": ["./Agent/src/controllers/productController.js"],
+                  "tests": ["./Agent/tests/products.test.js"]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "SUB-003",
+        "name": "Shopping Cart & Checkout",
+        "description": "Cart management and order processing",
+        "status": "pending",
+        "dependencies": ["SUB-001", "SUB-002"],
+        "milestones": [
+          {
+            "id": "MILE-004",
+            "name": "Shopping Cart",
+            "description": "Add/remove/update cart items",
+            "status": "pending",
+            "dependencies": ["MILE-001", "MILE-003"],
+            "tasks": [
+              {
+                "id": "TASK-007",
+                "title": "Implement cart management",
+                "description": "Session-based cart for guests, DB for users",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-002", "TASK-006"],
+                "estimatedHours": 8,
+                "completionCriteria": [
+                  "Add items to cart",
+                  "Update quantities",
+                  "Calculate totals",
+                  "Persist cart for logged-in users"
+                ],
+                "artifacts": {
+                  "code": [
+                    "./Agent/src/services/cartService.js",
+                    "./Agent/src/controllers/cartController.js"
+                  ],
+                  "tests": ["./Agent/tests/cart.test.js"]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
