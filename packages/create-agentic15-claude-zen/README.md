@@ -28,6 +28,7 @@ cd my-project
 ```bash
 # Initialize git (if not already done)
 git init
+git branch -M main  # Rename master to main
 git add .
 git commit -m "Initial commit"
 
@@ -51,7 +52,7 @@ cat > /tmp/protection.json << 'EOF'
   "required_pull_request_reviews": {
     "required_approving_review_count": 0
   },
-  "enforce_admins": true,
+  "enforce_admins": false,
   "allow_force_pushes": false,
   "allow_deletions": false,
   "required_status_checks": null,
@@ -77,7 +78,7 @@ $body = @"
   "required_pull_request_reviews": {
     "required_approving_review_count": 0
   },
-  "enforce_admins": true,
+  "enforce_admins": false,
   "allow_force_pushes": false,
   "allow_deletions": false,
   "required_status_checks": null,
@@ -93,25 +94,38 @@ gh api repos/OWNER/REPO -X PATCH -H "Accept: application/vnd.github+json" -f del
 
 Replace `OWNER/REPO` with your GitHub username and repository name.
 
-**Step 5: Launch Claude Code**
 
-Start Claude Code CLI from inside the `my-project` directory. Claude Code MUST be running from inside your project directory to access the framework files.
-
-> **IMPORTANT**: Always launch Claude Code from inside your project directory, not from the parent directory.
-
-**Step 6: Use Framework Commands**
+**Step 5: Use Framework Commands**
 ```bash
 npx agentic15 auth                         # One-time GitHub setup
 npx agentic15 plan                         # Enter interactive mode
 # Type/paste your requirements, press Ctrl+D when done
+```
+
+
+**Step 6: Launch Claude Code in Another Terminal**
+
 # Open another terminal. Make sure that you in your project directory. Launch Claude
+Start Claude Code CLI from inside the `my-project` directory. Claude Code MUST be running from inside your project directory to access the framework files.
 # Ask Claude: "Read the requirements file and generate a task breakdown plan"
+
+
+**Step 7: User Termianl and Not Claude Terminal**
+```
+npx agentic15 plan                         # Generate Task Files and Lock Plan
 npx agentic15 task next                    # Start first task
-# Ask Claude: "Implement this task"
+```
+
+**Step 8: Claude Terminal**
+# Ask Claude: "Implement this Active task"
+
+**Step 9: User Termianl Not Claude Terminal**
+```
 npx agentic15 commit                       # Test, commit, push, PR
 ```
 
-**Step 7: Clean Up Local Branches**
+
+**Step 10: Clean Up Local Branches**
 ```bash
 # If auto-delete is enabled, only clean up local branches
 git branch -d feature/task-001
