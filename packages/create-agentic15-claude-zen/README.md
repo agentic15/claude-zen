@@ -29,12 +29,12 @@ Start Claude Code CLI from inside the `my-project` directory. Claude Code MUST b
 
 **Step 4: Use Framework Commands**
 ```bash
-npx agentic15 auth                    # One-time GitHub setup
-npx agentic15 plan "Build a todo app" # Create requirements file
-# Ask Claude: "Generate a plan from the requirements"
-npx agentic15 task next               # Start first task
+npx agentic15 auth                         # One-time GitHub setup
+npx agentic15 plan "Build a todo app"      # Save requirements
+# Ask Claude: "Read the requirements and generate a task breakdown plan"
+npx agentic15 task next                    # Start first task
 # Ask Claude: "Implement this task"
-npx agentic15 commit                  # Test, commit, push, PR
+npx agentic15 commit                       # Test, commit, push, PR
 ```
 
 > **IMPORTANT**: Always launch Claude Code from inside your project directory, not from the parent directory. The framework relies on `.claude/` configuration files that must be accessible from the working directory.
