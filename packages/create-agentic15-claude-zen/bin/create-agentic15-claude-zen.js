@@ -176,7 +176,7 @@ async function main() {
 
   // Import and run initialization
   try {
-    const { initializeProject } = await import('../dist/index.js');
+    const { initializeProject } = await import('../src/index.js');
     await initializeProject(projectName, targetDir, { initGit, installDeps });
 
     console.log('\n✅ Project created successfully!\n');

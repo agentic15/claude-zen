@@ -28,7 +28,8 @@ const __dirname = dirname(__filename);
  */
 export class TemplateManager {
   constructor() {
-    this.templatesDir = join(__dirname, '..', 'templates');
+    // From src/core/, go up two levels to package root, then into templates
+    this.templatesDir = join(__dirname, '..', '..', 'templates');
     this.distDir = join(__dirname, '.');
   }
 

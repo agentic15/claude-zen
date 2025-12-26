@@ -53,25 +53,22 @@ export class ProjectInitializer {
     // Step 1: Copy templates
     await this.templateManager.copyTemplates(projectName, targetDir);
 
-    // Step 2: Extract bundled scripts and hooks
-    await this.templateManager.extractBundledFiles(targetDir);
-
-    // Step 3: Initialize git repository
+    // Step 2: Initialize git repository
     if (initGit) {
       await this.gitInitializer.initialize(targetDir);
     }
 
-    // Step 4: Install dependencies
+    // Step 3: Install dependencies
     if (installDeps) {
       await this.dependencyInstaller.install(targetDir);
     }
 
-    // Step 5: Setup git hooks
+    // Step 4: Setup git hooks
     if (initGit) {
       await this.hookInstaller.install(targetDir);
     }
 
-    // Step 6: Display onboarding instructions
+    // Step 5: Display onboarding instructions
     this.displayOnboarding();
   }
 
@@ -80,26 +77,25 @@ export class ProjectInitializer {
    */
   displayOnboarding() {
     console.log('\n' + '═'.repeat(70));
-    console.log('🎯 CRITICAL: NEXT STEP FOR CLAUDE CODE');
+    console.log('🎯 PROJECT CREATED SUCCESSFULLY');
     console.log('═'.repeat(70));
     console.log('\n📖 READ THIS FILE: .claude/POST-INSTALL.md');
-    console.log('\n   This file contains the COMPLETE 6-step setup workflow.');
-    console.log('   Single clear path - no confusion or multiple options.\n');
-    console.log('🚀 QUICK START (6 steps):');
-    console.log('  1. npm run plan:generate "description"');
-    console.log('  2. Claude creates PROJECT-PLAN.json');
-    console.log('  3. echo "plan-001-generated" > .claude/ACTIVE-PLAN');
-    console.log('  4. npm run plan:init');
-    console.log('  5. npm run task:start TASK-001');
-    console.log('  6. Work on task (9-step workflow in POST-INSTALL.md)');
+    console.log('\n   Complete workflow documentation with examples.\n');
+    console.log('🚀 QUICK START:');
+    console.log('  1. npx agentic15 auth');
+    console.log('  2. npx agentic15 plan "Your project description"');
+    console.log('  3. Tell Claude: "Create the project plan"');
+    console.log('  4. npx agentic15 plan (locks the plan)');
+    console.log('  5. npx agentic15 task next');
+    console.log('  6. Tell Claude: "Write code for TASK-001"');
+    console.log('  7. npx agentic15 commit');
     console.log('\n📂 Your Workspace:');
-    console.log('  ./Agent/     - Edit your source code here');
-    console.log('  ./scripts/   - Edit your scripts here');
-    console.log('  ./.claude/   - Framework files (DO NOT EDIT)');
-    console.log('\n⚠️  Work on main branch only - NO feature branches');
-    console.log('⚠️  Hooks enforce rules - violations will be BLOCKED');
+    console.log('  ./Agent/src/     - Your source code');
+    console.log('  ./Agent/tests/   - Your test files');
+    console.log('  ./test-site/     - Test site for visual verification');
+    console.log('  ./.claude/       - Framework files (auto-managed)');
     console.log('\n' + '═'.repeat(70));
-    console.log('✅ Setup complete! Read .claude/POST-INSTALL.md to continue.');
+    console.log('✅ Setup complete! See .claude/POST-INSTALL.md for details.');
     console.log('═'.repeat(70) + '\n');
   }
 }

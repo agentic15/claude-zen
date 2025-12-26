@@ -152,7 +152,9 @@ export class TaskCommand {
       const taskPath = this.getTaskPath(task.id);
       const taskData = JSON.parse(readFileSync(taskPath, 'utf-8'));
 
-      const { title, body, labels } = TaskIssueMapper.mapTaskToIssue(taskData);
+      const title = TaskIssueMapper.taskToIssueTitle(taskData);
+      const body = TaskIssueMapper.taskToIssueBody(taskData);
+      const labels = TaskIssueMapper.taskStatusToLabels(taskData.status || 'pending', taskData.phase);
       const issueNumber = await client.createIssue(title, body, labels);
 
       if (issueNumber) {
