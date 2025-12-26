@@ -18,16 +18,27 @@ npx @agentic15.com/agentic15-claude-zen my-project
 npx "@agentic15.com/agentic15-claude-zen" my-project
 ```
 
-**Step 2: Use CLI Inside Project**
+**Step 2: Navigate Into Project**
 ```bash
 cd my-project
+```
+
+**Step 3: Launch Claude Code from Inside Project Directory**
+
+Start Claude Code CLI from inside the `my-project` directory. Claude Code MUST be running from inside your project directory to access the framework files.
+
+**Step 4: Use Framework Commands**
+```bash
 npx agentic15 auth                    # One-time GitHub setup
 npx agentic15 plan                    # Enter interactive mode
 # Type/paste your requirements, press Ctrl+D when done
 npx agentic15 task next               # Start first task
+# Make your code changes with Claude...
 npx agentic15 commit                  # Test, commit, push, PR
 ```
 
+> **IMPORTANT**: Always launch Claude Code from inside your project directory, not from the parent directory. The framework relies on `.claude/` configuration files that must be accessible from the working directory.
+>
 > **Note**: Project creation uses the full package name `@agentic15.com/agentic15-claude-zen`.
 > Once inside your project, use the short command `agentic15` for all workflows.
 >

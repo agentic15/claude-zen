@@ -45,7 +45,9 @@
       "Bash(npx \"@agentic15.com/agentic15-claude-zen\" plan \"Build a simple calculator with add and subtract functions\")",
       "Bash(npx --package=@agentic15.com/agentic15-claude-zen agentic15:*)",
       "Bash(./node_modules/.bin/agentic15:*)",
-      "Bash(tar:*)"
+      "Bash(tar:*)",
+      "Bash(npx:*)",
+      "Bash(ls:*)"
     ]
   }
 }
