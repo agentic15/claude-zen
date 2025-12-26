@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Copyright 2024-2025 agentic15.com
 
+## [3.0.2] - 2025-12-25
+
+### Summary
+Publishing update - no code changes from v3.0.1.
+
+This release publishes the interactive requirements mode to npm registry.
+
 ## [3.0.1] - 2025-12-25
 
 ### Summary
