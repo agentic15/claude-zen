@@ -11,7 +11,9 @@
   "scripts": {
     "test": "node test/integration.test.js",
     "test:e2e": "node test/e2e-verification.test.js",
-    "test:site": "node test/verify-test-site.js"
+    "test:site": "node test/verify-test-site.js",
+    "sync-readme": "cp ../../README.md README.md",
+    "prepublishOnly": "npm run sync-readme"
   },
   "keywords": [
     "agentic15",

@@ -29,22 +29,17 @@ Start Claude Code CLI from inside the `my-project` directory. Claude Code MUST b
 
 **Step 4: Use Framework Commands**
 ```bash
-npx agentic15 auth                    # One-time GitHub setup
-npx agentic15 plan                    # Enter interactive mode
+npx agentic15 auth                         # One-time GitHub setup
+npx agentic15 plan                         # Enter interactive mode
 # Type/paste your requirements, press Ctrl+D when done
-npx agentic15 task next               # Start first task
-# Make your code changes with Claude...
-npx agentic15 commit                  # Test, commit, push, PR
+# Open another terminal. Make sure that you in your project directory. Launch Claude
+# Ask Claude: "Read the requirements file and generate a task breakdown plan"
+npx agentic15 task next                    # Start first task
+# Ask Claude: "Implement this task"
+npx agentic15 commit                       # Test, commit, push, PR
 ```
 
 > **IMPORTANT**: Always launch Claude Code from inside your project directory, not from the parent directory. The framework relies on `.claude/` configuration files that must be accessible from the working directory.
->
-> **Note**: Project creation uses the full package name `@agentic15.com/agentic15-claude-zen`.
-> Once inside your project, use the short command `agentic15` for all workflows.
->
-> **Tip**: `npx agentic15 plan` without arguments enters interactive mode where you can
-> paste long requirements, URLs, and detailed specs. Press Ctrl+D (Mac/Linux) or
-> Ctrl+Z+Enter (Windows) to save.
 
 **See [WORKFLOWS.md](WORKFLOWS.md) for complete workflows.**
 
@@ -52,12 +47,11 @@ npx agentic15 commit                  # Test, commit, push, PR
 
 ## What It Does
 
-**6 Commands:**
+**5 Commands:**
 - `npx agentic15 plan` - Generate and lock plans
 - `npx agentic15 task next` - Start next task
 - `npx agentic15 commit` - Test + commit + push + PR
 - `npx agentic15 status` - Check progress
-- `npx agentic15 upgrade` - Upgrade framework files
 - `npm test` - Run tests
 
 **Automates:**
