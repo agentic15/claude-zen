@@ -9,18 +9,26 @@ AI-Assisted Development Framework with Automated Workflows
 
 ## Quick Start
 
+**Step 1: Create Project**
 ```bash
 # Bash/Mac/Linux
 npx @agentic15.com/agentic15-claude-zen my-project
 
 # PowerShell (Windows)
 npx "@agentic15.com/agentic15-claude-zen" my-project
-
-# Then
-cd my-project
-npx agentic15 auth
-npx agentic15 plan "Build a todo app"
 ```
+
+**Step 2: Use CLI Inside Project**
+```bash
+cd my-project
+npx agentic15 auth                    # One-time GitHub setup
+npx agentic15 plan "Build a todo app" # Generate plan
+npx agentic15 task next               # Start first task
+npx agentic15 commit                  # Test, commit, push, PR
+```
+
+> **Note**: Project creation uses the full package name `@agentic15.com/agentic15-claude-zen`.
+> Once inside your project, use the short command `agentic15` for all workflows.
 
 **See [WORKFLOWS.md](WORKFLOWS.md) for complete workflows.**
 
