@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Copyright 2024-2025 agentic15.com
 
+## [3.1.0] - 2025-12-26
+
+### Summary
+Minor release adding upgrade command for existing projects.
+
+### Added
+- **`npx agentic15 upgrade`** - New command to upgrade framework files in existing projects
+  - Updates .claude/hooks/, settings.json, schemas, and templates
+  - Preserves user code (Agent/), plans (.claude/plans/), and local settings
+  - Creates automatic backup (.claude.backup/) before upgrading
+  - Shows version information and detailed upgrade report
+
+### Changed
+- Updated command count in README from 5 to 6 commands
+
 ## [3.0.4] - 2025-12-25
 
 ### Summary

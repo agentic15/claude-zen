@@ -6,6 +6,7 @@ import { TaskCommand } from '../src/cli/TaskCommand.js';
 import { CommitCommand } from '../src/cli/CommitCommand.js';
 import { StatusCommand } from '../src/cli/StatusCommand.js';
 import { PlanCommand } from '../src/cli/PlanCommand.js';
+import { UpgradeCommand } from '../src/cli/UpgradeCommand.js';
 
 const program = new Command();
 
@@ -46,5 +47,11 @@ program
   .description('Generate and lock plan')
   .argument('[description]', 'Project description (required for first run)')
   .action((description) => PlanCommand.handle(description));
+
+// Upgrade framework
+program
+  .command('upgrade')
+  .description('Upgrade framework files to latest version')
+  .action(() => UpgradeCommand.execute());
 
 program.parse();
