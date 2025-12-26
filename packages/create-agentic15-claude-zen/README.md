@@ -27,7 +27,7 @@ cd my-project
 
 Start Claude Code CLI from inside the `my-project` directory. Claude Code MUST be running from inside your project directory to access the framework files.
 
-**Step 4: Protect Your Main Branch (Recommended)**
+**Step 4: Configure Repository Settings (Recommended)**
 ```bash
 # Prevent direct pushes to main - require PRs for all changes
 gh api repos/OWNER/REPO/branches/main/protection -X PUT \
@@ -36,6 +36,11 @@ gh api repos/OWNER/REPO/branches/main/protection -X PUT \
   -f enforce_admins=false \
   -f allow_force_pushes=false \
   -f allow_deletions=false
+
+# Auto-delete branches after PR merge
+gh api repos/OWNER/REPO -X PATCH \
+  -H "Accept: application/vnd.github+json" \
+  -f delete_branch_on_merge=true
 ```
 Replace `OWNER/REPO` with your GitHub username and repository name.
 
@@ -53,14 +58,13 @@ npx agentic15 commit                       # Test, commit, push, PR
 
 > **IMPORTANT**: Always launch Claude Code from inside your project directory, not from the parent directory. The framework relies on `.claude/` configuration files that must be accessible from the working directory.
 
-**Step 6: Clean Up Merged Branches**
+**Step 6: Clean Up Local Branches**
 ```bash
-# After merging a PR on GitHub, delete the remote branch
-gh pr view <PR_NUMBER> --json headRefName --jq .headRefName | xargs git push origin --delete
+# If auto-delete is enabled, only clean up local branches
+git branch -d feature/task-001
 
-# Or delete local and remote branches manually
-git branch -d feature/task-001           # Delete local branch
-git push origin --delete feature/task-001  # Delete remote branch
+# For repositories without auto-delete, also delete remote
+git push origin --delete feature/task-001
 ```
 
 **See [WORKFLOWS.md](WORKFLOWS.md) for complete workflows.**
