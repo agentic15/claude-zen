@@ -28,6 +28,9 @@ export class TaskCommand {
       process.exit(1);
     }
 
+    // Verify git remote is configured
+    this.validateGitRemote();
+
     // Load task tracker
     const tracker = this.loadTracker();
     const task = tracker.taskFiles.find(t => t.id === taskId);
@@ -247,5 +250,37 @@ export class TaskCommand {
     const activePlanPath = join(process.cwd(), '.claude', 'ACTIVE-PLAN');
     const planId = readFileSync(activePlanPath, 'utf-8').trim();
     return join(process.cwd(), '.claude', 'plans', planId, 'tasks', `${taskId}.json`);
+  }
+
+  static validateGitRemote() {
+    try {
+      // Check if git remote origin exists
+      const remote = execSync('git remote get-url origin', { encoding: 'utf-8', stdio: 'pipe' }).trim();
+
+      if (!remote || remote.length === 0) {
+        throw new Error('No remote URL');
+      }
+
+      // Validate it's a GitHub URL
+      if (!remote.includes('github.com')) {
+        console.log('\n⚠️  Warning: Remote is not a GitHub repository');
+        console.log(`   Remote URL: ${remote}`);
+        console.log('   GitHub integration features may not work.\n');
+      }
+    } catch (error) {
+      console.log('\n❌ Git remote "origin" is not configured');
+      console.log('\n   Before starting tasks, you must link your project to a GitHub repository:');
+      console.log('\n   1. Create a GitHub repository:');
+      console.log('      gh repo create OWNER/REPO --public (or --private)');
+      console.log('\n   2. Link it to your local project:');
+      console.log('      git remote add origin https://github.com/OWNER/REPO.git');
+      console.log('\n   3. Push your initial code:');
+      console.log('      git add .');
+      console.log('      git commit -m "Initial commit"');
+      console.log('      git push -u origin main');
+      console.log('\n   4. Then start your task:');
+      console.log('      npx agentic15 task next\n');
+      process.exit(1);
+    }
   }
 }

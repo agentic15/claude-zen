@@ -23,9 +23,23 @@ npx "@agentic15.com/agentic15-claude-zen" my-project
 cd my-project
 ```
 
-**Step 3: Launch Claude Code from Inside Project Directory**
+**Step 3: Initialize Git and Link to GitHub**
 
-Start Claude Code CLI from inside the `my-project` directory. Claude Code MUST be running from inside your project directory to access the framework files.
+```bash
+# Initialize git (if not already done)
+git init
+git add .
+git commit -m "Initial commit"
+
+# Create GitHub repository and link it
+gh repo create OWNER/REPO --public  # or --private
+git remote add origin https://github.com/OWNER/REPO.git
+git push -u origin main
+```
+
+Replace `OWNER/REPO` with your GitHub username and repository name (e.g., `myusername/my-project`).
+
+> **REQUIRED**: This step is mandatory. The framework needs a GitHub remote to create issues and pull requests.
 
 **Step 4: Configure Repository Settings (Recommended)**
 
@@ -79,7 +93,13 @@ gh api repos/OWNER/REPO -X PATCH -H "Accept: application/vnd.github+json" -f del
 
 Replace `OWNER/REPO` with your GitHub username and repository name.
 
-**Step 5: Use Framework Commands**
+**Step 5: Launch Claude Code**
+
+Start Claude Code CLI from inside the `my-project` directory. Claude Code MUST be running from inside your project directory to access the framework files.
+
+> **IMPORTANT**: Always launch Claude Code from inside your project directory, not from the parent directory.
+
+**Step 6: Use Framework Commands**
 ```bash
 npx agentic15 auth                         # One-time GitHub setup
 npx agentic15 plan                         # Enter interactive mode
@@ -91,9 +111,7 @@ npx agentic15 task next                    # Start first task
 npx agentic15 commit                       # Test, commit, push, PR
 ```
 
-> **IMPORTANT**: Always launch Claude Code from inside your project directory, not from the parent directory. The framework relies on `.claude/` configuration files that must be accessible from the working directory.
-
-**Step 6: Clean Up Local Branches**
+**Step 7: Clean Up Local Branches**
 ```bash
 # If auto-delete is enabled, only clean up local branches
 git branch -d feature/task-001
