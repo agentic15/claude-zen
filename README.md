@@ -9,18 +9,34 @@ AI-Assisted Development Framework with Automated Workflows
 
 ## Quick Start
 
+**Step 1: Create Project**
 ```bash
 # Bash/Mac/Linux
 npx @agentic15.com/agentic15-claude-zen my-project
 
 # PowerShell (Windows)
 npx "@agentic15.com/agentic15-claude-zen" my-project
-
-# Then
-cd my-project
-npx agentic15 auth
-npx agentic15 plan "Build a todo app"
 ```
+
+**Step 2: Navigate Into Project**
+```bash
+cd my-project
+```
+
+**Step 3: Launch Claude Code from Inside Project Directory**
+
+Start Claude Code CLI from inside the `my-project` directory. Claude Code MUST be running from inside your project directory to access the framework files.
+
+**Step 4: Use Framework Commands**
+```bash
+npx agentic15 auth                    # One-time GitHub setup
+npx agentic15 plan "Build a todo app" # Generate plan
+npx agentic15 task next               # Start first task
+# Make your code changes with Claude...
+npx agentic15 commit                  # Test, commit, push, PR
+```
+
+> **IMPORTANT**: Always launch Claude Code from inside your project directory, not from the parent directory. The framework relies on `.claude/` configuration files that must be accessible from the working directory.
 
 **See [WORKFLOWS.md](WORKFLOWS.md) for complete workflows.**
 
