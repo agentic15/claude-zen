@@ -27,7 +27,19 @@ cd my-project
 
 Start Claude Code CLI from inside the `my-project` directory. Claude Code MUST be running from inside your project directory to access the framework files.
 
-**Step 4: Use Framework Commands**
+**Step 4: Protect Your Main Branch (Recommended)**
+```bash
+# Prevent direct pushes to main - require PRs for all changes
+gh api repos/OWNER/REPO/branches/main/protection -X PUT \
+  -H "Accept: application/vnd.github+json" \
+  -f required_pull_request_reviews[required_approving_review_count]=0 \
+  -f enforce_admins=false \
+  -f allow_force_pushes=false \
+  -f allow_deletions=false
+```
+Replace `OWNER/REPO` with your GitHub username and repository name.
+
+**Step 5: Use Framework Commands**
 ```bash
 npx agentic15 auth                         # One-time GitHub setup
 npx agentic15 plan                         # Enter interactive mode
