@@ -73,10 +73,11 @@ git push origin --delete feature/task-001
 
 ## What It Does
 
-**5 Commands:**
+**6 Commands:**
 - `npx agentic15 plan` - Generate and lock plans
 - `npx agentic15 task next` - Start next task
 - `npx agentic15 commit` - Test + commit + push + PR
+- `npx agentic15 visual-test <url>` - Capture screenshots & console errors
 - `npx agentic15 status` - Check progress
 - `npm test` - Run tests
 
