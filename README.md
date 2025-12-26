@@ -31,8 +31,9 @@ Start Claude Code CLI from inside the `my-project` directory. Claude Code MUST b
 ```bash
 npx agentic15 auth                    # One-time GitHub setup
 npx agentic15 plan "Build a todo app" # Generate plan
+# Claude will generate tasks from your requirements
 npx agentic15 task next               # Start first task
-# Make your code changes with Claude...
+# Ask Claude to implement the task
 npx agentic15 commit                  # Test, commit, push, PR
 ```
 
