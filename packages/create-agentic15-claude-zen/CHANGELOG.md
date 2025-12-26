@@ -7,6 +7,154 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Copyright 2024-2025 agentic15.com
 
+## [3.0.0] - 2025-12-25
+
+### 🎉 MAJOR RELEASE - Complete CLI Architecture Transformation
+
+This is a **major breaking release** that fundamentally transforms the framework from npm script-based workflows to a pure CLI-driven architecture. The package has been completely rewritten, tested, and optimized for production use.
+
+### 💥 Breaking Changes
+
+**CRITICAL**: This release is **NOT backward compatible** with v1.x or v2.x workflows.
+
+1. **All npm scripts removed** - Use `npx agentic15 <command>` instead
+   - ❌ `npm run plan:generate` → ✅ `npx agentic15 plan "description"`
+   - ❌ `npm run plan:init` → ✅ `npx agentic15 plan` (auto-locks)
+   - ❌ `npm run task:start` → ✅ `npx agentic15 task next`
+   - ❌ No task:done - Status auto-detected by CLI
+
+2. **No obfuscated/minified code** - Ships pure ESM source code
+   - Removed 248KB of minified v1.x code
+   - Transparent, auditable codebase
+   - Easier debugging and contributions
+
+3. **Built-in plan logic** - No external script dependencies
+   - Plan generation/locking logic moved into PlanCommand class
+   - No npm script wrapper required
+   - Single command for entire workflow
+
+4. **v2.0 schema support** - Updated PROJECT-PLAN.json structure
+   - Root level uses `project` (singular) instead of `projects` (plural)
+   - Compatible with PROJECT-PLAN-TEMPLATE.json format
+   - Recursive task extraction from nested structures
+
+### ✨ What's New
+
+#### CLI Commands (All New)
+```bash
+npx agentic15 auth              # One-time GitHub setup
+npx agentic15 plan "desc"       # Generate plan requirements
+npx agentic15 plan              # Lock plan (if PROJECT-PLAN.json exists)
+npx agentic15 task next         # Auto-start next pending task
+npx agentic15 task start ID     # Start specific task
+npx agentic15 commit            # Test, commit, push, create PR
+npx agentic15 status            # Show current progress
+```
+
+#### GitHub Integration
+- ✅ Issue templates (.github/ISSUE_TEMPLATE/task.md)
+- ✅ PR templates (.github/PULL_REQUEST_TEMPLATE.md)
+- ✅ CLI uses templates for consistent formatting
+- ✅ Auto-generated issues follow standard structure
+- ✅ Auto-generated PRs follow standard structure
+
+#### Quality Improvements
+- 📦 Package size: 46.0 kB compressed (down from 294KB)
+- 📁 Total files: 52 (down from 67)
+- 🧪 Black box tested - 5 critical bugs found and fixed
+- ✅ All core workflows verified end-to-end
+- 📚 Complete documentation with workflow diagrams
+
+### 🐛 Critical Bug Fixes (Found During Testing)
+
+All bugs discovered and fixed during comprehensive black box testing:
+
+1. **Import Path Error** (bin/create-agentic15-claude-zen.js:179)
+   - Fixed: dist/index.js → src/index.js
+
+2. **Template Path Error** (src/core/TemplateManager.js:32)
+   - Fixed: Added '../..' to reach package root from src/core/
+
+3. **Obsolete Method Call** (src/core/ProjectInitializer.js)
+   - Removed: extractBundledFiles() call (tried to copy non-existent scripts)
+
+4. **Schema Compatibility** (src/cli/PlanCommand.js:207-210)
+   - Added: Support for v2.0 schema with singular 'project' at root
+
+5. **Wrong Method Reference** (src/cli/TaskCommand.js:155-158)
+   - Fixed: Now calls correct TaskIssueMapper.taskToIssueTitle/Body/Labels methods
+
+### 📊 Testing & Verification
+
+- ✅ **Test Repository**: https://github.com/agentic15/agentic15-test-v2
+- ✅ **Project Creation**: Templates, dependencies, git, hooks
+- ✅ **Plan Generation**: Requirements file, plan ID, ACTIVE-PLAN
+- ✅ **Plan Locking**: Task extraction (3/3 tasks verified)
+- ✅ **Task Management**: Auto-start next task, feature branch creation
+- ✅ **Git Workflow**: Feature branches, status tracking
+
+### 🎯 Migration Guide (v1.x/v2.x → v3.0.0)
+
+**Before (v1.x/v2.x)**:
+```bash
+npm run plan:generate "Build calculator"
+# Claude creates plan
+echo "plan-001-generated" > .claude/ACTIVE-PLAN
+npm run plan:init
+npm run task:start TASK-001
+# Write code
+npm run task:done
+```
+
+**After (v3.0.0)**:
+```bash
+npx agentic15 plan "Build calculator"
+# Claude creates plan
+npx agentic15 plan
+npx agentic15 task next
+# Write code
+npx agentic15 commit
+```
+
+### 📦 Package Details
+
+- **Size**: 46.0 kB compressed, 177.7 kB unpacked
+- **Files**: 52
+- **Architecture**: Pure ESM modules
+- **Node**: >=18.0.0
+- **Dependencies**: @octokit/rest@20.0.2, commander@12.1.0
+
+### 🚀 Upgrade Instructions
+
+**New Projects** (Recommended):
+```bash
+npx @agentic15.com/agentic15-claude-zen@3.0.0 my-project
+cd my-project
+npx agentic15 auth
+npx agentic15 plan "Your project description"
+```
+
+**Existing Projects** (Requires Manual Migration):
+1. Update package: `npm install @agentic15.com/agentic15-claude-zen@3.0.0`
+2. Run auth setup: `npx agentic15 auth`
+3. Replace all npm run task:* with npx agentic15 commands
+4. Update any automation scripts
+
+### 🎓 Documentation
+
+- README.md: Quick start guide
+- WORKFLOWS.md: Complete workflow documentation with mermaid diagrams
+- CHANGELOG.md: Detailed version history (this file)
+- .claude/POST-INSTALL.md: Instructions for Claude
+
+### ⚠️ Known Limitations
+
+- GitHub integration requires valid Personal Access Token
+- PR creation requires GitHub CLI (gh) installed
+- Windows users: Use quotes around package name in PowerShell
+
+---
+
 ## [2.0.9] - 2025-12-25
 
 ### Changed
