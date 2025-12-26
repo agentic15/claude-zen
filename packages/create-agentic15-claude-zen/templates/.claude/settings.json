@@ -34,7 +34,6 @@
       "Edit(./.claude/settings.json)",
       "Edit(./.claude/hooks/**)",
       "Write(./.claude/hooks/**)",
-      "Edit(./.claude/CLAUDE.md)",
       "Edit(./.claude/TASK-TRACKER.json)",
       "Read(./.claude/POST-INSTALL.md)",
       "Read(./docs/**)",
@@ -150,11 +149,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/session-start-context.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/detect-pending-reviews.js"
+            "command": "node .claude/hooks/session-start-context.js"
           }
         ]
       }
@@ -174,19 +169,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/enforce-hard-requirements.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/prevent-read-bypass.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/enforce-structured-development.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/enforce-plan-template.js"
+            "command": "node .claude/hooks/enforce-plan-template.js"
           }
         ]
       },
@@ -195,87 +178,18 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-git-workflow.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-task-completion.js"
+            "command": "node .claude/hooks/validate-git-workflow.js"
           }
         ]
       }
     ],
     "PostToolUse": [
       {
-        "matcher": "Edit|Write",
+        "matcher": "Bash(git:*)",
         "hooks": [
           {
             "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/enforce-structured-development.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/auto-format.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-ui-syntax.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-ui-runtime.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-ui-visual-native.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-component-contract.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-test-quality.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-ui-integration.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-integration-site.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-database-changes.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-migration-impact.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-visual-regression.js"
-          }
-        ]
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-test-results.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/validate-e2e-coverage.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/enforce-test-pyramid.js"
-          },
-          {
-            "type": "command",
-            "command": "node node_modules/.agentic15-claude-zen/hooks/enforce-migration-workflow.js"
+            "command": "node .claude/hooks/post-merge.js"
           }
         ]
       }

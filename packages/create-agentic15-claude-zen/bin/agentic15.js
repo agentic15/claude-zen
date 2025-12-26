@@ -7,6 +7,7 @@ import { CommitCommand } from '../src/cli/CommitCommand.js';
 import { StatusCommand } from '../src/cli/StatusCommand.js';
 import { PlanCommand } from '../src/cli/PlanCommand.js';
 import { UpgradeCommand } from '../src/cli/UpgradeCommand.js';
+import { VisualTestCommand } from '../src/cli/VisualTestCommand.js';
 
 const program = new Command();
 
@@ -53,5 +54,12 @@ program
   .command('upgrade')
   .description('Upgrade framework files to latest version')
   .action(() => UpgradeCommand.execute());
+
+// Visual testing - capture screenshots and console errors
+program
+  .command('visual-test')
+  .description('Capture screenshots and console errors for UI debugging')
+  .argument('<url>', 'URL to test (e.g., http://localhost:3000)')
+  .action((url) => VisualTestCommand.execute(url));
 
 program.parse();

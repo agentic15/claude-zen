@@ -48,7 +48,10 @@
       "Bash(tar:*)",
       "Bash(npx:*)",
       "Bash(ls:*)",
-      "Bash(gh pr edit:*)"
+      "Bash(gh pr edit:*)",
+      "Bash(npm run sync-readme:*)",
+      "Bash(npm run test:*)",
+      "Bash(dir:*)"
     ]
   }
 }
