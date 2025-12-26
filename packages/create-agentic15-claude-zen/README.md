@@ -53,6 +53,16 @@ npx agentic15 commit                       # Test, commit, push, PR
 
 > **IMPORTANT**: Always launch Claude Code from inside your project directory, not from the parent directory. The framework relies on `.claude/` configuration files that must be accessible from the working directory.
 
+**Step 6: Clean Up Merged Branches**
+```bash
+# After merging a PR on GitHub, delete the remote branch
+gh pr view <PR_NUMBER> --json headRefName --jq .headRefName | xargs git push origin --delete
+
+# Or delete local and remote branches manually
+git branch -d feature/task-001           # Delete local branch
+git push origin --delete feature/task-001  # Delete remote branch
+```
+
 **See [WORKFLOWS.md](WORKFLOWS.md) for complete workflows.**
 
 ---
