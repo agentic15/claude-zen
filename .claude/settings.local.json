@@ -47,7 +47,8 @@
       "Bash(./node_modules/.bin/agentic15:*)",
       "Bash(tar:*)",
       "Bash(npx:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(gh pr edit:*)"
     ]
   }
 }

@@ -30,10 +30,10 @@ Start Claude Code CLI from inside the `my-project` directory. Claude Code MUST b
 **Step 4: Use Framework Commands**
 ```bash
 npx agentic15 auth                    # One-time GitHub setup
-npx agentic15 plan "Build a todo app" # Generate plan
-# Claude will generate tasks from your requirements
+npx agentic15 plan "Build a todo app" # Create requirements file
+# Ask Claude: "Generate a plan from the requirements"
 npx agentic15 task next               # Start first task
-# Ask Claude to implement the task
+# Ask Claude: "Implement this task"
 npx agentic15 commit                  # Test, commit, push, PR
 ```
 
