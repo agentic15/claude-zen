@@ -1,5 +1,5 @@
 import { execSync } from 'child_process';
-import { existsSync } from 'fs';
+import { existsSync, writeFileSync, mkdirSync, unlinkSync } from 'fs';
 import { join } from 'path';
 
 /**
@@ -172,11 +172,9 @@ const { join } = require('path');
 
     // Write test script to temp file and execute
     const tempScriptPath = join(process.cwd(), '.claude', 'temp-visual-test.js');
-    const fs = require('fs');
-    const { mkdirSync } = require('fs');
 
     mkdirSync(join(process.cwd(), '.claude'), { recursive: true });
-    fs.writeFileSync(tempScriptPath, testScript);
+    writeFileSync(tempScriptPath, testScript);
 
     try {
       execSync(`node "${tempScriptPath}"`, {
@@ -186,7 +184,7 @@ const { join } = require('path');
     } finally {
       // Clean up temp script
       try {
-        fs.unlinkSync(tempScriptPath);
+        unlinkSync(tempScriptPath);
       } catch {}
     }
   }
