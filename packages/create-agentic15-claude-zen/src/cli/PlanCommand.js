@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
 import { join } from 'path';
+import readline from 'readline';
 
 export class PlanCommand {
   static async handle(description) {
@@ -36,12 +37,42 @@ export class PlanCommand {
 
     // No plan exists - create new one
     if (!description) {
-      console.log('\n❌ Project description required');
-      console.log('   Usage: agentic15 plan "Build a calculator app"\n');
-      process.exit(1);
+      // No description provided - enter interactive mode
+      console.log('\n📝 Interactive Requirements Mode');
+      console.log('━'.repeat(70));
+      console.log('Enter your project requirements below.');
+      console.log('You can paste multiple lines, URLs, or write detailed specs.');
+      console.log('Press Ctrl+D (Mac/Linux) or Ctrl+Z then Enter (Windows) when done.\n');
+
+      description = await this.promptMultilineInput();
+
+      if (!description || description.trim().length === 0) {
+        console.log('\n❌ No requirements provided\n');
+        process.exit(1);
+      }
     }
 
     return this.generatePlan(description);
+  }
+
+  static async promptMultilineInput() {
+    return new Promise((resolve) => {
+      const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+        terminal: false
+      });
+
+      let lines = [];
+
+      rl.on('line', (line) => {
+        lines.push(line);
+      });
+
+      rl.on('close', () => {
+        resolve(lines.join('\n'));
+      });
+    });
   }
 
   static generatePlan(description) {

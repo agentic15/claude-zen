@@ -13,6 +13,22 @@ Copyright 2024-2025 agentic15.com
 
 This is a **major breaking release** that fundamentally transforms the framework from npm script-based workflows to a pure CLI-driven architecture. The package has been completely rewritten, tested, and optimized for production use.
 
+### 🆕 Interactive Requirements Mode
+
+Running `npx agentic15 plan` without arguments now enters **interactive mode**:
+- Type or paste requirements of any length
+- Include URLs, detailed specs, multiple paragraphs
+- Press Ctrl+D (Mac/Linux) or Ctrl+Z+Enter (Windows) to save
+- No shell escaping or quote issues
+- Perfect for complex corporate websites, detailed project specs
+
+**Example**:
+```bash
+npx agentic15 plan
+# Paste your requirements...
+# Press Ctrl+D when done
+```
+
 ### 💥 Breaking Changes
 
 **CRITICAL**: This release is **NOT backward compatible** with v1.x or v2.x workflows.
