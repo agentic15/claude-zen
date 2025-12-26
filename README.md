@@ -51,7 +51,7 @@ cat > /tmp/protection.json << 'EOF'
   "required_pull_request_reviews": {
     "required_approving_review_count": 0
   },
-  "enforce_admins": false,
+  "enforce_admins": true,
   "allow_force_pushes": false,
   "allow_deletions": false,
   "required_status_checks": null,
@@ -77,7 +77,7 @@ $body = @"
   "required_pull_request_reviews": {
     "required_approving_review_count": 0
   },
-  "enforce_admins": false,
+  "enforce_admins": true,
   "allow_force_pushes": false,
   "allow_deletions": false,
   "required_status_checks": null,
