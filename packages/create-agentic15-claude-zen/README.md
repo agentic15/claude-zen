@@ -27,7 +27,24 @@ cd my-project
 
 Start Claude Code CLI from inside the `my-project` directory. Claude Code MUST be running from inside your project directory to access the framework files.
 
-**Step 4: Use Framework Commands**
+**Step 4: Configure Repository Settings (Recommended)**
+```bash
+# Prevent direct pushes to main - require PRs for all changes
+gh api repos/OWNER/REPO/branches/main/protection -X PUT \
+  -H "Accept: application/vnd.github+json" \
+  -f required_pull_request_reviews[required_approving_review_count]=0 \
+  -f enforce_admins=false \
+  -f allow_force_pushes=false \
+  -f allow_deletions=false
+
+# Auto-delete branches after PR merge
+gh api repos/OWNER/REPO -X PATCH \
+  -H "Accept: application/vnd.github+json" \
+  -f delete_branch_on_merge=true
+```
+Replace `OWNER/REPO` with your GitHub username and repository name.
+
+**Step 5: Use Framework Commands**
 ```bash
 npx agentic15 auth                         # One-time GitHub setup
 npx agentic15 plan                         # Enter interactive mode
@@ -40,6 +57,15 @@ npx agentic15 commit                       # Test, commit, push, PR
 ```
 
 > **IMPORTANT**: Always launch Claude Code from inside your project directory, not from the parent directory. The framework relies on `.claude/` configuration files that must be accessible from the working directory.
+
+**Step 6: Clean Up Local Branches**
+```bash
+# If auto-delete is enabled, only clean up local branches
+git branch -d feature/task-001
+
+# For repositories without auto-delete, also delete remote
+git push origin --delete feature/task-001
+```
 
 **See [WORKFLOWS.md](WORKFLOWS.md) for complete workflows.**
 
