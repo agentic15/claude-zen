@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Copyright 2024-2025 agentic15.com
 
+## [3.0.1] - 2025-12-25
+
+### Summary
+Patch release to publish the interactive requirements mode feature to npm.
+
+This release makes v3.0.0 officially available on npm with the interactive mode feature fully documented and tested.
+
 ## [3.0.0] - 2025-12-25
 
 ### 🎉 MAJOR RELEASE - Complete CLI Architecture Transformation
