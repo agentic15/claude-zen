@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Copyright 2024-2025 agentic15.com
 
+## [3.0.4] - 2025-12-25
+
+### Summary
+Package configuration cleanup - removed WORKFLOWS.md from files array as it's available on GitHub.
+
+### Changed
+- Removed WORKFLOWS.md from package.json files array (documentation available at GitHub repo)
+- No functional changes
+
 ## [3.0.3] - 2025-12-25
 
 ### Summary
