@@ -275,6 +275,7 @@ export class TaskCommand {
       console.log('\n   2. Link it to your local project:');
       console.log('      git remote add origin https://github.com/OWNER/REPO.git');
       console.log('\n   3. Push your initial code:');
+      console.log('      git branch -M main');
       console.log('      git add .');
       console.log('      git commit -m "Initial commit"');
       console.log('      git push -u origin main');
