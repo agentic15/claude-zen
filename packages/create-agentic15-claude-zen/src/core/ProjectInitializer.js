@@ -83,7 +83,7 @@ export class ProjectInitializer {
     console.log('\n   Complete workflow documentation with examples.\n');
     console.log('🚀 QUICK START:');
     console.log('  1. npx agentic15 auth');
-    console.log('  2. npx agentic15 plan "Your project description"');
+    console.log('  2. npx agentic15 plan (interactive - paste requirements, Ctrl+D)');
     console.log('  3. Tell Claude: "Create the project plan"');
     console.log('  4. npx agentic15 plan (locks the plan)');
     console.log('  5. npx agentic15 task next');
