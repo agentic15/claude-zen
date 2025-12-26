@@ -53,7 +53,7 @@ async function main() {
 
   if (!taskId) {
     console.error('\n❌ ERROR: Task ID required');
-    console.error('Usage: npm run task:start TASK-001\n');
+    console.error('Usage: npx agentic15 task start TASK-001\n');
     process.exit(1);
   }
 
@@ -61,7 +61,7 @@ async function main() {
   const activePlanFile = '.claude/ACTIVE-PLAN';
   if (!fs.existsSync(activePlanFile)) {
     console.error('\n❌ ERROR: No active plan found');
-    console.error('Set active plan first: npm run plan:manager\n');
+    console.error('Set active plan first: npx agentic15 plan\n');
     process.exit(1);
   }
 
@@ -74,7 +74,7 @@ async function main() {
   if (!fs.existsSync(trackerFile)) {
     console.error('\n❌ ERROR: Task tracker not found');
     console.error(`Plan: ${activePlan}`);
-    console.error('Initialize first: npm run plan:init\n');
+    console.error('Initialize first: npx agentic15 plan\n');
     process.exit(1);
   }
 
@@ -218,11 +218,9 @@ async function main() {
 
   console.log(`\n📂 Task file: ${taskFile}`);
   console.log('\n📝 WORKFLOW:');
-  console.log(' 1. Make your changes on main branch');
-  console.log(' 2. Commit frequently with task reference:');
-  console.log(`     git commit -m "[${taskId}] Description of changes"`);
-  console.log(' 3. When finished:');
-  console.log(`     npm run task:done ${taskId}`);
+  console.log(' 1. Implement the task requirements');
+  console.log(' 2. When finished, commit and create PR:');
+  console.log(`     npx agentic15 commit`);
 
   process.exit(0);
 }

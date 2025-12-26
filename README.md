@@ -28,20 +28,55 @@ cd my-project
 Start Claude Code CLI from inside the `my-project` directory. Claude Code MUST be running from inside your project directory to access the framework files.
 
 **Step 4: Configure Repository Settings (Recommended)**
+
+**For Bash/Mac/Linux:**
 ```bash
 # Prevent direct pushes to main - require PRs for all changes
+cat > /tmp/protection.json << 'EOF'
+{
+  "required_pull_request_reviews": {
+    "required_approving_review_count": 0
+  },
+  "enforce_admins": false,
+  "allow_force_pushes": false,
+  "allow_deletions": false,
+  "required_status_checks": null,
+  "restrictions": null
+}
+EOF
+
 gh api repos/OWNER/REPO/branches/main/protection -X PUT \
   -H "Accept: application/vnd.github+json" \
-  -f required_pull_request_reviews[required_approving_review_count]=0 \
-  -f enforce_admins=false \
-  -f allow_force_pushes=false \
-  -f allow_deletions=false
+  --input /tmp/protection.json
 
 # Auto-delete branches after PR merge
 gh api repos/OWNER/REPO -X PATCH \
   -H "Accept: application/vnd.github+json" \
   -f delete_branch_on_merge=true
 ```
+
+**For PowerShell (Windows):**
+```powershell
+# Prevent direct pushes to main - require PRs for all changes
+$body = @"
+{
+  "required_pull_request_reviews": {
+    "required_approving_review_count": 0
+  },
+  "enforce_admins": false,
+  "allow_force_pushes": false,
+  "allow_deletions": false,
+  "required_status_checks": null,
+  "restrictions": null
+}
+"@
+
+echo $body | gh api repos/OWNER/REPO/branches/main/protection -X PUT -H "Accept: application/vnd.github+json" --input -
+
+# Auto-delete branches after PR merge
+gh api repos/OWNER/REPO -X PATCH -H "Accept: application/vnd.github+json" -f delete_branch_on_merge=true
+```
+
 Replace `OWNER/REPO` with your GitHub username and repository name.
 
 **Step 5: Use Framework Commands**

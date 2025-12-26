@@ -46,7 +46,7 @@ async function main() {
 
   if (!taskId) {
     console.error('\n❌ ERROR: Task ID required');
-    console.error('Usage: npm run task:done TASK-001\n');
+    console.error('Usage: Internal - called by npx agentic15 commit\n');
     process.exit(1);
   }
 
@@ -54,7 +54,7 @@ async function main() {
   const activePlanFile = '.claude/ACTIVE-PLAN';
   if (!fs.existsSync(activePlanFile)) {
     console.error('\n❌ ERROR: No active plan found');
-    console.error('Set active plan first: npm run plan:manager\n');
+    console.error('Set active plan first: npx agentic15 plan\n');
     process.exit(1);
   }
 
@@ -67,7 +67,7 @@ async function main() {
   if (!fs.existsSync(trackerFile)) {
     console.error('\n❌ ERROR: Task tracker not found');
     console.error(`Plan: ${activePlan}`);
-    console.error('Initialize first: npm run plan:init\n');
+    console.error('Initialize first: npx agentic15 plan\n');
     process.exit(1);
   }
 
@@ -208,7 +208,7 @@ async function main() {
     console.log('');
     console.log('📝 Next task:');
     console.log(`   ${nextPendingTask.id}: ${nextPendingTask.title}`);
-    console.log(`   Run: npm run task:start ${nextPendingTask.id}`);
+    console.log(`   Run: npx agentic15 task next`);
   } else {
     console.log('');
     console.log('🎉 All tasks completed!');

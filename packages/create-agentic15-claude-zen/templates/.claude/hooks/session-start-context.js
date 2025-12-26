@@ -67,7 +67,7 @@ if (activePlan && tracker) {
     }
   } else {
     log('\n   ⚠️  No active task - start one:', 'yellow');
-    log('   npm run task:next', 'yellow');
+    log('   npx agentic15 task next', 'yellow');
   }
 
   // Show progress
@@ -79,11 +79,9 @@ if (activePlan && tracker) {
 } else {
   log('❌ NO ACTIVE PROJECT PLAN', 'red');
   log('\n   You MUST work within the agentic15-claude-zen framework.', 'yellow');
-  log('   Create a plan first:', 'yellow');
-  log('   1. npm run plan:generate "Your requirements"', 'yellow');
-  log('   2. Create PROJECT-PLAN.json from requirements', 'yellow');
-  log('   3. npm run plan:init', 'yellow');
-  log('   4. npm run task:next\n', 'yellow');
+  log('   Initialize the plan and start execution:', 'yellow');
+  log('   npx agentic15 plan', 'yellow');
+  log('   npx agentic15 task next\n', 'yellow');
 }
 
 console.log('─'.repeat(70));
@@ -108,11 +106,11 @@ log('   ./node_modules/.agentic15-claude-zen/  # Bundled scripts & hooks', 'yell
 console.log('\n' + '─'.repeat(70));
 log('📋 AVAILABLE COMMANDS:', 'bold');
 console.log('─'.repeat(70));
-log('   npm run plan:generate <desc>   # Generate plan (non-interactive)', 'cyan');
-log('   npm run plan:init               # Lock plan', 'cyan');
-log('   npm run task:next               # Start next task', 'cyan');
-log('   npm run task:status             # View progress', 'cyan');
-log('   npm run task:done TASK-XXX      # Complete task', 'cyan');
+log('   npx agentic15 plan              # Generate and lock plan', 'cyan');
+log('   npx agentic15 task next         # Start next task', 'cyan');
+log('   npx agentic15 status            # View progress', 'cyan');
+log('   npx agentic15 commit            # Test, commit, push, PR', 'cyan');
+log('   npx agentic15 visual-test <url> # Capture UI screenshots', 'cyan');
 
 console.log('\n' + '─'.repeat(70));
 log('⚠️  ENFORCEMENT ACTIVE:', 'bold');
