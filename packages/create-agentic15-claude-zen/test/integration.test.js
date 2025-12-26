@@ -77,36 +77,21 @@ try {
   // Test 2: Template structure
   console.log('\n📋 Test 2: Template structure verification');
   testFileExists('.claude/settings.json', 'settings.json exists');
-  testFileExists('.claude/CLAUDE.md', 'CLAUDE.md exists');
   testFileExists('.claude/PLAN-SCHEMA.json', 'PLAN-SCHEMA.json exists');
   testFileExists('.claude/PROJECT-PLAN-TEMPLATE.json', 'PROJECT-PLAN-TEMPLATE.json exists');
+  testFileExists('.claude/hooks/require-active-task.js', 'require-active-task.js hook exists');
+  testFileExists('.claude/hooks/session-start-context.js', 'session-start-context.js hook exists');
+  testFileExists('.claude/hooks/enforce-plan-template.js', 'enforce-plan-template.js hook exists');
+  testFileExists('.claude/hooks/validate-git-workflow.js', 'validate-git-workflow.js hook exists');
+  testFileExists('.claude/hooks/post-merge.js', 'post-merge.js hook exists');
+  testFileExists('.claude/hooks/start-task.js', 'start-task.js hook exists');
+  testFileExists('.claude/hooks/complete-task.js', 'complete-task.js hook exists');
 
-  // Test 3: Bundled files extraction
-  console.log('\n📋 Test 3: Bundled files extraction');
-  testFileExists('node_modules/.agentic15-claude-zen/scripts', 'Scripts bundle directory exists');
-  testFileExists('node_modules/.agentic15-claude-zen/hooks', 'Hooks bundle directory exists');
-  testFileExists('node_modules/.agentic15-claude-zen/scripts/task-start.js', 'task-start.js extracted');
-  testFileExists('node_modules/.agentic15-claude-zen/scripts/task-done.js', 'task-done.js extracted');
-  testFileExists('node_modules/.agentic15-claude-zen/scripts/task-next.js', 'task-next.js extracted');
-  testFileExists('node_modules/.agentic15-claude-zen/scripts/plan-init.js', 'plan-init.js extracted');
-  testFileExists('node_modules/.agentic15-claude-zen/hooks/enforce-structured-development.js', 'Hook extracted');
-
-  // Test 4: Configuration correctness
-  console.log('\n📋 Test 4: Configuration verification');
+  // Test 3: Configuration correctness
+  console.log('\n📋 Test 3: Configuration verification');
   testFileContains('package.json', TEST_PROJECT, 'Project name interpolated in package.json');
-  testFileContains('package.json', 'node_modules/.agentic15-claude-zen/scripts', 'Scripts reference bundled path');
   testFileContains('README.md', TEST_PROJECT, 'Project name interpolated in README');
-  testFileContains('.claude/settings.json', 'node_modules/.agentic15-claude-zen/hooks', 'Hooks reference bundled path');
-
-  // Test 5: Script executability
-  console.log('\n📋 Test 5: npm scripts availability');
-  const packageJson = JSON.parse(readFileSync(join(TEST_PATH, 'package.json'), 'utf8'));
-  assert(packageJson.scripts['task:start'], 'task:start script exists');
-  assert(packageJson.scripts['task:done'], 'task:done script exists');
-  assert(packageJson.scripts['task:next'], 'task:next script exists');
-  assert(packageJson.scripts['plan:init'], 'plan:init script exists');
-  assert(packageJson.scripts['plan:create'], 'plan:create script exists');
-  console.log('  ✓ All required npm scripts defined');
+  testFileContains('.claude/settings.json', '.claude/hooks/', 'Hooks reference correct path');
 
   // Cleanup
   console.log('\n🧹 Cleanup: Removing test directory');

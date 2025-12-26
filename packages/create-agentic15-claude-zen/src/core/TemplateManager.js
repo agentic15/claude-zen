@@ -80,29 +80,6 @@ export class TemplateManager {
   }
 
   /**
-   * Extract bundled scripts and hooks to node_modules
-   *
-   * @param {string} targetDir - Target directory path
-   */
-  async extractBundledFiles(targetDir) {
-    const bundleDir = join(targetDir, 'node_modules', '.agentic15-claude-zen');
-    console.log('\n📦 Setting up bundled scripts and hooks...');
-    mkdirSync(bundleDir, { recursive: true });
-
-    // Copy bundled scripts
-    console.log('  ├─ scripts/');
-    const bundledScriptsDir = join(this.distDir, 'scripts');
-    cpSync(bundledScriptsDir, join(bundleDir, 'scripts'), { recursive: true });
-
-    // Copy bundled hooks
-    console.log('  └─ hooks/');
-    const bundledHooksDir = join(this.distDir, 'hooks');
-    cpSync(bundledHooksDir, join(bundleDir, 'hooks'), { recursive: true });
-
-    console.log('✅ Bundled files extracted');
-  }
-
-  /**
    * Copy a directory from templates to target
    *
    * @param {string} dirName - Directory name
