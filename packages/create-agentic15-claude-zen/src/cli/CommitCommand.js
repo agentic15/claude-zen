@@ -45,7 +45,10 @@ export class CommitCommand {
     // Step 8: Update GitHub issue status
     await this.updateGitHubIssue(task, prUrl);
 
-    // Step 9: Display summary
+    // Step 9: Mark task as completed
+    this.markTaskCompleted(task);
+
+    // Step 10: Display summary
     this.displaySummary(task, prUrl, tracker);
   }
 
@@ -263,6 +266,28 @@ export class CommitCommand {
       console.log(`✅ Updated GitHub issue #${taskData.githubIssue}`);
     } catch (error) {
       console.log(`\n⚠️  Failed to update GitHub issue: ${error.message}\n`);
+    }
+  }
+
+  static markTaskCompleted(task) {
+    try {
+      const activePlanPath = join(process.cwd(), '.claude', 'ACTIVE-PLAN');
+      const planId = readFileSync(activePlanPath, 'utf-8').trim();
+      const trackerPath = join(process.cwd(), '.claude', 'plans', planId, 'TASK-TRACKER.json');
+
+      // Update tracker
+      const tracker = JSON.parse(readFileSync(trackerPath, 'utf-8'));
+      const taskInTracker = tracker.taskFiles.find(t => t.id === task.id);
+
+      if (taskInTracker) {
+        taskInTracker.status = 'completed';
+        taskInTracker.completedAt = new Date().toISOString();
+        writeFileSync(trackerPath, JSON.stringify(tracker, null, 2));
+        console.log(`\n✅ Marked ${task.id} as completed`);
+      }
+    } catch (error) {
+      console.log(`\n⚠️  Failed to mark task as completed: ${error.message}`);
+      console.log('   You may need to manually update TASK-TRACKER.json\n');
     }
   }
 
