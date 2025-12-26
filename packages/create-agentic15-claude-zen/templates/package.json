@@ -4,7 +4,7 @@
   "description": "Project with Claude Code structured development framework",
   "type": "commonjs",
   "scripts": {
-    "test": "jest"
+    "test": "jest --passWithNoTests"
   },
   "keywords": [
     "claude-code",

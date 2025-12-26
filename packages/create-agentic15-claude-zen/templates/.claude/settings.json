@@ -9,10 +9,6 @@
       "Bash(git log*)",
       "Bash(git diff*)",
       "Bash(git branch*)",
-      "Bash(git checkout main)",
-      "Bash(git add *)",
-      "Bash(git commit*)",
-      "Bash(git push*)",
       "Edit(./Agent/**)",
       "Write(./Agent/**)",
       "Edit(./scripts/**)",
@@ -164,6 +160,15 @@
       }
     ],
     "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/require-active-task.js"
+          }
+        ]
+      },
       {
         "matcher": "*",
         "hooks": [
