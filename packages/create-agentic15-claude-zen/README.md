@@ -32,6 +32,7 @@ Start Claude Code CLI from inside the `my-project` directory. Claude Code MUST b
 npx agentic15 auth                         # One-time GitHub setup
 npx agentic15 plan                         # Enter interactive mode
 # Type/paste your requirements, press Ctrl+D when done
+# Open another terminal. Make sure that you in your project directory. Launch Claude
 # Ask Claude: "Read the requirements file and generate a task breakdown plan"
 npx agentic15 task next                    # Start first task
 # Ask Claude: "Implement this task"
