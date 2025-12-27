@@ -18,15 +18,15 @@
     "ask": [
       "Edit(./package.json)",
       "Edit(./tsconfig.json)",
-      "Write(./config/**)"
-    ],
-    "deny": [
+      "Write(./config/**)",
       "Edit(**/*.md)",
       "Write(**/*.md)",
       "Edit(./docs/**)",
       "Write(./docs/**)",
       "Edit(./README.md)",
-      "Edit(./CHANGELOG.md)",
+      "Edit(./CHANGELOG.md)"
+    ],
+    "deny": [
       "Edit(./.env*)",
       "Write(./.env*)",
       "Edit(./.claude/PROJECT-PLAN.json)",
