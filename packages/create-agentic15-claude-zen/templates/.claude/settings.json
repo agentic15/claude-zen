@@ -18,7 +18,6 @@
     "ask": [
       "Edit(./package.json)",
       "Edit(./tsconfig.json)",
-      "Edit(./jest.config.*)",
       "Write(./config/**)"
     ],
     "deny": [
@@ -59,7 +58,6 @@
       "Bash(node ./Agent/db/**)",
       "Bash(bash ./scripts/**)",
       "Bash(sh ./scripts/**)",
-      "Bash(git checkout -b:*)",
       "WebFetch",
       "WebSearch"
     ]
@@ -84,64 +82,6 @@
     "repo": null,
     "comment": "GitHub Issues integration. Configure in .claude/settings.local.json or via environment variables (GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO). Owner/repo auto-detected from git remote if not set."
   },
-  "testing": {
-    "ui": {
-      "strictMode": true,
-      "requireTestFile": true,
-      "requireImport": true,
-      "requireRender": true,
-      "requireProps": true,
-      "requireEventTests": true,
-      "requireApiMocking": true,
-      "requireStateTests": true,
-      "requireFormTests": true,
-      "requireConditionalTests": true,
-      "requireIntegrationSite": true,
-      "integrationSiteDir": "test-site",
-      "conditionalThreshold": 3,
-      "requireVisualCheck": true,
-      "requireContract": false,
-      "comment": "⚠️  ALL UI testing requirements are HARD REQUIREMENTS (cannot be disabled). Commits will be blocked if any requirement is violated."
-    },
-    "visual": {
-      "enabled": true,
-      "strictMode": false,
-      "autoApprove": false,
-      "requireBaseline": true,
-      "pixelMatchThreshold": 0.1,
-      "diffThreshold": 1.0,
-      "browsers": ["chromium"],
-      "viewports": [
-        {
-          "name": "desktop",
-          "width": 1920,
-          "height": 1080,
-          "deviceScaleFactor": 1
-        },
-        {
-          "name": "tablet",
-          "width": 768,
-          "height": 1024,
-          "deviceScaleFactor": 2
-        },
-        {
-          "name": "mobile",
-          "width": 375,
-          "height": 667,
-          "deviceScaleFactor": 2
-        }
-      ],
-      "excludePatterns": [
-        "**/node_modules/**",
-        "**/dist/**",
-        "**/build/**"
-      ],
-      "baselineDir": ".claude/visual-baselines",
-      "diffDir": ".claude/visual-diffs",
-      "tempDir": ".claude/visual-temp",
-      "comment": "Visual regression testing configuration. Triggers on UI component changes (.tsx, .jsx, .vue, .svelte). Set enabled:false to disable."
-    }
-  },
   "hooks": {
     "SessionStart": [
       {
@@ -165,31 +105,11 @@
         ]
       },
       {
-        "matcher": "*",
+        "matcher": "Write(./.claude/PROJECT-PLAN.json)",
         "hooks": [
           {
             "type": "command",
             "command": "node .claude/hooks/enforce-plan-template.js"
-          }
-        ]
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node .claude/hooks/validate-git-workflow.js"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Bash(git:*)",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node .claude/hooks/post-merge.js"
           }
         ]
       }

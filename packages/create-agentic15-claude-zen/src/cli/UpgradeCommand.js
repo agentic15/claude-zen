@@ -73,7 +73,10 @@ export class UpgradeCommand {
       console.log('   - .claude/ACTIVE-PLAN (current plan)');
       console.log('   - .claude/settings.local.json (local settings)');
       console.log('   - Agent/ (your source code)');
-      console.log('   - test-site/ (your test site)\n');
+      console.log('   - scripts/ (your scripts)');
+      console.log('   - test-site/ (your test site)');
+      console.log('   - package.json (your project config)');
+      console.log('   - README.md (your documentation)\n');
       console.log('💾 Backup location: .claude.backup/\n');
       console.log('═'.repeat(70) + '\n');
     } catch (error) {
@@ -118,10 +121,9 @@ export class UpgradeCommand {
     const filesToUpdate = [
       'hooks/complete-task.js',
       'hooks/enforce-plan-template.js',
-      'hooks/post-merge.js',
+      'hooks/require-active-task.js',
       'hooks/session-start-context.js',
       'hooks/start-task.js',
-      'hooks/validate-git-workflow.js',
       'PLAN-SCHEMA.json',
       'PROJECT-PLAN-TEMPLATE.json',
       'POST-INSTALL.md',
