@@ -1,6 +1,6 @@
 {
   "name": "@agentic15.com/agentic15-claude-zen",
-  "version": "4.0.0",
+  "version": "4.0.2",
   "description": "Structured AI-assisted development framework for Claude Code with enforced quality standards",
   "main": "src/index.js",
   "bin": {

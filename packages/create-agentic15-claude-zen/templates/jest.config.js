@@ -18,10 +18,10 @@ module.exports = {
   // Support JS, JSX, TS, TSX file extensions
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json'],
 
-  // Find test files in tests/ directory
+  // Find test files in Agent/tests/ directory only (not node_modules)
   testMatch: [
-    '**/tests/**/*.test.{js,jsx,ts,tsx}',
-    '**/tests/**/*.spec.{js,jsx,ts,tsx}',
+    '<rootDir>/Agent/tests/**/*.test.{js,jsx,ts,tsx}',
+    '<rootDir>/Agent/tests/**/*.spec.{js,jsx,ts,tsx}',
   ],
 
   // Coverage collection
