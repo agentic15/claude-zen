@@ -11,6 +11,6 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@agentic15.com/agentic15-claude-zen": "^2.0.0"
+    "@agentic15.com/agentic15-claude-zen": "^4.1.1"
   }
 }
