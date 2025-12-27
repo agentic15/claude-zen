@@ -40,8 +40,6 @@
       "Bash(gh:*)",
       "Bash(npm run task:*)",
       "Bash(npm run plan:*)",
-      "Bash(curl:*)",
-      "Bash(wget:*)",
       "Bash(rm -rf:*)",
       "Bash(sudo:*)",
       "Bash(npm install:*)",
