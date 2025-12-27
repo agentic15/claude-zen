@@ -34,8 +34,6 @@
       "Edit(./.claude/hooks/**)",
       "Write(./.claude/hooks/**)",
       "Edit(./.claude/TASK-TRACKER.json)",
-      "Read(./.claude/POST-INSTALL.md)",
-      "Read(./docs/**)",
       "Bash(agentic15:*)",
       "Bash(npx agentic15:*)",
       "Bash(git:*)",
