@@ -1,50 +1,58 @@
 # Agentic15 Claude Zen
 
-AI-Assisted Development Framework with Automated Workflows
+**Structured AI-Assisted Development Framework for Claude Code**
 
 [![npm version](https://badge.fury.io/js/@agentic15.com%2Fagentic15-claude-zen.svg)](https://www.npmjs.com/package/@agentic15.com/agentic15-claude-zen)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ---
 
+## Overview
+
+Agentic15 Claude Zen is a structured development framework designed to work seamlessly with Claude Code. It provides task tracking, workflow structure, and GitHub integration without enforcing rigid testing requirements.
+
+**Philosophy:** Structure, not enforcement. The framework provides commands and organization, while Claude decides when tests are appropriate.
+
+---
+
 ## Quick Start
 
-**Step 1: Create Project**
+### 1. Create Project
+
+**Bash/Mac/Linux:**
 ```bash
-# Bash/Mac/Linux
 npx @agentic15.com/agentic15-claude-zen my-project
-
-# PowerShell (Windows)
-npx "@agentic15.com/agentic15-claude-zen" my-project
-```
-
-**Step 2: Navigate Into Project**
-```bash
 cd my-project
 ```
 
-**Step 3: Initialize Git and Link to GitHub**
+**PowerShell (Windows):**
+```powershell
+npx "@agentic15.com/agentic15-claude-zen" my-project
+cd my-project
+```
+
+### 2. Initialize Git and Link to GitHub
 
 ```bash
-# Initialize git (if not already done)
+# Initialize git repository
 git init
-git branch -M main  # Rename master to main
+git branch -M main
 git add .
 git commit -m "Initial commit"
 
 # Create GitHub repository and link it
-gh repo create OWNER/REPO --public  # or --private
+gh repo create OWNER/REPO --public
 git remote add origin https://github.com/OWNER/REPO.git
 git push -u origin main
 ```
 
-Replace `OWNER/REPO` with your GitHub username and repository name (e.g., `myusername/my-project`).
+> **Note:** Replace `OWNER/REPO` with your GitHub username and repository name (e.g., `myusername/my-project`).
 
-> **REQUIRED**: This step is mandatory. The framework needs a GitHub remote to create issues and pull requests.
+> **Required:** This step is mandatory. The framework needs a GitHub remote to create issues and pull requests.
 
-**Step 4: Configure Repository Settings (Recommended)**
+### 3. Configure Repository Settings (Optional)
 
-**For Bash/Mac/Linux:**
+**Bash/Mac/Linux:**
 ```bash
 # Prevent direct pushes to main - require PRs for all changes
 cat > /tmp/protection.json << 'EOF'
@@ -70,7 +78,7 @@ gh api repos/OWNER/REPO -X PATCH \
   -f delete_branch_on_merge=true
 ```
 
-**For PowerShell (Windows):**
+**PowerShell (Windows):**
 ```powershell
 # Prevent direct pushes to main - require PRs for all changes
 $body = @"
@@ -92,96 +100,168 @@ echo $body | gh api repos/OWNER/REPO/branches/main/protection -X PUT -H "Accept:
 gh api repos/OWNER/REPO -X PATCH -H "Accept: application/vnd.github+json" -f delete_branch_on_merge=true
 ```
 
-Replace `OWNER/REPO` with your GitHub username and repository name.
+### 4. Start Using the Framework
 
-
-**Step 5: Use Framework Commands**
 ```bash
-npx agentic15 auth                         # One-time GitHub setup
-npx agentic15 plan                         # Enter interactive mode
-# Type/paste your requirements, press Ctrl+D when done
+# Configure GitHub authentication (one-time setup)
+npx agentic15 auth
+
+# Create a project plan
+npx agentic15 plan "Build a todo app with add, remove, and list features"
+
+# Start the first task
+npx agentic15 task next
 ```
 
+### 5. Development Workflow
 
-**Step 6: Launch Claude Code in Another Terminal**
+**In Claude Code Terminal:**
+1. Ask Claude: "Implement the active task"
+2. Claude writes code in `Agent/` directory
 
-# Open another terminal. Make sure that you in your project directory. Launch Claude
-Start Claude Code CLI from inside the `my-project` directory. Claude Code MUST be running from inside your project directory to access the framework files.
-# Ask Claude: "Read the requirements file and generate a task breakdown plan"
-
-
-**Step 7: User Termianl and Not Claude Terminal**
-```
-npx agentic15 plan                         # Generate Task Files and Lock Plan
-npx agentic15 task next                    # Start first task
-```
-
-**Step 8: Claude Terminal**
-# Ask Claude: "Implement this Active task"
-
-**Step 9: User Termianl Not Claude Terminal**
-```
-npx agentic15 commit                       # Test, commit, push, PR
-```
-
-
-**Step 10: Clean Up Local Branches**
+**In Your Terminal:**
 ```bash
-# If auto-delete is enabled, only clean up local branches
-git branch -d feature/task-001
-
-# For repositories without auto-delete, also delete remote
-git push origin --delete feature/task-001
+# When task is complete
+npx agentic15 commit
+# This will: stage changes, commit, push, and create PR
 ```
 
-**See [WORKFLOWS.md](WORKFLOWS.md) for complete workflows.**
+**On GitHub:**
+1. Review and merge the PR
+2. Continue to next task:
 
----
-
-## What It Does
-
-**6 Commands:**
-- `npx agentic15 plan` - Generate and lock plans
-- `npx agentic15 task next` - Start next task
-- `npx agentic15 commit` - Test + commit + push + PR
-- `npx agentic15 visual-test <url>` - Capture screenshots & console errors
-- `npx agentic15 status` - Check progress
-- `npm test` - Run tests
-
-**Automates:**
-- Feature branches (`feature/task-001`)
-- Commit messages (`[TASK-001] Task title`)
-- GitHub push
-- Pull requests
-- Issue tracking
-
-**Workflow:**
-```
-plan → task → code → test → commit → PR → merge → repeat
+```bash
+npx agentic15 task next
 ```
 
 ---
 
-## Documentation
+## Core Features
 
-- **[WORKFLOWS.md](WORKFLOWS.md)** - Complete workflows with diagrams
-- **[CHANGELOG.md](CHANGELOG.md)** - Version history
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `npx agentic15 plan` | Generate and lock project plan |
+| `npx agentic15 task next` | Start next pending task |
+| `npx agentic15 task start TASK-XXX` | Start specific task |
+| `npx agentic15 task status` | View current progress |
+| `npx agentic15 commit` | Commit, push, and create PR |
+| `npx agentic15 visual-test <url>` | Capture UI screenshots and console errors |
+| `npx agentic15 upgrade` | Update framework files |
+| `npx agentic15 auth` | Configure GitHub authentication |
+
+### Workflow Automation
+
+The framework automates:
+- **Feature branches:** `feature/task-001`, `feature/task-002`, etc.
+- **Commit messages:** `[TASK-001] Task title`
+- **GitHub push:** Automatic push to remote
+- **Pull requests:** Auto-generated with task details
+- **Issue tracking:** Optional GitHub Issues integration
+
+### Standard Workflow
+
+```
+plan → task → code → commit → PR → merge → next task
+```
+
+---
+
+## Project Structure
+
+```
+my-project/
+├── .claude/                    # Framework configuration
+│   ├── hooks/                  # Claude Code hooks
+│   ├── plans/                  # Project plans and tasks
+│   ├── settings.json           # Framework settings
+│   └── settings.local.json     # Local overrides (gitignored)
+├── Agent/                      # Your code workspace
+│   ├── src/                    # Source code
+│   └── tests/                  # Tests (optional)
+├── scripts/                    # Build and utility scripts
+├── test-site/                  # Integration test site (optional)
+└── package.json                # Project dependencies
+```
+
+---
+
+## GitHub Integration
+
+### Optional Configuration
+
+Create `.claude/settings.local.json`:
+```json
+{
+  "github": {
+    "token": "ghp_xxxxxxxxxxxxx",
+    "owner": "your-username",
+    "repo": "your-repo"
+  }
+}
+```
+
+Or use environment variables:
+```bash
+export GITHUB_TOKEN="ghp_xxxxxxxxxxxxx"
+export GITHUB_OWNER="your-username"
+export GITHUB_REPO="your-repo"
+```
+
+### Features
+- **Auto-create issues:** When starting tasks
+- **Auto-update issues:** When creating PRs
+- **Auto-close issues:** When merging to main (optional)
 
 ---
 
 ## Requirements
 
-- Node.js 18+
-- Git
-- GitHub account
-- GitHub CLI (`gh`)
+- **Node.js:** 18.0.0 or higher
+- **Git:** Any recent version
+- **GitHub CLI:** `gh` command-line tool
+- **GitHub Account:** For issue and PR management
+
+---
+
+## Documentation
+
+- **[CHANGELOG.md](CHANGELOG.md)** - Version history and release notes
+
+---
+
+## Philosophy
+
+**Structure, Not Enforcement**
+
+The framework provides:
+- ✅ Task tracking and organization
+- ✅ Consistent workflow structure
+- ✅ GitHub integration
+- ✅ Manual UI testing tools
+
+The framework does NOT enforce:
+- ❌ Mandatory testing
+- ❌ Specific test frameworks
+- ❌ CI/CD requirements
+- ❌ Code quality gates
+
+**You decide:** When to write tests, what tools to use, and how to ensure quality. The framework provides structure and tools, not rigid rules.
+
+---
+
+## Support
+
+- **Issues:** https://github.com/agentic15/claude-zen/issues
+- **Documentation:** https://github.com/agentic15/claude-zen
 
 ---
 
 ## License
 
-Apache 2.0 - See [LICENSE](LICENSE)
+Apache 2.0 - See [LICENSE](LICENSE) file for details.
 
 ---
 
-**Support:** https://github.com/agentic15/claude-zen/issues
+**Made with ❤️ for Claude Code developers**
