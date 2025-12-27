@@ -46,7 +46,7 @@ if (fs.existsSync(activePlanFile)) {
 }
 
 console.log('\n' + '═'.repeat(70));
-log('🎯 GL-LIFE-CLAUDE-ZEN WORKFLOW - SESSION START', 'bold');
+log('🎯 AGENTIC15-CLAUDE-ZEN WORKFLOW - SESSION START', 'bold');
 console.log('═'.repeat(70) + '\n');
 
 // Display active context
@@ -56,17 +56,20 @@ if (activePlan && tracker) {
   log(`   Plan: ${activePlan}`, 'cyan');
   log(`   Location: .claude/plans/${activePlan}/`, 'cyan');
 
-  if (tracker.activeTask) {
-    const taskFile = path.join(planDir, 'tasks', `${tracker.activeTask}.json`);
+  // Find task with in_progress status
+  const inProgressTask = tracker.taskFiles.find(t => t.status === 'in_progress');
+
+  if (inProgressTask) {
+    const taskFile = path.join(planDir, 'tasks', `${inProgressTask.id}.json`);
     if (fs.existsSync(taskFile)) {
       const task = JSON.parse(fs.readFileSync(taskFile, 'utf8'));
-      log(`\n   Active Task: ${tracker.activeTask}`, 'yellow');
+      log(`\n   🔄 TASK IN PROGRESS: ${inProgressTask.id}`, 'yellow');
       log(`   Title: ${task.title}`, 'yellow');
-      log(`   Status: ${task.status}`, 'yellow');
       log(`   Description: ${task.description}`, 'yellow');
+      log(`\n   ⚠️  COMPLETE THIS TASK FIRST: npx agentic15 commit`, 'red');
     }
   } else {
-    log('\n   ⚠️  No active task - start one:', 'yellow');
+    log('\n   ✓ No task in progress - start next:', 'yellow');
     log('   npx agentic15 task next', 'yellow');
   }
 
@@ -85,15 +88,14 @@ if (activePlan && tracker) {
 }
 
 console.log('─'.repeat(70));
-log('📖 MANDATORY WORKFLOW RULES:', 'bold');
+log('📖 MANDATORY WORKFLOW RULES - NO EXCEPTIONS:', 'bold');
 console.log('─'.repeat(70));
 log('   1. NO work without active plan + task', 'cyan');
-log('   2. Work ONLY on main branch (no feature branches)', 'cyan');
+log('   2. ONE task at a time - complete before starting next', 'cyan');
 log('   3. Edit ONLY ./Agent/** and ./scripts/** directories', 'cyan');
-log('   4. Follow 9-step task completion checklist', 'cyan');
-log('   5. Follow TDD: write tests first, then code', 'cyan');
-log('   6. Commit with task ID: [TASK-XXX] Description', 'cyan');
-log('   7. Push regularly: git push origin main', 'cyan');
+log('   4. Commit workflow: stage → commit → push → PR', 'cyan');
+log('   5. Use feature branches (feature/task-xxx)', 'cyan');
+log('   6. Testing is optional - structure, not enforcement', 'cyan');
 
 console.log('\n' + '─'.repeat(70));
 log('📂 DIRECTORY STRUCTURE:', 'bold');
@@ -101,28 +103,29 @@ console.log('─'.repeat(70));
 log('   ./Agent/                    # Your workspace (EDIT HERE)', 'green');
 log('   ./scripts/                  # Your scripts (EDIT HERE)', 'green');
 log('   ./.claude/                  # Framework files (READ ONLY)', 'yellow');
-log('   ./node_modules/.agentic15-claude-zen/  # Bundled scripts & hooks', 'yellow');
 
 console.log('\n' + '─'.repeat(70));
 log('📋 AVAILABLE COMMANDS:', 'bold');
 console.log('─'.repeat(70));
 log('   npx agentic15 plan              # Generate and lock plan', 'cyan');
-log('   npx agentic15 task next         # Start next task', 'cyan');
-log('   npx agentic15 status            # View progress', 'cyan');
-log('   npx agentic15 commit            # Test, commit, push, PR', 'cyan');
+log('   npx agentic15 task start TASK-XXX  # Start specific task', 'cyan');
+log('   npx agentic15 task next         # Start next pending task', 'cyan');
+log('   npx agentic15 task status       # View progress', 'cyan');
+log('   npx agentic15 commit            # Commit, push, create PR', 'cyan');
 log('   npx agentic15 visual-test <url> # Capture UI screenshots', 'cyan');
+log('   npx agentic15 upgrade           # Update framework files', 'cyan');
 
 console.log('\n' + '─'.repeat(70));
-log('⚠️  ENFORCEMENT ACTIVE:', 'bold');
+log('⚠️  CRITICAL: NEVER OFFER TO SKIP WORKFLOW STEPS', 'bold');
 console.log('─'.repeat(70));
-log('   • Hooks BLOCK operations that violate rules', 'red');
-log('   • Permission system DENIES dangerous commands', 'red');
-log('   • All work requires active task (enforced)', 'red');
-log('   • Tests must pass before commit (enforced)', 'red');
-log('   • Direct main branch workflow (enforced)', 'red');
+log('   • If task is in_progress, complete it first (agentic15 commit)', 'red');
+log('   • NEVER ask "continue with next task or commit first?"', 'red');
+log('   • NEVER offer options that violate one-task-at-a-time rule', 'red');
+log('   • Framework enforces workflow - follow it, do not bypass it', 'red');
+log('   • Settings should lead to ONE conclusion, not options', 'red');
 
 console.log('\n' + '═'.repeat(70));
-log('📖 Read .claude/ONBOARDING.md for complete workflow details', 'bold');
+log('📖 Read .claude/POST-INSTALL.md for complete workflow details', 'bold');
 console.log('═'.repeat(70) + '\n');
 
 process.exit(0);

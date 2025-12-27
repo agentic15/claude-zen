@@ -121,10 +121,9 @@ export class UpgradeCommand {
     const filesToUpdate = [
       'hooks/complete-task.js',
       'hooks/enforce-plan-template.js',
-      'hooks/post-merge.js',
+      'hooks/require-active-task.js',
       'hooks/session-start-context.js',
       'hooks/start-task.js',
-      'hooks/validate-git-workflow.js',
       'PLAN-SCHEMA.json',
       'PROJECT-PLAN-TEMPLATE.json',
       'POST-INSTALL.md',
