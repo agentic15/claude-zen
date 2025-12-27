@@ -267,6 +267,11 @@ export class CommitCommand {
       if (taskInTracker) {
         taskInTracker.status = 'completed';
         taskInTracker.completedAt = new Date().toISOString();
+
+        // Clear active task and update statistics
+        tracker.activeTask = null;
+        this.updateStatistics(tracker);
+
         writeFileSync(trackerPath, JSON.stringify(tracker, null, 2));
         console.log(`\n✅ Marked ${task.id} as completed`);
       }
@@ -274,6 +279,20 @@ export class CommitCommand {
       console.log(`\n⚠️  Failed to mark task as completed: ${error.message}`);
       console.log('   You may need to manually update TASK-TRACKER.json\n');
     }
+  }
+
+  static updateStatistics(tracker) {
+    const completed = tracker.taskFiles.filter(t => t.status === 'completed').length;
+    const inProgress = tracker.taskFiles.filter(t => t.status === 'in_progress').length;
+    const pending = tracker.taskFiles.filter(t => t.status === 'pending').length;
+    const totalTasks = tracker.taskFiles.length;
+
+    tracker.statistics = {
+      totalTasks,
+      completed,
+      inProgress,
+      pending
+    };
   }
 
   static displaySummary(task, prUrl, tracker) {

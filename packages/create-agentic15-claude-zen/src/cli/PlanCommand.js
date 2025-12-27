@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
-import { join } from 'path';
+import { join, basename } from 'path';
 import readline from 'readline';
 
 export class PlanCommand {
@@ -187,9 +187,18 @@ GENERATED: ${new Date().toISOString()}
       });
 
       // Create task tracker
+      const projectName = basename(process.cwd());
       const tracker = {
         planId,
+        projectName,
+        activeTask: null,
         lockedAt: new Date().toISOString(),
+        statistics: {
+          totalTasks: tasks.length,
+          completed: 0,
+          inProgress: 0,
+          pending: tasks.length
+        },
         taskFiles: tasks.map(task => ({
           id: task.id,
           title: task.title,

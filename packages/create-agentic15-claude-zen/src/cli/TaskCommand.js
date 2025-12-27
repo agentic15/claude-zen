@@ -70,6 +70,10 @@ export class TaskCommand {
     // Update task status
     task.status = 'in_progress';
     task.startedAt = new Date().toISOString();
+
+    // Update tracker metadata
+    tracker.activeTask = task.id;
+    this.updateStatistics(tracker);
     this.saveTracker(tracker);
 
     // Create GitHub issue if enabled
@@ -244,6 +248,20 @@ export class TaskCommand {
     const trackerPath = join(process.cwd(), '.claude', 'plans', planId, 'TASK-TRACKER.json');
 
     writeFileSync(trackerPath, JSON.stringify(tracker, null, 2));
+  }
+
+  static updateStatistics(tracker) {
+    const completed = tracker.taskFiles.filter(t => t.status === 'completed').length;
+    const inProgress = tracker.taskFiles.filter(t => t.status === 'in_progress').length;
+    const pending = tracker.taskFiles.filter(t => t.status === 'pending').length;
+    const totalTasks = tracker.taskFiles.length;
+
+    tracker.statistics = {
+      totalTasks,
+      completed,
+      inProgress,
+      pending
+    };
   }
 
   static getTaskPath(taskId) {
