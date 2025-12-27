@@ -51,7 +51,10 @@
       "Bash(gh pr edit:*)",
       "Bash(npm run sync-readme:*)",
       "Bash(npm run test:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(git fetch:*)",
+      "Bash(git merge:*)",
+      "Bash(git rm:*)"
     ]
   }
 }

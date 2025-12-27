@@ -57,9 +57,6 @@ export class TemplateManager {
     // Copy .gitignore (npm may rename it)
     this.copyGitignore(targetDir);
 
-    // Copy test-site
-    this.copyDirectory('test-site', targetDir);
-
     // Copy Agent directory
     this.copyDirectory('Agent', targetDir);
 

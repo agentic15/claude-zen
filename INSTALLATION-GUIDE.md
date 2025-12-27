@@ -38,20 +38,6 @@ my-project/
 ├── scripts/                                    # Build and utility scripts
 │   └── .gitkeep                                # Placeholder to ensure directory is tracked
 │
-├── test-site/                                  # Integration test site (optional)
-│   ├── src/
-│   │   ├── App.css                             # Test app styles
-│   │   ├── App.jsx                             # Test app component
-│   │   ├── index.css                           # Global styles
-│   │   └── main.jsx                            # Entry point
-│   │
-│   ├── .gitignore                              # Test site gitignore
-│   ├── index.html                              # HTML template
-│   ├── package.json                            # Test site dependencies
-│   ├── README.md                               # Test site documentation
-│   ├── server.js                               # Development server
-│   └── vite.config.js                          # Vite configuration
-│
 ├── .gitignore                                  # Project gitignore
 ├── package.json                                # Project dependencies
 └── README.md                                   # Project documentation
@@ -113,22 +99,6 @@ scripts/
 ├── build.sh          # Build script
 ├── deploy.sh         # Deployment script
 └── .gitkeep          # Placeholder
-```
-
-### `test-site/` Directory (Integration Testing)
-
-Optional Vite + React test site for manual UI testing.
-
-**Usage:**
-```bash
-cd test-site
-npm install
-npm run dev
-```
-
-Then use:
-```bash
-npx agentic15 visual-test http://localhost:5173
 ```
 
 ### Root Files
@@ -231,10 +201,9 @@ npx agentic15 upgrade
 | Claude Code Hooks | 5 | Workflow enforcement and context |
 | Framework Config | 5 | Settings, schemas, templates |
 | GitHub Templates | 2 | Issue and PR templates |
-| Test Site | 10 | Optional integration testing |
 | Project Root | 3 | Gitignore, package.json, README |
 | Placeholders | 2 | .gitkeep files for empty dirs |
-| **Total** | **27** | **Complete project structure** |
+| **Total** | **17** | **Minimal project structure** |
 
 ---
 
@@ -250,12 +219,11 @@ npx agentic15 upgrade
 
 3. **Optional Features:**
    - GitHub integration (configure in `.claude/settings.local.json`)
-   - Test site (delete `test-site/` if not needed)
-   - Visual testing (use `npx agentic15 visual-test` when needed)
+   - Visual testing (use `npx agentic15 visual-test <url>` with any URL)
 
 4. **Upgradeable:** Run `npx agentic15 upgrade` to update framework files without affecting your code.
 
 ---
 
-**Package Version:** 4.0.5
+**Package Version:** 4.1.0
 **Last Updated:** 2025-12-27
