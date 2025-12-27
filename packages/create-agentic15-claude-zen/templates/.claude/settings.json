@@ -56,9 +56,7 @@
       "Bash(node ./scripts/**)",
       "Bash(node ./Agent/db/**)",
       "Bash(bash ./scripts/**)",
-      "Bash(sh ./scripts/**)",
-      "WebFetch",
-      "WebSearch"
+      "Bash(sh ./scripts/**)"
     ]
   },
   "sandbox": {
