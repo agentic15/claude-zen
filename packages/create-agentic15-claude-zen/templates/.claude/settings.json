@@ -37,6 +37,7 @@
       "Read(./.claude/POST-INSTALL.md)",
       "Read(./docs/**)",
       "Bash(agentic15:*)",
+      "Bash(npx agentic15:*)",
       "Bash(git:*)",
       "Bash(gh:*)",
       "Bash(npm run task:*)",
