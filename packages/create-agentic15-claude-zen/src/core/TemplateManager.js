@@ -66,14 +66,6 @@ export class TemplateManager {
     // Copy scripts directory
     this.copyDirectory('scripts', targetDir);
 
-    // Copy Jest configuration files
-    this.copySingleFile('jest.config.js', targetDir);
-    this.copySingleFile('jest.setup.js', targetDir);
-    this.copySingleFile('.babelrc', targetDir);
-
-    // Copy __mocks__ directory
-    this.copyDirectory('__mocks__', targetDir);
-
     console.log('✅ Framework structure created');
     console.log('✅ Templates copied');
     console.log('✅ Configuration files generated');
