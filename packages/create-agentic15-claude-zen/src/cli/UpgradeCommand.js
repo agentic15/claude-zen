@@ -73,7 +73,10 @@ export class UpgradeCommand {
       console.log('   - .claude/ACTIVE-PLAN (current plan)');
       console.log('   - .claude/settings.local.json (local settings)');
       console.log('   - Agent/ (your source code)');
-      console.log('   - test-site/ (your test site)\n');
+      console.log('   - scripts/ (your scripts)');
+      console.log('   - test-site/ (your test site)');
+      console.log('   - package.json (your project config)');
+      console.log('   - README.md (your documentation)\n');
       console.log('💾 Backup location: .claude.backup/\n');
       console.log('═'.repeat(70) + '\n');
     } catch (error) {
