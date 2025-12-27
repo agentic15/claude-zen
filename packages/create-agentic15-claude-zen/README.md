@@ -181,7 +181,6 @@ my-project/
 │   ├── src/                    # Source code
 │   └── tests/                  # Tests (optional)
 ├── scripts/                    # Build and utility scripts
-├── test-site/                  # Integration test site (optional)
 └── package.json                # Project dependencies
 ```
 
