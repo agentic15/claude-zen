@@ -9,9 +9,31 @@
 
 ## Overview
 
+<table>
+<tr>
+<td width="50%">
+
+### What is Agentic15 Claude Zen?
+
 Agentic15 Claude Zen is a structured development framework designed to work seamlessly with Claude Code. It provides task tracking, workflow structure, and GitHub integration without enforcing rigid testing requirements.
 
 **Philosophy:** Structure, not enforcement. The framework provides commands and organization, while Claude decides when tests are appropriate.
+
+</td>
+<td width="50%">
+
+### Key Benefits
+
+- ✅ **Task tracking** and organization
+- ✅ **Consistent workflow** structure
+- ✅ **GitHub integration** with automated PRs
+- ✅ **Manual UI testing** tools
+- ✅ **Flexible** - no mandatory testing
+- ✅ **Claude Code optimized** hooks
+
+</td>
+</tr>
+</table>
 
 ---
 
@@ -39,6 +61,10 @@ Agentic15 Claude Zen is a structured development framework designed to work seam
 
 ## Core Features
 
+<table>
+<tr>
+<td width="50%">
+
 ### Commands
 
 | Command | Description |
@@ -51,6 +77,9 @@ Agentic15 Claude Zen is a structured development framework designed to work seam
 | `npx agentic15 sync` | Sync with main branch after PR merge |
 | `npx agentic15 visual-test <url>` | Capture UI screenshots and console errors |
 | `npx agentic15 auth` | Configure GitHub authentication |
+
+</td>
+<td width="50%">
 
 ### Workflow Automation
 
@@ -67,38 +96,51 @@ The framework automates:
 plan → task → code → commit → PR → merge → sync → next task
 ```
 
+</td>
+</tr>
+</table>
+
 ---
 
 ## Project Structure
+
+<table>
+<tr>
+<td width="50%">
+
+### Directory Layout
 
 ```
 my-project/
 ├── node_modules/
 │   └── @agentic15.com/agentic15-claude-zen/
-│       └── framework/          # Framework files (hooks, schemas, templates)
+│       └── framework/          # Framework files
 │           ├── hooks/          # Claude Code hooks
 │           ├── settings.json   # Framework settings
 │           ├── PLAN-SCHEMA.json
 │           ├── PROJECT-PLAN-TEMPLATE.json
 │           └── POST-INSTALL.md
-├── .claude/                    # User-generated content only
+├── .claude/                    # User-generated content
 │   ├── ACTIVE-PLAN             # Current active plan
-│   ├── plans/                  # Your project plans and tasks
+│   ├── plans/                  # Your project plans
 │   │   └── {planId}/
 │   │       ├── TASK-TRACKER.json
 │   │       └── tasks/
-│   ├── settings.json           # References framework in node_modules
-│   └── settings.local.json     # Local overrides (optional, gitignored)
+│   ├── settings.json           # References framework
+│   └── settings.local.json     # Local overrides
 ├── Agent/                      # Your code workspace
 │   ├── src/                    # Source code
 │   └── tests/                  # Tests (optional)
-├── scripts/                    # Build and utility scripts
+├── scripts/                    # Build utilities
 └── package.json                # Project dependencies
 ```
 
+</td>
+<td width="50%">
+
 ### Framework Upgrades
 
-Framework files live in `node_modules` and are automatically updated when you upgrade the package:
+Framework files live in `node_modules` and are automatically updated:
 
 ```bash
 # Upgrade to latest version
@@ -118,9 +160,17 @@ npm install @agentic15.com/agentic15-claude-zen@5.0.0
 - ✅ Your plans and tasks in `.claude/plans/`
 - ✅ Your local settings in `.claude/settings.local.json`
 
+</td>
+</tr>
+</table>
+
 ---
 
 ## GitHub Integration
+
+<table>
+<tr>
+<td width="50%">
 
 ### Authentication
 
@@ -136,6 +186,11 @@ This command will:
 2. Run `gh auth login` if not already authenticated
 3. Auto-detect your repository owner/repo from git remote
 4. Save configuration to `.claude/settings.local.json`
+
+**Note:** Authentication is handled by `gh` CLI - no token field needed.
+
+</td>
+<td width="50%">
 
 ### Manual Configuration (Optional)
 
@@ -153,32 +208,44 @@ If you need to override the auto-detected values, create or edit `.claude/settin
 }
 ```
 
-**Note:** Authentication is handled by `gh` CLI - no token field needed.
-
 ### Features
 - **Auto-create issues:** When starting tasks
 - **Auto-update issues:** When creating PRs
 - **Auto-close issues:** When merging to main (optional)
 - **Secure authentication:** Uses `gh` CLI credentials
 
+</td>
+</tr>
+</table>
+
 ---
 
-## Requirements
+## Requirements & Philosophy
+
+<table>
+<tr>
+<td width="50%">
+
+### Requirements
 
 - **Node.js:** 18.0.0 or higher
 - **Git:** Any recent version
 - **GitHub CLI:** `gh` command-line tool
 - **GitHub Account:** For issue and PR management
 
----
-
-## Documentation
+### Documentation
 
 - **[CHANGELOG.md](CHANGELOG.md)** - Version history and release notes
 
----
+### Support
 
-## Philosophy
+- **Issues:** https://github.com/agentic15/claude-zen/issues
+- **Documentation:** https://github.com/agentic15/claude-zen
+
+</td>
+<td width="50%">
+
+### Philosophy
 
 **Structure, Not Enforcement**
 
@@ -196,12 +263,9 @@ The framework does NOT enforce:
 
 **You decide:** When to write tests, what tools to use, and how to ensure quality. The framework provides structure and tools, not rigid rules.
 
----
-
-## Support
-
-- **Issues:** https://github.com/agentic15/claude-zen/issues
-- **Documentation:** https://github.com/agentic15/claude-zen
+</td>
+</tr>
+</table>
 
 ---
 
