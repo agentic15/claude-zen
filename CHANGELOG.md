@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.7] - 2025-12-28
+
+### Fixed
+- **CRITICAL: Missing dependency** - Added `@octokit/rest` to package.json dependencies
+  - GitHub integration (GitHubClient.js) requires this package
+  - Fixes "Cannot find package '@octokit/rest'" error when running any `npx agentic15` command
+  - Users upgrading from v5.0.6 should run `npm install` to get the missing dependency
+
 ## [5.0.6] - 2025-12-28
 
 ### Added
