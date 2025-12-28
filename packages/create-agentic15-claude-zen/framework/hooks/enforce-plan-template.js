@@ -90,8 +90,8 @@ if (tool === 'Write' && filePath && filePath.includes('PROJECT-PLAN.json')) {
     console.error('\n   Validation errors:');
     errors.forEach(err => console.error(`   • ${err}`));
     console.error('\n   ✅ Use the official template:');
-    console.error('   1. Read .claude/PLAN-SCHEMA.json for structure');
-    console.error('   2. Read .claude/PROJECT-PLAN-TEMPLATE.json for format');
+    console.error('   1. Read node_modules/@agentic15.com/agentic15-claude-zen/framework/PLAN-SCHEMA.json for structure');
+    console.error('   2. Read node_modules/@agentic15.com/agentic15-claude-zen/framework/PROJECT-PLAN-TEMPLATE.json for format');
     console.error('   3. Follow the exact structure');
     console.error('\n   Required fields:');
     console.error('   - planId, projectName, description, structure, tasks');

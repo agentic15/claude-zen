@@ -9,6 +9,7 @@
       "Bash(git log:*)",
       "Bash(git diff:*)",
       "Bash(git branch:*)",
+      "Bash(npx agentic15 status:*)",
       "Edit(./Agent/**)",
       "Write(./Agent/**)",
       "Edit(./scripts/**)",
@@ -31,8 +32,6 @@
       "Write(./.env*)",
       "Edit(./.claude/PROJECT-PLAN.json)",
       "Edit(./.claude/settings.json)",
-      "Edit(./.claude/hooks/**)",
-      "Write(./.claude/hooks/**)",
       "Edit(./.claude/TASK-TRACKER.json)",
       "Bash(agentic15:*)",
       "Bash(npx agentic15:*)",
@@ -84,7 +83,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/session-start-context.js"
+            "command": "node node_modules/@agentic15.com/agentic15-claude-zen/framework/hooks/session-start-context.js"
           }
         ]
       }
@@ -95,7 +94,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/require-active-task.js"
+            "command": "node node_modules/@agentic15.com/agentic15-claude-zen/framework/hooks/require-active-task.js"
           }
         ]
       },
@@ -104,7 +103,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/enforce-plan-template.js"
+            "command": "node node_modules/@agentic15.com/agentic15-claude-zen/framework/hooks/enforce-plan-template.js"
           }
         ]
       }
