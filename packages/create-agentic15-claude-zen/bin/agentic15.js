@@ -8,6 +8,7 @@ import { StatusCommand } from '../src/cli/StatusCommand.js';
 import { PlanCommand } from '../src/cli/PlanCommand.js';
 import { UpgradeCommand } from '../src/cli/UpgradeCommand.js';
 import { VisualTestCommand } from '../src/cli/VisualTestCommand.js';
+import { SyncCommand } from '../src/cli/SyncCommand.js';
 
 const program = new Command();
 
@@ -61,5 +62,11 @@ program
   .description('Capture screenshots and console errors for UI debugging')
   .argument('<url>', 'URL to test (e.g., http://localhost:3000)')
   .action((url) => VisualTestCommand.execute(url));
+
+// Sync with remote main branch
+program
+  .command('sync')
+  .description('Switch to main branch, pull latest changes, and cleanup feature branch')
+  .action(() => SyncCommand.execute());
 
 program.parse();
