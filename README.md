@@ -50,7 +50,37 @@ git push -u origin main
 
 > **Required:** This step is mandatory. The framework needs a GitHub remote to create issues and pull requests.
 
-### 3. Configure Repository Settings (Optional)
+### 3. Create Initial Project Plan
+
+```bash
+# Configure GitHub authentication (one-time setup)
+npx agentic15 auth
+
+# Generate project plan requirements
+npx agentic15 plan "Build a todo app with add, remove, and list features"
+```
+
+**In Claude Code:**
+Ask Claude: "Create the project plan from the requirements file"
+
+Claude will read `.claude/plans/plan-001-generated/PROJECT-REQUIREMENTS.txt` and create the PROJECT-PLAN.json.
+
+**Back in your terminal:**
+```bash
+# Lock the plan (validates and creates task tracker)
+npx agentic15 plan
+
+# Commit the initial plan to main
+git add .
+git commit -m "Add initial project plan"
+git push
+```
+
+> **Important:** The initial plan must be committed directly to main before enabling branch protection in the next step.
+
+### 4. Enable Branch Protection (Recommended)
+
+Now that the initial plan is committed, enable branch protection to enforce PR-only workflow for all future changes:
 
 **Bash/Mac/Linux:**
 ```bash
@@ -100,20 +130,14 @@ echo $body | gh api repos/OWNER/REPO/branches/main/protection -X PUT -H "Accept:
 gh api repos/OWNER/REPO -X PATCH -H "Accept: application/vnd.github+json" -f delete_branch_on_merge=true
 ```
 
-### 4. Start Using the Framework
+### 5. Start Development Workflow
 
 ```bash
-# Configure GitHub authentication (one-time setup)
-npx agentic15 auth
-
-# Create a project plan
-npx agentic15 plan "Build a todo app with add, remove, and list features"
-
 # Start the first task
 npx agentic15 task next
 ```
 
-### 5. Development Workflow
+### 6. Daily Development Workflow
 
 **In Claude Code Terminal:**
 1. Ask Claude: "Implement the active task"
