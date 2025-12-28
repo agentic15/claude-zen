@@ -1,6 +1,6 @@
 {
   "name": "@agentic15.com/agentic15-claude-zen",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Structured AI-assisted development framework for Claude Code with enforced quality standards",
   "main": "src/index.js",
   "bin": {
@@ -55,7 +55,6 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@octokit/rest": "^20.0.2",
     "commander": "^12.1.0"
   },
   "devDependencies": {
