@@ -82,6 +82,20 @@ export class CommitCommand {
         // scripts/ might not exist
       }
 
+      // Stage .claude/ framework files (ACTIVE-PLAN, plans/, TASK-TRACKER updates)
+      try {
+        execSync('git add .claude/', { stdio: 'pipe' });
+      } catch (e) {
+        // .claude/ might not exist in some projects
+      }
+
+      // Stage package.json and package-lock.json if they exist
+      try {
+        execSync('git add package.json package-lock.json', { stdio: 'pipe' });
+      } catch (e) {
+        // Files might not exist or have no changes
+      }
+
       // Show what was staged
       const staged = execSync('git diff --cached --name-only', { encoding: 'utf-8' });
 
