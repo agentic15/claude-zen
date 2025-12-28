@@ -128,9 +128,14 @@ npx agentic15 commit
 
 **On GitHub:**
 1. Review and merge the PR
-2. Continue to next task:
 
+**Back in Your Terminal:**
 ```bash
+# Sync with main branch after PR merge
+npx agentic15 sync
+# This will: switch to main, pull changes, delete feature branch
+
+# Continue to next task
 npx agentic15 task next
 ```
 
@@ -147,6 +152,7 @@ npx agentic15 task next
 | `npx agentic15 task start TASK-XXX` | Start specific task |
 | `npx agentic15 task status` | View current progress |
 | `npx agentic15 commit` | Commit, push, and create PR |
+| `npx agentic15 sync` | Sync with main branch after PR merge |
 | `npx agentic15 visual-test <url>` | Capture UI screenshots and console errors |
 | `npx agentic15 upgrade` | Update framework files |
 | `npx agentic15 auth` | Configure GitHub authentication |
@@ -163,7 +169,7 @@ The framework automates:
 ### Standard Workflow
 
 ```
-plan → task → code → commit → PR → merge → next task
+plan → task → code → commit → PR → merge → sync → next task
 ```
 
 ---

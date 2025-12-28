@@ -82,11 +82,24 @@ export class CommitCommand {
         // scripts/ might not exist
       }
 
-      // Stage .claude/ framework files (ACTIVE-PLAN, plans/, TASK-TRACKER updates)
+      // Stage user-generated .claude/ files (NOT framework files)
+      // Only stage: ACTIVE-PLAN, plans/, TASK-TRACKER.json
       try {
-        execSync('git add .claude/', { stdio: 'pipe' });
+        execSync('git add .claude/ACTIVE-PLAN', { stdio: 'pipe' });
       } catch (e) {
-        // .claude/ might not exist in some projects
+        // File might not exist
+      }
+
+      try {
+        execSync('git add .claude/plans/', { stdio: 'pipe' });
+      } catch (e) {
+        // Directory might not exist
+      }
+
+      try {
+        execSync('git add .claude/TASK-TRACKER.json', { stdio: 'pipe' });
+      } catch (e) {
+        // File might not exist
       }
 
       // Stage package.json and package-lock.json if they exist
