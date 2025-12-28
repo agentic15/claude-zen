@@ -1,5 +1,5 @@
 import { execSync } from 'child_process';
-import { existsSync, writeFileSync, mkdirSync, unlinkSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync, mkdirSync, unlinkSync } from 'fs';
 import { join } from 'path';
 
 /**
@@ -32,14 +32,23 @@ export class VisualTestCommand {
 
     try {
       // Run Playwright visual test
-      this.runVisualTest(url);
+      const generatedFiles = this.runVisualTest(url);
 
       console.log('\n✅ Visual test complete');
       console.log('   Screenshots saved to: .claude/visual-test/\n');
-      console.log('💡 Next steps:');
-      console.log('   1. Review screenshots in .claude/visual-test/');
-      console.log('   2. Check console-errors.log for JavaScript errors');
-      console.log('   3. Ask Claude to analyze the visual test results\n');
+
+      // Display all generated files for easy copy-paste
+      console.log('📁 Generated Files (copy these paths for Claude):');
+      console.log('─'.repeat(60));
+      generatedFiles.forEach(file => {
+        console.log(file);
+      });
+      console.log('─'.repeat(60));
+
+      console.log('\n💡 Next steps:');
+      console.log('   1. Copy the file paths above');
+      console.log('   2. Ask Claude to analyze the visual test results');
+      console.log('   3. Paste the paths when Claude asks for them\n');
 
       process.exit(0);
     } catch (error) {
@@ -68,7 +77,7 @@ export class VisualTestCommand {
   static runVisualTest(url) {
     const testScript = `
 const { chromium } = require('playwright');
-const { writeFileSync, mkdirSync } = require('fs');
+const { writeFileSync, mkdirSync, existsSync } = require('fs');
 const { join } = require('path');
 
 (async () => {
@@ -77,6 +86,7 @@ const { join } = require('path');
 
   const consoleErrors = [];
   const consoleWarnings = [];
+  const generatedFiles = [];
 
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({
@@ -116,16 +126,20 @@ const { join } = require('path');
     await page.waitForTimeout(2000);
 
     // Capture full page screenshot
+    const fullpagePath = join(outputDir, 'fullpage.png');
     await page.screenshot({
-      path: join(outputDir, 'fullpage.png'),
+      path: fullpagePath,
       fullPage: true
     });
+    generatedFiles.push(fullpagePath);
 
     // Capture viewport screenshot
+    const viewportPath = join(outputDir, 'viewport.png');
     await page.screenshot({
-      path: join(outputDir, 'viewport.png'),
+      path: viewportPath,
       fullPage: false
     });
+    generatedFiles.push(viewportPath);
 
     // Save console errors
     if (consoleErrors.length > 0) {
@@ -133,7 +147,9 @@ const { join } = require('path');
         \`[\${e.timestamp}] \${e.message}\${e.stack ? '\\n' + e.stack : ''}\`
       ).join('\\n\\n');
 
-      writeFileSync(join(outputDir, 'console-errors.log'), errorLog);
+      const errorLogPath = join(outputDir, 'console-errors.log');
+      writeFileSync(errorLogPath, errorLog);
+      generatedFiles.push(errorLogPath);
       console.log(\`❌ Found \${consoleErrors.length} console errors\`);
     } else {
       console.log('✅ No console errors detected');
@@ -145,22 +161,36 @@ const { join } = require('path');
         \`[\${w.timestamp}] \${w.message}\`
       ).join('\\n\\n');
 
-      writeFileSync(join(outputDir, 'console-warnings.log'), warningLog);
+      const warningLogPath = join(outputDir, 'console-warnings.log');
+      writeFileSync(warningLogPath, warningLog);
+      generatedFiles.push(warningLogPath);
       console.log(\`⚠️  Found \${consoleWarnings.length} console warnings\`);
     }
 
     // Capture page HTML for debugging
     const html = await page.content();
-    writeFileSync(join(outputDir, 'page.html'), html);
+    const htmlPath = join(outputDir, 'page.html');
+    writeFileSync(htmlPath, html);
+    generatedFiles.push(htmlPath);
+
+    // Write file list for the parent process to read
+    const fileListPath = join(outputDir, '.file-list.json');
+    writeFileSync(fileListPath, JSON.stringify(generatedFiles, null, 2));
 
   } catch (error) {
     console.error('Error during visual test:', error.message);
 
     // Try to capture screenshot even on error
     try {
+      const errorScreenshotPath = join(outputDir, 'error-screenshot.png');
       await page.screenshot({
-        path: join(outputDir, 'error-screenshot.png')
+        path: errorScreenshotPath
       });
+      generatedFiles.push(errorScreenshotPath);
+
+      // Write file list even on error
+      const fileListPath = join(outputDir, '.file-list.json');
+      writeFileSync(fileListPath, JSON.stringify(generatedFiles, null, 2));
     } catch {}
 
     throw error;
@@ -172,6 +202,7 @@ const { join } = require('path');
 
     // Write test script to temp file and execute
     const tempScriptPath = join(process.cwd(), '.claude', 'temp-visual-test.js');
+    const fileListPath = join(process.cwd(), '.claude', 'visual-test', '.file-list.json');
 
     mkdirSync(join(process.cwd(), '.claude'), { recursive: true });
     writeFileSync(tempScriptPath, testScript);
@@ -181,10 +212,22 @@ const { join } = require('path');
         stdio: 'inherit',
         cwd: process.cwd()
       });
+
+      // Read the generated file list
+      let generatedFiles = [];
+      if (existsSync(fileListPath)) {
+        const fileListContent = readFileSync(fileListPath, 'utf-8');
+        generatedFiles = JSON.parse(fileListContent);
+      }
+
+      return generatedFiles;
     } finally {
-      // Clean up temp script
+      // Clean up temp script and file list
       try {
         unlinkSync(tempScriptPath);
+      } catch {}
+      try {
+        unlinkSync(fileListPath);
       } catch {}
     }
   }
