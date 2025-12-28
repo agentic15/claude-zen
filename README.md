@@ -344,19 +344,21 @@ If you need to override the auto-detected values, create or edit `.claude/settin
 {
   "github": {
     "enabled": true,
-    "autoCreate": true,
-    "autoUpdate": true,
-    "autoClose": true,
+    "autoCreate": false,
+    "autoUpdate": false,
+    "autoClose": false,
     "owner": "your-username",
     "repo": "your-repo"
   }
 }
 ```
 
-### Features
-- **Auto-create issues:** When starting tasks
-- **Auto-update issues:** When creating PRs
-- **Auto-close issues:** When merging to main (optional)
+**Note:** Default settings have `autoCreate`, `autoUpdate`, and `autoClose` set to `false` to give you full control. Set them to `true` if you want automatic GitHub issue management.
+
+### Features (Optional - Enable in settings)
+- **Auto-create issues:** When starting tasks (set `autoCreate: true`)
+- **Auto-update issues:** When creating PRs (set `autoUpdate: true`)
+- **Auto-close issues:** When merging to main (set `autoClose: true`)
 - **Secure authentication:** Uses `gh` CLI credentials
 
 </td>

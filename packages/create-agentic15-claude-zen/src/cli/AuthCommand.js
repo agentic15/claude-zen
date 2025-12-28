@@ -187,9 +187,9 @@ export class AuthCommand {
     // Update GitHub config (no token needed, gh CLI handles auth)
     settings.github = {
       enabled: true,
-      autoCreate: true,
-      autoUpdate: true,
-      autoClose: true,
+      autoCreate: false,
+      autoUpdate: false,
+      autoClose: false,
       owner,
       repo,
       comment: "Authentication handled by gh CLI (no token needed)"
