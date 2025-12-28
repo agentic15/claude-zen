@@ -122,30 +122,44 @@ npm install @agentic15.com/agentic15-claude-zen@5.0.0
 
 ## GitHub Integration
 
-### Optional Configuration
+### Authentication
 
-Create `.claude/settings.local.json`:
+The framework uses **GitHub CLI (`gh`)** for authentication - no personal access tokens needed!
+
+**Setup:**
+```bash
+npx agentic15 auth
+```
+
+This command will:
+1. Check if `gh` CLI is installed
+2. Run `gh auth login` if not already authenticated
+3. Auto-detect your repository owner/repo from git remote
+4. Save configuration to `.claude/settings.local.json`
+
+### Manual Configuration (Optional)
+
+If you need to override the auto-detected values, create or edit `.claude/settings.local.json`:
 ```json
 {
   "github": {
-    "token": "ghp_xxxxxxxxxxxxx",
+    "enabled": true,
+    "autoCreate": true,
+    "autoUpdate": true,
+    "autoClose": true,
     "owner": "your-username",
     "repo": "your-repo"
   }
 }
 ```
 
-Or use environment variables:
-```bash
-export GITHUB_TOKEN="ghp_xxxxxxxxxxxxx"
-export GITHUB_OWNER="your-username"
-export GITHUB_REPO="your-repo"
-```
+**Note:** Authentication is handled by `gh` CLI - no token field needed.
 
 ### Features
 - **Auto-create issues:** When starting tasks
 - **Auto-update issues:** When creating PRs
 - **Auto-close issues:** When merging to main (optional)
+- **Secure authentication:** Uses `gh` CLI credentials
 
 ---
 
