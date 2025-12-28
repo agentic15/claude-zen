@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.4] - 2025-12-28
+
+### Fixed
+- **CRITICAL: GitHub default settings** - Changed default GitHub integration settings to prevent automatic actions without user consent
+  - **AuthCommand.js:** Set `autoCreate`, `autoUpdate`, and `autoClose` to `false` by default (were `true`)
+  - **README.md:** Updated Manual Configuration example to show correct defaults
+  - **Impact:** Users now have full control over GitHub issue creation/updates/closing
+  - **Migration:** Existing users with `settings.local.json` are unaffected
+  - **Rationale:** Prevents surprise GitHub issues and repository clutter, gives users opt-in control
+  - Users can set these to `true` in `.claude/settings.local.json` if they want automatic GitHub issue management
+
 ## [5.0.3] - 2025-12-28
 
 ### Changed
