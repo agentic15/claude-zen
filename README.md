@@ -220,6 +220,7 @@ Starts next task
 | `npx agentic15 task status` | View current progress |
 | `npx agentic15 commit` | Commit, push, and create PR |
 | `npx agentic15 sync` | Sync with main branch after PR merge |
+| `npx agentic15 update-settings` | Update `.claude/settings.json` from latest framework |
 | `npx agentic15 visual-test <url>` | Capture UI screenshots and console errors |
 | `npx agentic15 auth` | Configure GitHub authentication |
 
@@ -291,8 +292,12 @@ Framework files live in `node_modules` and are automatically updated:
 # Upgrade to latest version
 npm install @agentic15.com/agentic15-claude-zen@latest
 
+# Update settings.json to latest framework version
+npx agentic15 update-settings
+
 # Or to a specific version
 npm install @agentic15.com/agentic15-claude-zen@5.0.0
+npx agentic15 update-settings
 ```
 
 **What gets updated:**
@@ -304,6 +309,8 @@ npm install @agentic15.com/agentic15-claude-zen@5.0.0
 - ✅ Your code in `Agent/`
 - ✅ Your plans and tasks in `.claude/plans/`
 - ✅ Your local settings in `.claude/settings.local.json`
+
+**Note:** After upgrading, run `npx agentic15 update-settings` to update your `.claude/settings.json` with the latest framework configuration. Your existing settings will be backed up to `.claude/settings.json.backup`.
 
 </td>
 </tr>
