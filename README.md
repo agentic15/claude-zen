@@ -383,6 +383,7 @@ If you need to override the auto-detected values, create or edit `.claude/settin
 ### Documentation
 
 - **[CHANGELOG.md](CHANGELOG.md)** - Version history and release notes
+- **[MIGRATION-GUIDE-v4-to-v5.md](MIGRATION-GUIDE-v4-to-v5.md)** - Upgrade guide from v4.x to v5.x
 
 ### Support
 
