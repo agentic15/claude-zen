@@ -83,7 +83,8 @@ export class CommitCommand {
       }
 
       // Stage user-generated .claude/ files (NOT framework files)
-      // Only stage: ACTIVE-PLAN and plans/ directory (contains TASK-TRACKER.json)
+      // Stage: ACTIVE-PLAN, plans/, and settings.local.json
+      // DO NOT stage: settings.json, POST-INSTALL.md (generated from framework)
       try {
         execSync('git add .claude/ACTIVE-PLAN', { stdio: 'pipe' });
       } catch (e) {
@@ -94,6 +95,12 @@ export class CommitCommand {
         execSync('git add .claude/plans/', { stdio: 'pipe' });
       } catch (e) {
         // Directory might not exist
+      }
+
+      try {
+        execSync('git add .claude/settings.local.json', { stdio: 'pipe' });
+      } catch (e) {
+        // File might not exist (it's optional)
       }
 
       // Stage package.json and package-lock.json if they exist
