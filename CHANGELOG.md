@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.2] - 2025-12-28
+
+### Added
+- **Visual test file list display** - `npx agentic15 visual-test <url>` now displays all generated file paths with visual separators for easy copy-paste to Claude
+  - Shows fullpage.png, viewport.png, console-errors.log (if errors), console-warnings.log (if warnings), page.html
+  - Eliminates manual file navigation - users can now instantly share all test outputs with Claude for analysis
+
+### Changed
+- **GitHub authentication documentation** - Updated README.md GitHub Integration section
+  - Removed all personal access token references
+  - Clarified that authentication is handled by `gh` CLI
+  - Added clear setup instructions using `npx agentic15 auth`
+  - Updated manual configuration example to show gh CLI is used (no token field needed)
+
+- **Quick Start documentation** - Reformatted Quick Start section as easy-to-read tables
+  - Setup steps now displayed in table format matching Commands section
+  - Added Daily Development Workflow table
+  - Improved readability and scanability
+
+### Fixed
+- **Documentation accuracy** - Removed outdated GitHub token configuration examples from README
+  - No longer references environment variables `GITHUB_TOKEN`, `GITHUB_OWNER`, `GITHUB_REPO`
+  - Accurate reflection of v5.0.1 gh CLI authentication changes
+
 ## [2.0.0] - 2025-12-25
 
 ### Added
