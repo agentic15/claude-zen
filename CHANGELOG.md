@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.6] - 2025-12-28
+
+### Added
+- **`update-settings` command** - New CLI command to update `.claude/settings.json` from latest framework version
+  - Automatically backs up existing settings to `.claude/settings.json.backup`
+  - Copies latest framework settings from `node_modules/@agentic15.com/agentic15-claude-zen/framework/settings.json`
+  - Preserves user overrides in `.claude/settings.local.json`
+  - Usage: `npx agentic15 update-settings`
+  - Solves the issue where settings.json is not automatically updated when upgrading the npm package
+  - Includes validation for framework files and .claude directory existence
+
 ## [5.0.5] - 2025-12-28
 
 ### Added

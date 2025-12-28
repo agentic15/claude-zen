@@ -8,6 +8,7 @@ import { StatusCommand } from '../src/cli/StatusCommand.js';
 import { PlanCommand } from '../src/cli/PlanCommand.js';
 import { VisualTestCommand } from '../src/cli/VisualTestCommand.js';
 import { SyncCommand } from '../src/cli/SyncCommand.js';
+import { UpdateSettingsCommand } from '../src/cli/UpdateSettingsCommand.js';
 
 const program = new Command();
 
@@ -61,5 +62,11 @@ program
   .command('sync')
   .description('Switch to main branch, pull latest changes, and cleanup feature branch')
   .action(() => SyncCommand.execute());
+
+// Update settings.json from framework
+program
+  .command('update-settings')
+  .description('Update .claude/settings.json from latest framework version')
+  .action(() => UpdateSettingsCommand.execute());
 
 program.parse();
