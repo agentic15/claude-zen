@@ -61,7 +61,8 @@ npx agentic15 plan "Build a todo app with add, remove, and list features"
 ```
 
 **In Claude Code:**
-Ask Claude: "Create the project plan from the requirements file"
+1. Launch Claude Code from within your project directory
+2. Ask Claude: "Create the project plan from the requirements file"
 
 Claude will read `.claude/plans/plan-001-generated/PROJECT-REQUIREMENTS.txt` and create the PROJECT-PLAN.json.
 
