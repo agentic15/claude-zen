@@ -154,7 +154,6 @@ npx agentic15 task next
 | `npx agentic15 commit` | Commit, push, and create PR |
 | `npx agentic15 sync` | Sync with main branch after PR merge |
 | `npx agentic15 visual-test <url>` | Capture UI screenshots and console errors |
-| `npx agentic15 upgrade` | Update framework files |
 | `npx agentic15 auth` | Configure GitHub authentication |
 
 ### Workflow Automation
@@ -178,17 +177,50 @@ plan → task → code → commit → PR → merge → sync → next task
 
 ```
 my-project/
-├── .claude/                    # Framework configuration
-│   ├── hooks/                  # Claude Code hooks
-│   ├── plans/                  # Project plans and tasks
-│   ├── settings.json           # Framework settings
-│   └── settings.local.json     # Local overrides (gitignored)
+├── node_modules/
+│   └── @agentic15.com/agentic15-claude-zen/
+│       └── framework/          # Framework files (hooks, schemas, templates)
+│           ├── hooks/          # Claude Code hooks
+│           ├── settings.json   # Framework settings
+│           ├── PLAN-SCHEMA.json
+│           ├── PROJECT-PLAN-TEMPLATE.json
+│           └── POST-INSTALL.md
+├── .claude/                    # User-generated content only
+│   ├── ACTIVE-PLAN             # Current active plan
+│   ├── plans/                  # Your project plans and tasks
+│   │   └── {planId}/
+│   │       ├── TASK-TRACKER.json
+│   │       └── tasks/
+│   ├── settings.json           # References framework in node_modules
+│   └── settings.local.json     # Local overrides (optional, gitignored)
 ├── Agent/                      # Your code workspace
 │   ├── src/                    # Source code
 │   └── tests/                  # Tests (optional)
 ├── scripts/                    # Build and utility scripts
 └── package.json                # Project dependencies
 ```
+
+### Framework Upgrades
+
+Framework files live in `node_modules` and are automatically updated when you upgrade the package:
+
+```bash
+# Upgrade to latest version
+npm install @agentic15.com/agentic15-claude-zen@latest
+
+# Or to a specific version
+npm install @agentic15.com/agentic15-claude-zen@5.0.0
+```
+
+**What gets updated:**
+- ✅ Framework hooks in `node_modules`
+- ✅ Settings schema and templates
+- ✅ CLI commands
+
+**What stays unchanged:**
+- ✅ Your code in `Agent/`
+- ✅ Your plans and tasks in `.claude/plans/`
+- ✅ Your local settings in `.claude/settings.local.json`
 
 ---
 
