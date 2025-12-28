@@ -39,23 +39,168 @@ Agentic15 Claude Zen is a structured development framework designed to work seam
 
 ## Quick Start
 
-| Step | Action | Commands |
-|------|--------|----------|
-| **1. Create Project** | **Bash/Mac/Linux:**<br>`npx @agentic15.com/agentic15-claude-zen my-project`<br>`cd my-project`<br><br>**PowerShell (Windows):**<br>`npx "@agentic15.com/agentic15-claude-zen" my-project`<br>`cd my-project` | Creates new project with framework structure |
-| **2. Initialize Git** | `git init`<br>`git branch -M main`<br>`git add .`<br>`git commit -m "Initial commit"`<br><br>`gh repo create OWNER/REPO --public`<br>`git remote add origin https://github.com/OWNER/REPO.git`<br>`git push -u origin main`<br><br>**Note:** Replace `OWNER/REPO` with your GitHub username/repo | Links project to GitHub (required for PRs) |
-| **3. Configure Auth** | `npx agentic15 auth` | One-time GitHub authentication setup |
-| **4. Create Plan** | **In Terminal:**<br>`npx agentic15 plan "Build a todo app with add, remove, and list features"`<br><br>**In Claude Code (launch from project directory):**<br>Ask: "Create the project plan from the requirements file"<br><br>**Back in Terminal:**<br>`npx agentic15 plan`<br>`git add .`<br>`git commit -m "Add initial project plan"`<br>`git push`<br><br>**Important:** Commit plan to main BEFORE enabling branch protection | Generates and locks project plan |
-| **5. Enable Branch Protection** | **Bash/Mac/Linux:**<br>```cat > /tmp/protection.json << 'EOF'```<br>```{```<br>```  "required_pull_request_reviews": {```<br>```    "required_approving_review_count": 0```<br>```  },```<br>```  "enforce_admins": false,```<br>```  "allow_force_pushes": false,```<br>```  "allow_deletions": false,```<br>```  "required_status_checks": null,```<br>```  "restrictions": null```<br>```}```<br>```EOF```<br><br>```gh api repos/OWNER/REPO/branches/main/protection -X PUT \```<br>```  -H "Accept: application/vnd.github+json" \```<br>```  --input /tmp/protection.json```<br><br>```gh api repos/OWNER/REPO -X PATCH \```<br>```  -H "Accept: application/vnd.github+json" \```<br>```  -f delete_branch_on_merge=true```<br><br>**PowerShell (Windows):**<br>```$body = @"```<br>```{```<br>```  "required_pull_request_reviews": {```<br>```    "required_approving_review_count": 0```<br>```  },```<br>```  "enforce_admins": false,```<br>```  "allow_force_pushes": false,```<br>```  "allow_deletions": false,```<br>```  "required_status_checks": null,```<br>```  "restrictions": null```<br>```}```<br>```"@```<br><br>```echo $body \| gh api repos/OWNER/REPO/branches/main/protection -X PUT -H "Accept: application/vnd.github+json" --input -```<br><br>```gh api repos/OWNER/REPO -X PATCH -H "Accept: application/vnd.github+json" -f delete_branch_on_merge=true``` | Enforces PR-only workflow for all future changes |
-| **6. Start First Task** | `npx agentic15 task next` | Creates feature branch for first task |
+### 1. Create Project
+Creates new project with framework structure
 
-### Daily Development Workflow
+**Bash/Mac/Linux:**
+```bash
+npx @agentic15.com/agentic15-claude-zen my-project
+cd my-project
+```
 
-| Location | Step | Action |
-|----------|------|--------|
-| **Claude Code** | 1. Implement | Ask: "Implement the active task"<br>Claude writes code in `Agent/` directory |
-| **Your Terminal** | 2. Commit & PR | `npx agentic15 commit`<br>Stages changes, commits, pushes, creates PR |
-| **GitHub** | 3. Review | Review and merge the PR |
-| **Your Terminal** | 4. Sync & Next | `npx agentic15 sync`<br>Syncs with main, deletes feature branch<br><br>`npx agentic15 task next`<br>Starts next task |
+**PowerShell (Windows):**
+```powershell
+npx "@agentic15.com/agentic15-claude-zen" my-project
+cd my-project
+```
+
+---
+
+### 2. Initialize Git
+Links project to GitHub (required for PRs)
+
+```bash
+git init
+git branch -M main
+git add .
+git commit -m "Initial commit"
+
+gh repo create OWNER/REPO --public
+git remote add origin https://github.com/OWNER/REPO.git
+git push -u origin main
+```
+
+**Note:** Replace `OWNER/REPO` with your GitHub username/repo
+
+---
+
+### 3. Configure Auth
+One-time GitHub authentication setup
+
+```bash
+npx agentic15 auth
+```
+
+---
+
+### 4. Create Plan
+Generates and locks project plan
+
+**In Terminal:**
+```bash
+npx agentic15 plan "Build a todo app with add, remove, and list features"
+```
+
+**In Claude Code (launch from project directory):**
+```
+Ask: "Create the project plan from the requirements file"
+```
+
+**Back in Terminal:**
+```bash
+npx agentic15 plan
+git add .
+git commit -m "Add initial project plan"
+git push
+```
+
+**Important:** Commit plan to main BEFORE enabling branch protection
+
+---
+
+### 5. Enable Branch Protection
+Enforces PR-only workflow for all future changes
+
+**Bash/Mac/Linux:**
+```bash
+cat > /tmp/protection.json << 'EOF'
+{
+  "required_pull_request_reviews": {
+    "required_approving_review_count": 0
+  },
+  "enforce_admins": false,
+  "allow_force_pushes": false,
+  "allow_deletions": false,
+  "required_status_checks": null,
+  "restrictions": null
+}
+EOF
+
+gh api repos/OWNER/REPO/branches/main/protection -X PUT \
+  -H "Accept: application/vnd.github+json" \
+  --input /tmp/protection.json
+
+gh api repos/OWNER/REPO -X PATCH \
+  -H "Accept: application/vnd.github+json" \
+  -f delete_branch_on_merge=true
+```
+
+**PowerShell (Windows):**
+```powershell
+$body = @"
+{
+  "required_pull_request_reviews": {
+    "required_approving_review_count": 0
+  },
+  "enforce_admins": false,
+  "allow_force_pushes": false,
+  "allow_deletions": false,
+  "required_status_checks": null,
+  "restrictions": null
+}
+"@
+
+echo $body | gh api repos/OWNER/REPO/branches/main/protection -X PUT -H "Accept: application/vnd.github+json" --input -
+
+gh api repos/OWNER/REPO -X PATCH -H "Accept: application/vnd.github+json" -f delete_branch_on_merge=true
+```
+
+---
+
+### 6. Start First Task
+Creates feature branch for first task
+
+```bash
+npx agentic15 task next
+```
+
+---
+
+## Daily Development Workflow
+
+### 1. Implement (Claude Code)
+Ask: "Implement the active task"
+
+Claude writes code in `Agent/` directory
+
+---
+
+### 2. Commit & PR (Your Terminal)
+```bash
+npx agentic15 commit
+```
+
+Stages changes, commits, pushes, creates PR
+
+---
+
+### 3. Review (GitHub)
+Review and merge the PR
+
+---
+
+### 4. Sync & Next (Your Terminal)
+```bash
+npx agentic15 sync
+```
+
+Syncs with main, deletes feature branch
+
+```bash
+npx agentic15 task next
+```
+
+Starts next task
 
 ---
 
