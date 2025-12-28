@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.3] - 2025-12-28
+
+### Changed
+- **README.md layout improvements** - Major documentation readability enhancements
+  - **2-column layout** for main sections using HTML tables
+    - Overview: "What is Agentic15 Claude Zen?" | "Key Benefits"
+    - Core Features: "Commands" | "Workflow Automation"
+    - Project Structure: "Directory Layout" | "Framework Upgrades"
+    - GitHub Integration: "Authentication" | "Manual Configuration"
+    - Requirements & Philosophy: "Requirements/Docs/Support" | "Philosophy"
+  - **Single-column Quick Start** - Converted from cramped 3-column table to clean sequential layout
+    - Each step (1-6) has its own heading with clear description
+    - Commands properly formatted in code blocks with syntax highlighting
+    - Bash/Mac/Linux and PowerShell (Windows) clearly separated
+    - Visual separators (---) between steps
+  - **Single-column Daily Development Workflow** - Same clean format as Quick Start
+    - Each step clearly labeled with location (Claude Code, Your Terminal, GitHub)
+    - Commands in proper code blocks
+  - **Benefits:**
+    - Much easier to read and follow
+    - Better mobile/narrow screen compatibility
+    - Professional documentation appearance
+    - Better use of horizontal space
+    - Improved visual hierarchy
+
 ## [5.0.2] - 2025-12-28
 
 ### Added
