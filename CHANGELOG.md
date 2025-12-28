@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.5] - 2025-12-28
+
+### Added
+- **Migration guide** - Comprehensive v4.x to v5.x migration documentation
+  - `MIGRATION-GUIDE-v4-to-v5.md` with step-by-step upgrade instructions
+  - Explains architectural changes (framework files moved to node_modules)
+  - GitHub settings migration options
+  - Troubleshooting section for common issues
+  - Quick migration checklist
+  - Linked from README.md Documentation section
+
+### Fixed
+- **Framework settings.json GitHub config** - Aligned with v5.x standards
+  - Removed `token` field (no longer needed with gh CLI authentication)
+  - Set `autoCreate`, `autoUpdate`, `autoClose` to `false` (matching v5.0.4 defaults)
+  - Updated comment to reference `npx agentic15 auth` command
+  - Updated comment to clarify gh CLI handles authentication
+  - New projects now have consistent GitHub defaults matching AuthCommand.js behavior
+
 ## [5.0.4] - 2025-12-28
 
 ### Fixed
