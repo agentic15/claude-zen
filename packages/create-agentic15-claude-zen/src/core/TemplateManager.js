@@ -45,8 +45,24 @@ export class TemplateManager {
 
     console.log('📋 Copying framework templates...');
 
-    // Copy .claude directory structure
-    this.copyDirectory('.claude', targetDir);
+    // Create .claude directory (user-generated content only)
+    mkdirSync(join(targetDir, '.claude'), { recursive: true });
+    console.log('  ├─ .claude/');
+
+    // Copy framework settings.json (references hooks in node_modules)
+    const frameworkDir = join(__dirname, '..', '..', 'framework');
+    console.log('  ├─ .claude/settings.json (from framework)');
+    cpSync(
+      join(frameworkDir, 'settings.json'),
+      join(targetDir, '.claude', 'settings.json')
+    );
+
+    // Copy framework documentation
+    console.log('  ├─ .claude/POST-INSTALL.md (from framework)');
+    cpSync(
+      join(frameworkDir, 'POST-INSTALL.md'),
+      join(targetDir, '.claude', 'POST-INSTALL.md')
+    );
 
     // Copy and customize package.json
     this.copyAndCustomize('package.json', targetDir, projectName);
