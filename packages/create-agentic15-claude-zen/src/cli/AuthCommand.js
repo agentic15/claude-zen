@@ -3,7 +3,6 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import readline from 'readline';
-import { Octokit } from '@octokit/rest';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -12,10 +11,36 @@ export class AuthCommand {
   static async setup() {
     console.log('\n🔐 GitHub Authentication Setup\n');
 
-    // Step 1: Display current git configuration
+    // Step 1: Check if gh CLI is installed
+    if (!this.isGhInstalled()) {
+      console.log('❌ GitHub CLI (gh) is not installed\n');
+      console.log('Please install GitHub CLI first:');
+      console.log('  - macOS: brew install gh');
+      console.log('  - Windows: winget install --id GitHub.cli');
+      console.log('  - Linux: https://github.com/cli/cli/blob/trunk/docs/install_linux.md\n');
+      console.log('Or visit: https://cli.github.com/\n');
+      process.exit(1);
+    }
+
+    // Step 2: Check if already authenticated with gh
+    if (!this.isGhAuthenticated()) {
+      console.log('📝 You need to authenticate with GitHub CLI\n');
+      console.log('Running: gh auth login\n');
+
+      try {
+        execSync('gh auth login', { stdio: 'inherit' });
+      } catch (error) {
+        console.log('\n❌ GitHub authentication failed\n');
+        process.exit(1);
+      }
+    } else {
+      console.log('✓ Already authenticated with GitHub CLI\n');
+    }
+
+    // Step 3: Display current git configuration
     this.displayGitConfig();
 
-    // Step 2: Confirm configuration
+    // Step 4: Confirm configuration
     const configOk = await this.confirmConfig();
     if (!configOk) {
       this.showConfigCommands();
@@ -23,26 +48,35 @@ export class AuthCommand {
       process.exit(1);
     }
 
-    // Step 3: Get GitHub token
-    const token = await this.promptToken();
-
-    // Step 4: Validate token
-    const isValid = await this.validateToken(token);
-    if (!isValid) {
-      console.log('\n❌ Invalid GitHub token. Please try again.\n');
-      process.exit(1);
-    }
-
     // Step 5: Auto-detect owner/repo
     const { owner, repo } = this.detectRepo();
 
-    // Step 6: Save configuration
-    this.saveConfig(token, owner, repo);
+    // Step 6: Save configuration (no token needed, gh CLI handles auth)
+    this.saveConfig(owner, repo);
 
     console.log('\n✅ GitHub authentication configured successfully!\n');
     console.log(`   Owner: ${owner}`);
     console.log(`   Repo: ${repo}`);
+    console.log(`   Auth: Using gh CLI credentials`);
     console.log(`   Config: .claude/settings.local.json\n`);
+  }
+
+  static isGhInstalled() {
+    try {
+      execSync('gh --version', { stdio: 'pipe' });
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  static isGhAuthenticated() {
+    try {
+      execSync('gh auth status', { stdio: 'pipe' });
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
   static displayGitConfig() {
@@ -101,34 +135,6 @@ export class AuthCommand {
     });
   }
 
-  static async promptToken() {
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-    });
-
-    console.log('🔑 GitHub Personal Access Token:');
-    console.log('   Create one at: https://github.com/settings/tokens');
-    console.log('   Required scopes: repo (Full control of private repositories)\n');
-
-    return new Promise((resolve) => {
-      rl.question('Enter your GitHub token: ', (token) => {
-        rl.close();
-        resolve(token.trim());
-      });
-    });
-  }
-
-  static async validateToken(token) {
-    try {
-      const octokit = new Octokit({ auth: token });
-      await octokit.rest.users.getAuthenticated();
-      console.log('\n✓ Token validated successfully');
-      return true;
-    } catch (error) {
-      return false;
-    }
-  }
 
   static detectRepo() {
     try {
@@ -159,7 +165,7 @@ export class AuthCommand {
     };
   }
 
-  static saveConfig(token, owner, repo) {
+  static saveConfig(owner, repo) {
     const settingsPath = join(process.cwd(), '.claude', 'settings.local.json');
     const settingsDir = dirname(settingsPath);
 
@@ -178,15 +184,15 @@ export class AuthCommand {
       }
     }
 
-    // Update GitHub config
+    // Update GitHub config (no token needed, gh CLI handles auth)
     settings.github = {
       enabled: true,
       autoCreate: true,
       autoUpdate: true,
       autoClose: true,
-      token,
       owner,
-      repo
+      repo,
+      comment: "Authentication handled by gh CLI (no token needed)"
     };
 
     // Write settings
