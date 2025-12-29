@@ -117,7 +117,7 @@ await testAsync('AzureDevOpsConfig class should exist', async () => {
 
 await testAsync('AzureDevOpsConfig should default to disabled', async () => {
   try {
-    const { AzureDevOpsConfig } = await import('../../src/core/AzureDevOpsConfig.js');
+    const { AzureDevOpsConfig } = await import('../../src/core/Azure/AzureDevOpsConfig.js');
     const config = new AzureDevOpsConfig('/nonexistent');
     assertEqual(config.isEnabled(), false, 'Azure should be disabled by default');
   } catch (error) {
@@ -139,7 +139,7 @@ await testAsync('AzureDevOpsConfig should read azureDevOps.enabled from settings
   });
 
   try {
-    const { AzureDevOpsConfig } = await import('../../src/core/AzureDevOpsConfig.js');
+    const { AzureDevOpsConfig } = await import('../../src/core/Azure/AzureDevOpsConfig.js');
     const config = new AzureDevOpsConfig(tempDir);
 
     // Should read the enabled flag from settings
@@ -166,7 +166,7 @@ await testAsync('AzureDevOpsConfig should require all fields to be fully enabled
   });
 
   try {
-    const { AzureDevOpsConfig } = await import('../../src/core/AzureDevOpsConfig.js');
+    const { AzureDevOpsConfig } = await import('../../src/core/Azure/AzureDevOpsConfig.js');
     const config = new AzureDevOpsConfig(tempDir);
 
     // Even though enabled=true, should not be fully enabled without all required fields
@@ -303,7 +303,7 @@ await testAsync('Azure and GitHub should have independent tokens', async () => {
 
   try {
     const githubConfig = new GitHubConfig(tempDir);
-    const { AzureDevOpsConfig } = await import('../../src/core/AzureDevOpsConfig.js');
+    const { AzureDevOpsConfig } = await import('../../src/core/Azure/AzureDevOpsConfig.js');
     const azureConfig = new AzureDevOpsConfig(tempDir);
 
     // Tokens must be completely separate
@@ -337,8 +337,8 @@ await testAsync('Azure features should throw error when flag is disabled', async
   });
 
   try {
-    const { AzureDevOpsConfig } = await import('../../src/core/AzureDevOpsConfig.js');
-    const { AzureDevOpsClient } = await import('../../src/core/AzureDevOpsClient.js').catch(() => ({}));
+    const { AzureDevOpsConfig } = await import('../../src/core/Azure/AzureDevOpsConfig.js');
+    const { AzureDevOpsClient } = await import('../../src/core/Azure/AzureDevOpsClient.js').catch(() => ({}));
 
     if (!AzureDevOpsClient) {
       throw new Error('AzureDevOpsClient not implemented yet');
@@ -374,7 +374,7 @@ await testAsync('Azure features should only work when flag is enabled', async ()
   });
 
   try {
-    const { AzureDevOpsConfig } = await import('../../src/core/AzureDevOpsConfig.js');
+    const { AzureDevOpsConfig } = await import('../../src/core/Azure/AzureDevOpsConfig.js');
     const config = new AzureDevOpsConfig(tempDir);
 
     // When properly configured, Azure should be enabled
@@ -412,7 +412,7 @@ await testAsync('Should support both GitHub and Azure enabled simultaneously', a
 
   try {
     const githubConfig = new GitHubConfig(tempDir);
-    const { AzureDevOpsConfig } = await import('../../src/core/AzureDevOpsConfig.js');
+    const { AzureDevOpsConfig } = await import('../../src/core/Azure/AzureDevOpsConfig.js');
     const azureConfig = new AzureDevOpsConfig(tempDir);
 
     // Both should be enabled simultaneously
@@ -443,7 +443,7 @@ await testAsync('Should handle missing azureDevOps config gracefully', async () 
   });
 
   try {
-    const { AzureDevOpsConfig } = await import('../../src/core/AzureDevOpsConfig.js');
+    const { AzureDevOpsConfig } = await import('../../src/core/Azure/AzureDevOpsConfig.js');
     const azureConfig = new AzureDevOpsConfig(tempDir);
 
     // Should default to disabled when config section is missing
