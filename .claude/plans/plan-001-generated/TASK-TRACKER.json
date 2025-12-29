@@ -5,9 +5,9 @@
   "lockedAt": "2025-12-29T14:06:34.725Z",
   "statistics": {
     "totalTasks": 17,
-    "completed": 12,
+    "completed": 13,
     "inProgress": 0,
-    "pending": 5
+    "pending": 4
   },
   "taskFiles": [
     {
@@ -122,8 +122,10 @@
       "id": "TASK-013",
       "title": "Implement Azure work item operations",
       "phase": "implementation",
-      "status": "pending",
-      "description": "Implement work item API to make tests pass"
+      "status": "completed",
+      "description": "Implement work item API to make tests pass",
+      "startedAt": "2025-12-29T22:52:47.654Z",
+      "completedAt": "2025-12-29T22:58:30.505Z"
     },
     {
       "id": "TASK-014",
