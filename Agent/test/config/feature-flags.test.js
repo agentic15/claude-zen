@@ -277,14 +277,12 @@ await testAsync('GitHub integration should work when Azure is enabled', async ()
   }
 });
 
-await testAsync('Azure and GitHub should have independent tokens', async () => {
+await testAsync('Azure and GitHub should have independent authentication', async () => {
   // Clear environment variables that could interfere with tests
   const originalEnv = {
-    GITHUB_TOKEN: process.env.GITHUB_TOKEN,
-    AZURE_DEVOPS_TOKEN: process.env.AZURE_DEVOPS_TOKEN
+    GITHUB_TOKEN: process.env.GITHUB_TOKEN
   };
   delete process.env.GITHUB_TOKEN;
-  delete process.env.AZURE_DEVOPS_TOKEN;
 
   const { tempDir, cleanup } = createTempSettings({
     github: {
@@ -295,9 +293,9 @@ await testAsync('Azure and GitHub should have independent tokens', async () => {
     },
     azureDevOps: {
       enabled: true,
-      token: 'azure-secret-pat',
       organization: 'test-org',
-      project: 'test-project'
+      project: 'test-project',
+      useCliAuth: true  // Azure uses CLI auth, no token
     }
   });
 
@@ -306,13 +304,19 @@ await testAsync('Azure and GitHub should have independent tokens', async () => {
     const { AzureDevOpsConfig } = await import('../../src/core/Azure/AzureDevOpsConfig.js');
     const azureConfig = new AzureDevOpsConfig(tempDir);
 
-    // Tokens must be completely separate
+    // GitHub uses token authentication
     const githubToken = githubConfig.getToken();
-    const azureToken = azureConfig.getToken();
-
-    assert(githubToken !== azureToken, `GitHub and Azure must use different tokens (GH: ${githubToken}, Azure: ${azureToken})`);
     assertEqual(githubToken, 'github-secret-token', `GitHub token should be correct (got: ${githubToken})`);
-    assertEqual(azureToken, 'azure-secret-pat', `Azure token should be correct (got: ${azureToken})`);
+
+    // Azure uses CLI authentication (no token needed)
+    const azureOrg = azureConfig.getOrganization();
+    const azureProject = azureConfig.getProject();
+    assertEqual(azureOrg, 'test-org', `Azure org should be correct (got: ${azureOrg})`);
+    assertEqual(azureProject, 'test-project', `Azure project should be correct (got: ${azureProject})`);
+
+    // Verify they are independent - GitHub has tokens, Azure does not
+    assert(githubToken !== null, 'GitHub should have a token');
+    assert(azureOrg !== null, 'Azure should have organization');
   } catch (error) {
     if (error.message.includes('not found') || error.code === 'ERR_MODULE_NOT_FOUND') {
       throw new Error('AzureDevOpsConfig not implemented yet');
@@ -322,7 +326,6 @@ await testAsync('Azure and GitHub should have independent tokens', async () => {
     cleanup();
     // Restore environment variables
     if (originalEnv.GITHUB_TOKEN) process.env.GITHUB_TOKEN = originalEnv.GITHUB_TOKEN;
-    if (originalEnv.AZURE_DEVOPS_TOKEN) process.env.AZURE_DEVOPS_TOKEN = originalEnv.AZURE_DEVOPS_TOKEN;
   }
 });
 
@@ -395,6 +398,16 @@ await testAsync('Azure features should only work when flag is enabled', async ()
 console.log('\n--- Configuration Validation Tests ---\n');
 
 await testAsync('Should support both GitHub and Azure enabled simultaneously', async () => {
+  // Clear environment variables that could interfere with tests
+  const originalEnv = {
+    GITHUB_TOKEN: process.env.GITHUB_TOKEN,
+    GITHUB_OWNER: process.env.GITHUB_OWNER,
+    GITHUB_REPO: process.env.GITHUB_REPO
+  };
+  delete process.env.GITHUB_TOKEN;
+  delete process.env.GITHUB_OWNER;
+  delete process.env.GITHUB_REPO;
+
   const { tempDir, cleanup } = createTempSettings({
     github: {
       enabled: true,
@@ -406,7 +419,7 @@ await testAsync('Should support both GitHub and Azure enabled simultaneously', a
       enabled: true,
       organization: 'org',
       project: 'proj',
-      token: 'az-token'
+      useCliAuth: true
     }
   });
 
@@ -420,7 +433,14 @@ await testAsync('Should support both GitHub and Azure enabled simultaneously', a
     assert(azureConfig.isEnabled(), 'Azure should be enabled');
 
     // Both should have their own independent configs
-    assert(githubConfig.getToken() !== azureConfig.getToken(), 'Should have different tokens');
+    // GitHub uses token auth, Azure uses CLI auth
+    const githubToken = githubConfig.getToken();
+    const azureOrg = azureConfig.getOrganization();
+
+    assert(githubToken !== null, 'GitHub should have token');
+    assert(azureOrg !== null, 'Azure should have organization');
+    assertEqual(githubToken, 'gh-token', `GitHub token should be correct (expected: gh-token, got: ${githubToken})`);
+    assertEqual(azureOrg, 'org', `Azure org should be correct (expected: org, got: ${azureOrg})`);
   } catch (error) {
     if (error.message.includes('not found') || error.code === 'ERR_MODULE_NOT_FOUND') {
       throw new Error('AzureDevOpsConfig not implemented yet');
@@ -428,6 +448,10 @@ await testAsync('Should support both GitHub and Azure enabled simultaneously', a
     throw error;
   } finally {
     cleanup();
+    // Restore environment variables
+    if (originalEnv.GITHUB_TOKEN) process.env.GITHUB_TOKEN = originalEnv.GITHUB_TOKEN;
+    if (originalEnv.GITHUB_OWNER) process.env.GITHUB_OWNER = originalEnv.GITHUB_OWNER;
+    if (originalEnv.GITHUB_REPO) process.env.GITHUB_REPO = originalEnv.GITHUB_REPO;
   }
 });
 

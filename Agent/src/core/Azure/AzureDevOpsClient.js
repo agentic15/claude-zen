@@ -14,33 +14,50 @@
  * limitations under the License.
  */
 
+import { execSync } from 'child_process';
+
 /**
- * AzureDevOpsClient - Handles Azure DevOps API operations
+ * AzureDevOpsClient - Handles Azure DevOps work item operations via Azure CLI
  *
- * Single Responsibility: Interact with Azure DevOps Work Items API
+ * Single Responsibility: Interact with Azure DevOps Work Items using `az boards` CLI
  *
  * CRITICAL: Completely isolated from GitHub integration
  * - Uses separate configuration (AzureDevOpsConfig)
- * - Uses separate authentication (Azure PAT tokens)
+ * - Uses Azure CLI authentication (az login) - NO tokens needed
  * - No shared state with GitHub client
+ *
+ * Authentication: Requires `az login` - credentials managed by Azure CLI
  */
 export class AzureDevOpsClient {
   /**
    * Initialize Azure DevOps client
    *
-   * @param {Object} config - AzureDevOpsConfig instance
+   * @param {string} organization - Azure DevOps organization name
+   * @param {string} project - Azure DevOps project name
    */
-  constructor(config) {
-    this.config = config;
+  constructor(organization, project) {
+    this.organization = organization;
+    this.project = project;
   }
 
   /**
-   * Check if client is properly configured
+   * Check if Azure CLI is authenticated and client is configured
    *
-   * @returns {boolean} True if configured, false otherwise
+   * @returns {boolean} True if configured and authenticated, false otherwise
    */
   isConfigured() {
-    return this.config && this.config.isEnabled();
+    if (!this.organization || !this.project) {
+      return false;
+    }
+
+    try {
+      // Check if Azure CLI is authenticated
+      execSync('az account show', { stdio: 'pipe' });
+      return true;
+    } catch {
+      console.warn('⚠ Azure CLI not authenticated. Run: az login');
+      return false;
+    }
   }
 
   /**
@@ -49,68 +66,192 @@ export class AzureDevOpsClient {
    * @param {string} title - Work item title
    * @param {string} description - Work item description
    * @param {Array<string>} tags - Work item tags (optional)
-   * @returns {Promise<Object|null>} Work item object or null if not configured
+   * @returns {Promise<number|null>} Work item ID or null if failed
    */
   async createWorkItem(title, description, tags = []) {
     if (!this.isConfigured()) {
       return null;
     }
 
-    // Placeholder for actual Azure DevOps API implementation
-    // This would use the Azure DevOps REST API:
-    // POST https://dev.azure.com/{organization}/{project}/_apis/wit/workitems/${type}?api-version=7.0
-    console.log('Azure DevOps: Would create work item:', title);
-    return null;
+    try {
+      const tagString = tags.join(';');
+
+      // Build command - use Array.join to avoid issues with newlines
+      const args = [
+        'boards', 'work-item', 'create',
+        '--title', title,
+        '--type', 'Task',
+        '--description', description,
+        '--organization', `https://dev.azure.com/${this.organization}`,
+        '--project', this.project,
+        '--output', 'json'
+      ];
+
+      // Add tags field if tags provided
+      if (tagString) {
+        args.push('--fields', `System.Tags=${tagString}`);
+      }
+
+      const command = `az ${args.join(' ')}`;
+      const result = execSync(command, { encoding: 'utf8', stdio: 'pipe' });
+      const workItem = JSON.parse(result);
+
+      return workItem.id;
+    } catch (error) {
+      console.warn('⚠ Failed to create Azure work item:', error.message);
+      return null;
+    }
   }
 
   /**
-   * Update work item tags in Azure DevOps
+   * Update work item state
+   *
+   * @param {number} workItemId - Work item ID
+   * @param {string} state - New state (New, Active, Closed, Resolved, etc.)
+   * @returns {Promise<boolean>} True if updated, false on failure
+   */
+  async updateWorkItemState(workItemId, state) {
+    if (!this.isConfigured() || !workItemId) {
+      return false;
+    }
+
+    try {
+      const args = [
+        'boards', 'work-item', 'update',
+        '--id', workItemId.toString(),
+        '--state', state,
+        '--organization', `https://dev.azure.com/${this.organization}`,
+        '--project', this.project
+      ];
+
+      const command = `az ${args.join(' ')}`;
+      execSync(command, { stdio: 'pipe' });
+
+      return true;
+    } catch (error) {
+      console.warn('⚠ Failed to update work item state:', error.message);
+      return false;
+    }
+  }
+
+  /**
+   * Update work item tags
    *
    * @param {number} workItemId - Work item ID
    * @param {Array<string>} tags - New tags to set
    * @returns {Promise<boolean>} True if successful, false otherwise
    */
   async updateWorkItemTags(workItemId, tags) {
-    if (!this.isConfigured()) {
+    if (!this.isConfigured() || !workItemId) {
       return false;
     }
 
-    // Placeholder for actual Azure DevOps API implementation
-    console.log('Azure DevOps: Would update work item tags:', workItemId, tags);
-    return false;
+    try {
+      const tagString = tags.join(';');
+
+      const args = [
+        'boards', 'work-item', 'update',
+        '--id', workItemId.toString(),
+        '--fields', `System.Tags=${tagString}`,
+        '--organization', `https://dev.azure.com/${this.organization}`,
+        '--project', this.project
+      ];
+
+      const command = `az ${args.join(' ')}`;
+      execSync(command, { stdio: 'pipe' });
+
+      return true;
+    } catch (error) {
+      console.warn('⚠ Failed to update work item tags:', error.message);
+      return false;
+    }
   }
 
   /**
-   * Add comment to work item
+   * Add a comment to work item (as discussion)
    *
    * @param {number} workItemId - Work item ID
    * @param {string} comment - Comment text
    * @returns {Promise<boolean>} True if successful, false otherwise
    */
   async addWorkItemComment(workItemId, comment) {
-    if (!this.isConfigured()) {
+    if (!this.isConfigured() || !workItemId) {
       return false;
     }
 
-    // Placeholder for actual Azure DevOps API implementation
-    console.log('Azure DevOps: Would add comment to work item:', workItemId);
-    return false;
+    try {
+      // In Azure Boards, comments are added via the --discussion flag
+      const args = [
+        'boards', 'work-item', 'update',
+        '--id', workItemId.toString(),
+        '--discussion', comment,
+        '--organization', `https://dev.azure.com/${this.organization}`,
+        '--project', this.project
+      ];
+
+      const command = `az ${args.join(' ')}`;
+      execSync(command, { stdio: 'pipe' });
+
+      return true;
+    } catch (error) {
+      console.warn('⚠ Failed to add work item comment:', error.message);
+      return false;
+    }
   }
 
   /**
-   * Close a work item
+   * Close a work item with optional comment
    *
    * @param {number} workItemId - Work item ID
-   * @param {string} comment - Optional closing comment
+   * @param {string|null} comment - Optional closing comment
    * @returns {Promise<boolean>} True if successful, false otherwise
    */
   async closeWorkItem(workItemId, comment = null) {
-    if (!this.isConfigured()) {
+    if (!this.isConfigured() || !workItemId) {
       return false;
     }
 
-    // Placeholder for actual Azure DevOps API implementation
-    console.log('Azure DevOps: Would close work item:', workItemId);
-    return false;
+    try {
+      // Add comment first if provided
+      if (comment) {
+        await this.addWorkItemComment(workItemId, comment);
+      }
+
+      // Close the work item by setting state to 'Closed'
+      return await this.updateWorkItemState(workItemId, 'Closed');
+    } catch (error) {
+      console.warn('⚠ Failed to close work item:', error.message);
+      return false;
+    }
+  }
+
+  /**
+   * Get work item details
+   *
+   * @param {number} workItemId - Work item ID
+   * @returns {Promise<Object|null>} Work item object or null
+   */
+  async getWorkItem(workItemId) {
+    if (!this.isConfigured() || !workItemId) {
+      return null;
+    }
+
+    try {
+      const args = [
+        'boards', 'work-item', 'show',
+        '--id', workItemId.toString(),
+        '--organization', `https://dev.azure.com/${this.organization}`,
+        '--project', this.project,
+        '--output', 'json'
+      ];
+
+      const command = `az ${args.join(' ')}`;
+      const result = execSync(command, { encoding: 'utf8', stdio: 'pipe' });
+
+      return JSON.parse(result);
+    } catch (error) {
+      console.warn('⚠ Failed to get work item:', error.message);
+      return null;
+    }
   }
 }
