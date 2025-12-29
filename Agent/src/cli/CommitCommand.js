@@ -282,15 +282,21 @@ export class CommitCommand {
 
       if (existsSync(templatePath)) {
         // Use the PR template and populate it with task data
+        console.log('📋 Using PR template from .github/PULL_REQUEST_TEMPLATE.md');
         const template = readFileSync(templatePath, 'utf-8');
         prBody = this.populatePRTemplate(template, taskData, task, commitMessage);
       } else {
         // Fallback to custom body if template doesn't exist
+        console.log('📋 PR template not found, using default format');
         prBody = this.buildCustomPRBody(taskData, task, commitMessage);
       }
 
-      // Create PR using gh CLI
-      const prCommand = `gh pr create --title "${commitMessage}" --body "${prBody}" --base ${mainBranch}`;
+      // Write PR body to temp file to avoid shell escaping issues
+      const tempBodyFile = join(process.cwd(), '.git', 'PR_BODY.md');
+      writeFileSync(tempBodyFile, prBody);
+
+      // Create PR using gh CLI with body from file
+      const prCommand = `gh pr create --title "${commitMessage}" --body-file "${tempBodyFile}" --base ${mainBranch}`;
       const prOutput = execSync(prCommand, { encoding: 'utf-8' });
 
       // Extract PR URL from output
