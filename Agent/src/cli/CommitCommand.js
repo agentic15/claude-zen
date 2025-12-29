@@ -8,6 +8,9 @@ export class CommitCommand {
   static async execute() {
     console.log('\n🚀 Starting commit workflow...\n');
 
+    // Step 0: Check if current branch already has a PR (protection)
+    await this.checkBranchPRStatus();
+
     // Step 1: Find active task
     const { task, tracker, trackerPath } = this.getActiveTask();
 
@@ -79,6 +82,48 @@ export class CommitCommand {
 
     // Step 9: Display summary
     this.displaySummary(task, prUrl, tracker);
+  }
+
+  static async checkBranchPRStatus() {
+    try {
+      const currentBranch = execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf-8' }).trim();
+
+      // Skip check for main/master branches
+      if (currentBranch === 'main' || currentBranch === 'master') {
+        return;
+      }
+
+      // Check if PR exists for current branch
+      const prCheckOutput = execSync(`gh pr list --head ${currentBranch} --json number,url,state,title`, { encoding: 'utf-8' });
+      const prs = JSON.parse(prCheckOutput);
+
+      if (prs.length > 0) {
+        const pr = prs[0];
+
+        if (pr.state === 'MERGED') {
+          console.log(`\n❌ BRANCH PROTECTION: Cannot commit to branch with merged PR\n`);
+          console.log(`   Current branch: ${currentBranch}`);
+          console.log(`   Merged PR: ${pr.url}`);
+          console.log(`   Title: ${pr.title}\n`);
+          console.log(`💡 Solution: Start a new task with a new branch:`);
+          console.log(`   npx agentic15 task start TASK-XXX\n`);
+          process.exit(1);
+        } else if (pr.state === 'CLOSED') {
+          console.log(`\n⚠️  WARNING: Branch has a closed PR\n`);
+          console.log(`   Current branch: ${currentBranch}`);
+          console.log(`   Closed PR: ${pr.url}`);
+          console.log(`   Title: ${pr.title}\n`);
+          console.log(`   Continuing will push updates to the closed PR...\n`);
+          // Allow but warn - they might want to reopen
+        } else if (pr.state === 'OPEN') {
+          console.log(`✓ Updating existing PR: ${pr.url}\n`);
+          // This is OK - updating an open PR
+        }
+      }
+    } catch (error) {
+      // gh CLI not available or no PR exists - allow commit
+      // This is fine, PR will be created later
+    }
   }
 
   static getActiveTask() {
@@ -203,8 +248,150 @@ export class CommitCommand {
         taskData = task;
       }
 
-      // Build PR body following .github/PULL_REQUEST_TEMPLATE.md structure
-      let prBody = `## Task\n\n`;
+      // Check if PR already exists for this branch
+      const currentBranch = execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf-8' }).trim();
+      let existingPR = null;
+
+      try {
+        const prCheckOutput = execSync(`gh pr list --head ${currentBranch} --json number,url,state`, { encoding: 'utf-8' });
+        const prs = JSON.parse(prCheckOutput);
+
+        if (prs.length > 0) {
+          existingPR = prs[0];
+
+          if (existingPR.state === 'MERGED') {
+            console.log(`⚠️  PR already exists and was merged: ${existingPR.url}`);
+            console.log(`   Branch ${currentBranch} should start a new task with a new branch\n`);
+            return existingPR.url;
+          } else if (existingPR.state === 'OPEN') {
+            console.log(`✅ PR already exists (open): ${existingPR.url}`);
+            return existingPR.url;
+          } else if (existingPR.state === 'CLOSED') {
+            console.log(`⚠️  PR exists but was closed: ${existingPR.url}`);
+            console.log(`   Consider reopening with: gh pr reopen ${existingPR.number}\n`);
+            return existingPR.url;
+          }
+        }
+      } catch (error) {
+        // No existing PR found or gh CLI error - continue with PR creation
+      }
+
+      // Try to read PR template
+      const templatePath = join(process.cwd(), '.github', 'PULL_REQUEST_TEMPLATE.md');
+      let prBody = '';
+
+      if (existsSync(templatePath)) {
+        // Use the PR template and populate it with task data
+        const template = readFileSync(templatePath, 'utf-8');
+        prBody = this.populatePRTemplate(template, taskData, task, commitMessage);
+      } else {
+        // Fallback to custom body if template doesn't exist
+        prBody = this.buildCustomPRBody(taskData, task, commitMessage);
+      }
+
+      // Create PR using gh CLI
+      const prCommand = `gh pr create --title "${commitMessage}" --body "${prBody}" --base ${mainBranch}`;
+      const prOutput = execSync(prCommand, { encoding: 'utf-8' });
+
+      // Extract PR URL from output
+      const prUrl = prOutput.match(/https:\/\/github\.com\/[^\s]+/)?.[0];
+
+      if (prUrl) {
+        console.log(`✅ Pull request created: ${prUrl}`);
+        return prUrl;
+      }
+
+      console.log('✅ Pull request created');
+      return null;
+    } catch (error) {
+      console.log(`\n⚠️  Failed to create PR: ${error.message}`);
+      console.log('   You may need to install GitHub CLI: https://cli.github.com/\n');
+      return null;
+    }
+  }
+
+  static populatePRTemplate(template, taskData, task, commitMessage) {
+    let populated = template;
+
+    // Fill in Description
+    populated = populated.replace(
+      /<!-- Provide a brief description of the changes in this PR -->/,
+      `${taskData.description || task.description || commitMessage}`
+    );
+
+    // Fill in Type of Change based on phase
+    if (taskData.phase === 'testing') {
+      populated = populated.replace(/- \[ \] Test update/, '- [x] Test update');
+    } else if (taskData.phase === 'implementation') {
+      populated = populated.replace(/- \[ \] New feature/, '- [x] New feature');
+    } else if (taskData.phase === 'design') {
+      populated = populated.replace(/- \[ \] Documentation update/, '- [x] Documentation update');
+    }
+
+    // Fill in Related Issues
+    if (taskData.githubIssue) {
+      populated = populated.replace(/Fixes #\s*\n/, `Fixes #${taskData.githubIssue}\n`);
+    } else {
+      populated = populated.replace(/Fixes #\s*\n/, `Related to ${task.id}\n`);
+    }
+
+    // Fill in Motivation and Context
+    populated = populated.replace(
+      /<!-- Why is this change required\? What problem does it solve\? -->/,
+      `**Task:** ${task.id} - ${task.title}\n\n${taskData.description || task.description || ''}`
+    );
+
+    // Add TDD section to "How Has This Been Tested?"
+    let testingSection = '';
+    if (taskData.phase === 'testing') {
+      populated = populated.replace(/- \[ \] Unit tests/, '- [x] Unit tests');
+      testingSection = `\n### TDD Compliance (Testing Phase):\n`;
+      testingSection += `- [ ] All tests are REAL and EXECUTABLE (no mocks/placeholders)\n`;
+      testingSection += `- [ ] Tests verify actual functionality\n`;
+      testingSection += `- [ ] Positive and negative test cases included\n`;
+      testingSection += `- [ ] Edge cases and error conditions covered\n`;
+      testingSection += `- [ ] Tests pass and are ready for implementation phase\n\n`;
+    } else if (taskData.phase === 'implementation') {
+      populated = populated.replace(/- \[ \] Unit tests/, '- [x] Unit tests');
+      populated = populated.replace(/- \[ \] Integration tests/, '- [x] Integration tests');
+      testingSection = `\n### TDD Compliance (Implementation Phase):\n`;
+      testingSection += `- [ ] Prerequisite testing task is completed\n`;
+      testingSection += `- [ ] All tests from prerequisite task pass\n`;
+      testingSection += `- [ ] No tests were modified (implementation makes existing tests pass)\n\n`;
+    }
+
+    // Insert TDD section after the test checkboxes
+    populated = populated.replace(
+      /\*\*Test Configuration\*\*:/,
+      testingSection + '\n**Test Configuration**:'
+    );
+
+    // Add copyright header checkbox automatically
+    populated = populated.replace(
+      /- \[ \] I have added copyright headers to new files/,
+      '- [x] I have added copyright headers to new files'
+    );
+
+    // Add test requirement checkbox
+    populated = populated.replace(
+      /- \[ \] I have added tests that prove my fix is effective or that my feature works/,
+      taskData.phase === 'testing' || taskData.phase === 'implementation'
+        ? '- [x] I have added tests that prove my fix is effective or that my feature works'
+        : '- [ ] I have added tests that prove my fix is effective or that my feature works'
+    );
+
+    // Add note about auto-generation
+    populated = populated.replace(
+      /<!-- Add any additional notes, concerns, or questions for reviewers -->/,
+      `**Task ID:** ${task.id}\n**Phase:** ${taskData.phase}\n\nAuto-generated by Agentic15 Claude Zen`
+    );
+
+    return populated;
+  }
+
+  static buildCustomPRBody(taskData, task, commitMessage) {
+    // Original custom body as fallback
+    let prBody = `## Task\n\n`;
 
       if (taskData.githubIssue) {
         prBody += `Closes #${taskData.githubIssue}\n\n`;
@@ -314,25 +501,7 @@ export class CommitCommand {
       prBody += `## Notes\n\n`;
       prBody += `Auto-generated by Agentic15 Claude Zen`;
 
-      // Create PR using gh CLI
-      const prCommand = `gh pr create --title "${commitMessage}" --body "${prBody}" --base ${mainBranch}`;
-      const prOutput = execSync(prCommand, { encoding: 'utf-8' });
-
-      // Extract PR URL from output
-      const prUrl = prOutput.match(/https:\/\/github\.com\/[^\s]+/)?.[0];
-
-      if (prUrl) {
-        console.log(`✅ Pull request created: ${prUrl}`);
-        return prUrl;
-      }
-
-      console.log('✅ Pull request created');
-      return null;
-    } catch (error) {
-      console.log(`\n⚠️  Failed to create PR: ${error.message}`);
-      console.log('   You may need to install GitHub CLI: https://cli.github.com/\n');
-      return null;
-    }
+      return prBody;
   }
 
   static async updateGitHubIssue(task, prUrl) {
