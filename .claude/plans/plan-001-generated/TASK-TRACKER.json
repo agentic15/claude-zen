@@ -5,9 +5,9 @@
   "lockedAt": "2025-12-29T14:06:34.725Z",
   "statistics": {
     "totalTasks": 17,
-    "completed": 8,
+    "completed": 9,
     "inProgress": 0,
-    "pending": 9
+    "pending": 8
   },
   "taskFiles": [
     {
@@ -86,8 +86,10 @@
       "id": "TASK-009",
       "title": "Design Azure authentication flow",
       "phase": "design",
-      "status": "pending",
-      "description": "Plan PAT token handling for Azure DevOps"
+      "status": "completed",
+      "description": "Plan PAT token handling for Azure DevOps",
+      "startedAt": "2025-12-29T20:40:36.480Z",
+      "completedAt": "2025-12-29T20:58:11.923Z"
     },
     {
       "id": "TASK-010",

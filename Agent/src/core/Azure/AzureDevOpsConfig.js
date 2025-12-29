@@ -48,12 +48,12 @@ export class AzureDevOpsConfig {
   loadConfig() {
     const config = {
       enabled: false, // Default to disabled for safety
-      token: null,
       organization: null,
       project: null,
       autoCreate: false,
       autoUpdate: false,
-      autoClose: false
+      autoClose: false,
+      useCliAuth: true // Always use Azure CLI authentication
     };
 
     // Load from settings.json (defaults)
@@ -83,9 +83,6 @@ export class AzureDevOpsConfig {
     }
 
     // Override with environment variables (highest priority)
-    if (process.env.AZURE_DEVOPS_TOKEN) {
-      config.token = process.env.AZURE_DEVOPS_TOKEN;
-    }
     if (process.env.AZURE_DEVOPS_ORGANIZATION) {
       config.organization = process.env.AZURE_DEVOPS_ORGANIZATION;
     }
@@ -106,15 +103,6 @@ export class AzureDevOpsConfig {
     }
 
     return config;
-  }
-
-  /**
-   * Get Azure DevOps Personal Access Token
-   *
-   * @returns {string|null} Token or null if not configured
-   */
-  getToken() {
-    return this.config.token;
   }
 
   /**
@@ -150,11 +138,12 @@ export class AzureDevOpsConfig {
   /**
    * Check if Azure DevOps integration is fully enabled and configured
    *
+   * Note: Authentication is handled by Azure CLI (az login), no token needed
+   *
    * @returns {boolean} True if ready to use, false otherwise
    */
   isEnabled() {
     return this.config.enabled &&
-           this.config.token !== null &&
            this.config.organization !== null &&
            this.config.project !== null;
   }
