@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { execSync } from 'child_process';
+import { execSync, execFileSync } from 'child_process';
 
 /**
  * AzureDevOpsClient - Handles Azure DevOps work item operations via Azure CLI
@@ -76,7 +76,7 @@ export class AzureDevOpsClient {
     try {
       const tagString = tags.join(';');
 
-      // Build command - use Array.join to avoid issues with newlines
+      // Build args array for execFileSync (handles escaping automatically)
       const args = [
         'boards', 'work-item', 'create',
         '--title', title,
@@ -92,8 +92,7 @@ export class AzureDevOpsClient {
         args.push('--fields', `System.Tags=${tagString}`);
       }
 
-      const command = `az ${args.join(' ')}`;
-      const result = execSync(command, { encoding: 'utf8', stdio: 'pipe' });
+      const result = execFileSync('az', args, { encoding: 'utf8' });
       const workItem = JSON.parse(result);
 
       return workItem.id;
@@ -124,8 +123,7 @@ export class AzureDevOpsClient {
         '--project', this.project
       ];
 
-      const command = `az ${args.join(' ')}`;
-      execSync(command, { stdio: 'pipe' });
+      execFileSync('az', args);
 
       return true;
     } catch (error) {
@@ -157,8 +155,7 @@ export class AzureDevOpsClient {
         '--project', this.project
       ];
 
-      const command = `az ${args.join(' ')}`;
-      execSync(command, { stdio: 'pipe' });
+      execFileSync('az', args);
 
       return true;
     } catch (error) {
@@ -189,8 +186,7 @@ export class AzureDevOpsClient {
         '--project', this.project
       ];
 
-      const command = `az ${args.join(' ')}`;
-      execSync(command, { stdio: 'pipe' });
+      execFileSync('az', args);
 
       return true;
     } catch (error) {
@@ -245,8 +241,7 @@ export class AzureDevOpsClient {
         '--output', 'json'
       ];
 
-      const command = `az ${args.join(' ')}`;
-      const result = execSync(command, { encoding: 'utf8', stdio: 'pipe' });
+      const result = execFileSync('az', args, { encoding: 'utf8' });
 
       return JSON.parse(result);
     } catch (error) {

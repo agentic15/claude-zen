@@ -5,9 +5,9 @@
   "lockedAt": "2025-12-29T14:06:34.725Z",
   "statistics": {
     "totalTasks": 17,
-    "completed": 11,
+    "completed": 12,
     "inProgress": 0,
-    "pending": 6
+    "pending": 5
   },
   "taskFiles": [
     {
@@ -113,8 +113,10 @@
       "id": "TASK-012",
       "title": "Write tests for Azure work item API (TDD)",
       "phase": "testing",
-      "status": "pending",
-      "description": "Write tests BEFORE implementing work item fetching"
+      "status": "completed",
+      "description": "Write tests BEFORE implementing work item fetching",
+      "startedAt": "2025-12-29T22:28:55.061Z",
+      "completedAt": "2025-12-29T22:51:31.005Z"
     },
     {
       "id": "TASK-013",
