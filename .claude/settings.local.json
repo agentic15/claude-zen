@@ -4,7 +4,8 @@
       "WebSearch",
       "Bash(mkdir:*)",
       "Bash(npm create:*)",
-      "Bash(npm pack:*)"
+      "Bash(npm pack:*)",
+      "Bash(node:*)"
     ]
   },
   "github": {
