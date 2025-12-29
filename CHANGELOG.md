@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.9] - 2025-12-29
+
+### Fixed
+- **CRITICAL: Sync command data loss protection** - Added comprehensive PR merge verification before deleting feature branches
+  - **Root cause**: `npx agentic15 sync` could force delete feature branches even if PR wasn't merged, causing permanent data loss
+  - **New protection**: Added `checkPRStatus()` method that blocks sync in dangerous scenarios:
+    1. ✅ PR exists but NOT merged → Blocks sync, prompts user to merge PR first
+    2. ✅ No PR exists but branch has commits → Blocks sync, prompts user to create PR or push manually
+    3. ✅ Cannot verify PR status → Blocks sync for safety
+    4. ✅ PR is merged → Allows sync to proceed safely
+  - **Implementation**: Uses `gh pr view` to check PR state and `git log` to detect unpushed commits
+  - **User experience**: Clear error messages with recovery options when sync is blocked
+  - **Safety first**: Defaults to blocking sync if any uncertainty exists, preventing accidental data loss
+  - Complements existing uncommitted changes protection (already present since v5.0.0)
+
 ## [5.0.8] - 2025-12-29
 
 ### Fixed

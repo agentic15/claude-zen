@@ -26,25 +26,30 @@ export class SyncCommand {
       process.exit(1);
     }
 
-    // Step 4: Get main branch name
+    // Step 4: Check PR status (CRITICAL: prevents data loss)
+    if (isFeatureBranch) {
+      this.checkPRStatus(currentBranch);
+    }
+
+    // Step 5: Get main branch name
     const mainBranch = this.getMainBranch();
     console.log(`🎯 Main branch: ${mainBranch}\n`);
 
-    // Step 5: Switch to main
+    // Step 6: Switch to main
     console.log(`📦 Switching to ${mainBranch}...\n`);
     this.switchToMain(mainBranch);
 
-    // Step 6: Pull latest changes
+    // Step 7: Pull latest changes
     console.log('⬇️  Pulling latest changes...\n');
     this.pullMain(mainBranch);
 
-    // Step 7: Delete feature branch if we were on one
+    // Step 8: Delete feature branch if we were on one
     if (isFeatureBranch) {
       console.log(`🗑️  Cleaning up feature branch: ${currentBranch}...\n`);
       this.deleteFeatureBranch(currentBranch);
     }
 
-    // Step 8: Display summary
+    // Step 9: Display summary
     this.displaySummary(mainBranch, currentBranch, isFeatureBranch);
   }
 
@@ -115,6 +120,56 @@ export class SyncCommand {
         console.log(`   ✓ Force deleted local branch: ${branchName}`);
       } catch (forceError) {
         console.log(`   ⚠️  Could not delete branch: ${forceError.message}`);
+      }
+    }
+  }
+
+  static checkPRStatus(branchName) {
+    try {
+      // Check if PR exists for this branch
+      const prInfo = execSync(`gh pr view ${branchName} --json state,mergedAt`, {
+        encoding: 'utf-8',
+        stdio: ['pipe', 'pipe', 'pipe']
+      });
+
+      const pr = JSON.parse(prInfo);
+
+      // If PR exists but not merged, block sync
+      if (pr.state === 'OPEN' || (pr.state === 'CLOSED' && !pr.mergedAt)) {
+        console.log(`\n❌ Cannot sync: PR for ${branchName} is not merged\n`);
+        console.log(`   PR must be merged before running sync\n`);
+        console.log(`   Options:`);
+        console.log(`   1. Merge the PR on GitHub`);
+        console.log(`   2. Close PR and abandon changes\n`);
+        console.log(`   Aborting sync to prevent data loss.\n`);
+        process.exit(1);
+      }
+
+      // PR is merged, safe to proceed
+      console.log(`✅ PR merged - safe to sync\n`);
+
+    } catch (error) {
+      // No PR found - check if branch has commits
+      try {
+        const commits = execSync(`git log origin/main..${branchName} --oneline`, {
+          encoding: 'utf-8',
+          stdio: ['pipe', 'pipe', 'pipe']
+        });
+
+        if (commits.trim().length > 0) {
+          console.log(`\n❌ Cannot sync: No PR found but ${branchName} has unpushed commits\n`);
+          console.log(`   You have committed changes that were never pushed to a PR.\n`);
+          console.log(`   Options:`);
+          console.log(`   1. Create PR first: npx agentic15 commit`);
+          console.log(`   2. Push manually: git push -u origin ${branchName}\n`);
+          console.log(`   Aborting sync to prevent data loss.\n`);
+          process.exit(1);
+        }
+      } catch (e) {
+        // Error checking commits, be safe and block
+        console.log(`\n⚠️  Could not verify PR status for ${branchName}`);
+        console.log(`   Aborting sync for safety\n`);
+        process.exit(1);
       }
     }
   }
