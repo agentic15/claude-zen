@@ -4,11 +4,12 @@
   "description": "Structured AI-assisted development framework for Claude Code with enforced quality standards",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "Agent"
   ],
   "scripts": {
-    "build": "npm run build --workspace=packages/create-agentic15-claude-zen",
-    "test": "npm run test --workspace=packages/create-agentic15-claude-zen"
+    "build": "npm run build --workspace=Agent",
+    "test": "npm run test --workspace=Agent",
+    "publish:package": "cd Agent && npm publish"
   },
   "keywords": [
     "agentic15",
@@ -26,8 +27,5 @@
   },
   "bugs": {
     "url": "https://github.com/agentic15/claude-zen/issues"
-  },
-  "dependencies": {
-    "@agentic15.com/agentic15-claude-zen": "^5.0.10"
   }
 }
