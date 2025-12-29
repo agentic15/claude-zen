@@ -9,9 +9,32 @@ export class CommitCommand {
     console.log('\n🚀 Starting commit workflow...\n');
 
     // Step 1: Find active task
-    const { task, tracker } = this.getActiveTask();
+    const { task, tracker, trackerPath } = this.getActiveTask();
 
     if (!task) {
+      // Fallback mode: Check if there are pending changes to commit
+      const hasPendingChanges = this.checkPendingChanges();
+
+      if (hasPendingChanges) {
+        console.log('⚠️  No active task, but found uncommitted changes');
+        console.log('   This usually means TASK-TRACKER.json was left behind from a previous commit\n');
+
+        // Stage and commit the leftover changes
+        console.log('📦 Staging leftover changes...\n');
+        this.stageFiles();
+
+        console.log('💾 Creating commit for leftover changes...\n');
+        this.createCommit('[TRACKER] Update task completion status');
+
+        // Push to current branch
+        const currentBranch = execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf-8' }).trim();
+        console.log(`⬆️  Pushing to ${currentBranch}...\n`);
+        execSync('git push', { stdio: 'inherit' });
+
+        console.log('\n✅ Leftover changes committed and pushed to PR\n');
+        return;
+      }
+
       console.log('❌ No task in progress');
       console.log('   Start a task first: agentic15 task start TASK-001\n');
       process.exit(1);
@@ -19,30 +42,31 @@ export class CommitCommand {
 
     console.log(`📌 Task: ${task.id} - ${task.title}\n`);
 
-    // Step 2: Stage files in Agent/
+    // Step 2: Mark task as completed BEFORE committing (so TASK-TRACKER.json is included)
+    console.log('✓ Marking task as completed...\n');
+    this.markTaskCompleted(task, tracker, trackerPath);
+
+    // Step 3: Stage files (including updated TASK-TRACKER.json)
     console.log('📦 Staging changes...\n');
     this.stageFiles();
 
-    // Step 3: Generate commit message
+    // Step 4: Generate commit message
     const commitMessage = this.generateCommitMessage(task);
 
-    // Step 4: Commit
+    // Step 5: Commit
     console.log('💾 Creating commit...\n');
     this.createCommit(commitMessage);
 
-    // Step 5: Push to feature branch
+    // Step 6: Push to feature branch
     console.log('⬆️  Pushing to remote...\n');
     this.pushBranch(task.id);
 
-    // Step 6: Create PR
+    // Step 7: Create PR
     console.log('🔀 Creating pull request...\n');
     const prUrl = await this.createPullRequest(task, commitMessage);
 
-    // Step 7: Update GitHub issue status
+    // Step 8: Update GitHub issue status
     await this.updateGitHubIssue(task, prUrl);
-
-    // Step 8: Mark task as completed
-    this.markTaskCompleted(task);
 
     // Step 9: Display summary
     this.displaySummary(task, prUrl, tracker);
@@ -67,7 +91,16 @@ export class CommitCommand {
     const tracker = JSON.parse(readFileSync(trackerPath, 'utf-8'));
     const task = tracker.taskFiles.find(t => t.status === 'in_progress');
 
-    return { task, tracker };
+    return { task, tracker, trackerPath };
+  }
+
+  static checkPendingChanges() {
+    try {
+      const status = execSync('git status --porcelain', { encoding: 'utf-8' });
+      return status.trim().length > 0;
+    } catch (e) {
+      return false;
+    }
   }
 
   static stageFiles() {
@@ -282,14 +315,9 @@ export class CommitCommand {
     }
   }
 
-  static markTaskCompleted(task) {
+  static markTaskCompleted(task, tracker, trackerPath) {
     try {
-      const activePlanPath = join(process.cwd(), '.claude', 'ACTIVE-PLAN');
-      const planId = readFileSync(activePlanPath, 'utf-8').trim();
-      const trackerPath = join(process.cwd(), '.claude', 'plans', planId, 'TASK-TRACKER.json');
-
       // Update tracker
-      const tracker = JSON.parse(readFileSync(trackerPath, 'utf-8'));
       const taskInTracker = tracker.taskFiles.find(t => t.id === task.id);
 
       if (taskInTracker) {
@@ -301,7 +329,7 @@ export class CommitCommand {
         this.updateStatistics(tracker);
 
         writeFileSync(trackerPath, JSON.stringify(tracker, null, 2));
-        console.log(`\n✅ Marked ${task.id} as completed`);
+        console.log(`✅ Marked ${task.id} as completed`);
       }
     } catch (error) {
       console.log(`\n⚠️  Failed to mark task as completed: ${error.message}`);

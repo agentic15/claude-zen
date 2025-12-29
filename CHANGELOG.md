@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.8] - 2025-12-29
+
+### Fixed
+- **CRITICAL: TASK-TRACKER.json not committed in PRs** - Fixed bug where task completion status was left uncommitted
+  - **Root cause**: Task was marked as completed AFTER commit/push/PR, leaving TASK-TRACKER.json modified but unstaged
+  - **Solution**: Mark task as completed BEFORE committing, so TASK-TRACKER.json changes are included in the PR
+  - **Fallback mode**: If `npx agentic15 commit` is run with no active task but pending changes exist, it will commit and push those leftover changes with message `[TRACKER] Update task completion status`
+  - This ensures TASK-TRACKER.json is always synchronized with the PR state
+  - Prevents "orphaned" task tracker updates from being left in the working directory
+
 ## [5.0.7] - 2025-12-28
 
 ### Fixed
