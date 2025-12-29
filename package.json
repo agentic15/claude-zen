@@ -26,5 +26,8 @@
   },
   "bugs": {
     "url": "https://github.com/agentic15/claude-zen/issues"
+  },
+  "dependencies": {
+    "@agentic15.com/agentic15-claude-zen": "^5.0.10"
   }
 }
