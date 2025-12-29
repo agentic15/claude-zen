@@ -23,3 +23,13 @@ coverage/
 # Temporary files
 *.tmp
 *.temp
+
+# Claude framework files (managed by npm package)
+.claude/settings.json
+.claude.backup/
+
+# Keep user-specific Claude files
+!.claude/settings.local.json
+!.claude/plans/
+!.claude/ACTIVE-PLAN
+!.claude/.framework-version
