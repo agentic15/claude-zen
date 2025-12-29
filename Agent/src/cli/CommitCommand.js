@@ -114,43 +114,9 @@ export class CommitCommand {
 
   static stageFiles() {
     try {
-      // Stage all files in Agent/
-      execSync('git add Agent/', { stdio: 'inherit' });
-
-      // Also stage scripts/ if exists
-      try {
-        execSync('git add scripts/', { stdio: 'pipe' });
-      } catch (e) {
-        // scripts/ might not exist
-      }
-
-      // Stage user-generated .claude/ files (NOT framework files)
-      // Stage: ACTIVE-PLAN, plans/, and settings.local.json
-      // DO NOT stage: settings.json, POST-INSTALL.md (generated from framework)
-      try {
-        execSync('git add .claude/ACTIVE-PLAN', { stdio: 'pipe' });
-      } catch (e) {
-        // File might not exist
-      }
-
-      try {
-        execSync('git add .claude/plans/', { stdio: 'pipe' });
-      } catch (e) {
-        // Directory might not exist
-      }
-
-      try {
-        execSync('git add .claude/settings.local.json', { stdio: 'pipe' });
-      } catch (e) {
-        // File might not exist (it's optional)
-      }
-
-      // Stage package.json and package-lock.json if they exist
-      try {
-        execSync('git add package.json package-lock.json', { stdio: 'pipe' });
-      } catch (e) {
-        // Files might not exist or have no changes
-      }
+      // Stage all changes (including deletions, moves, and new files)
+      console.log('📦 Staging all changes...\n');
+      execSync('git add -A', { stdio: 'inherit' });
 
       // Show what was staged
       const staged = execSync('git diff --cached --name-only', { encoding: 'utf-8' });
