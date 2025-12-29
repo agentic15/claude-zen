@@ -185,6 +185,16 @@ await testAsync('AzureDevOpsConfig should require all fields to be fully enabled
 console.log('\n--- GitHub/Azure Isolation Tests ---\n');
 
 await testAsync('GitHub integration should work when Azure is disabled', async () => {
+  // Clear environment variables that could interfere with tests
+  const originalEnv = {
+    GITHUB_TOKEN: process.env.GITHUB_TOKEN,
+    GITHUB_OWNER: process.env.GITHUB_OWNER,
+    GITHUB_REPO: process.env.GITHUB_REPO
+  };
+  delete process.env.GITHUB_TOKEN;
+  delete process.env.GITHUB_OWNER;
+  delete process.env.GITHUB_REPO;
+
   const { tempDir, cleanup } = createTempSettings({
     github: {
       enabled: true,
@@ -202,15 +212,34 @@ await testAsync('GitHub integration should work when Azure is disabled', async (
     const githubConfig = new GitHubConfig(tempDir);
 
     // GitHub should be fully functional when Azure is disabled
-    assert(githubConfig.isEnabled(), 'GitHub should be enabled');
+    const repoInfo = githubConfig.getRepoInfo();
+    const token = githubConfig.getToken();
+
+    assert(githubConfig.isEnabled(), `GitHub should be enabled (token: ${token}, owner: ${repoInfo.owner}, repo: ${repoInfo.repo})`);
     assert(githubConfig.isAutoCreateEnabled(), 'GitHub auto-create should work');
-    assertEqual(githubConfig.getRepoInfo().owner, 'test-owner', 'GitHub config should be intact');
+    assertEqual(repoInfo.owner, 'test-owner', `GitHub config should be intact (got: ${repoInfo.owner})`);
   } finally {
     cleanup();
+    // Restore environment variables
+    if (originalEnv.GITHUB_TOKEN) process.env.GITHUB_TOKEN = originalEnv.GITHUB_TOKEN;
+    if (originalEnv.GITHUB_OWNER) process.env.GITHUB_OWNER = originalEnv.GITHUB_OWNER;
+    if (originalEnv.GITHUB_REPO) process.env.GITHUB_REPO = originalEnv.GITHUB_REPO;
   }
 });
 
 await testAsync('GitHub integration should work when Azure is enabled', async () => {
+  // Clear environment variables that could interfere with tests
+  const originalEnv = {
+    GITHUB_TOKEN: process.env.GITHUB_TOKEN,
+    GITHUB_OWNER: process.env.GITHUB_OWNER,
+    GITHUB_REPO: process.env.GITHUB_REPO,
+    AZURE_DEVOPS_TOKEN: process.env.AZURE_DEVOPS_TOKEN
+  };
+  delete process.env.GITHUB_TOKEN;
+  delete process.env.GITHUB_OWNER;
+  delete process.env.GITHUB_REPO;
+  delete process.env.AZURE_DEVOPS_TOKEN;
+
   const { tempDir, cleanup } = createTempSettings({
     github: {
       enabled: true,
@@ -231,24 +260,44 @@ await testAsync('GitHub integration should work when Azure is enabled', async ()
     const githubConfig = new GitHubConfig(tempDir);
 
     // CRITICAL: GitHub should remain fully functional even when Azure is enabled
-    assert(githubConfig.isEnabled(), 'GitHub should still be enabled with Azure enabled');
+    const repoInfo = githubConfig.getRepoInfo();
+    const token = githubConfig.getToken();
+
+    assert(githubConfig.isEnabled(), `GitHub should still be enabled with Azure enabled (token: ${token}, owner: ${repoInfo.owner})`);
     assert(githubConfig.isAutoCreateEnabled(), 'GitHub features should be unaffected');
-    assertEqual(githubConfig.getRepoInfo().owner, 'test-owner', 'GitHub config should be independent');
-    assertEqual(githubConfig.getToken(), 'github-token', 'GitHub token should be separate');
+    assertEqual(repoInfo.owner, 'test-owner', `GitHub config should be independent (got: ${repoInfo.owner})`);
+    assertEqual(token, 'github-token', `GitHub token should be separate (got: ${token})`);
   } finally {
     cleanup();
+    // Restore environment variables
+    if (originalEnv.GITHUB_TOKEN) process.env.GITHUB_TOKEN = originalEnv.GITHUB_TOKEN;
+    if (originalEnv.GITHUB_OWNER) process.env.GITHUB_OWNER = originalEnv.GITHUB_OWNER;
+    if (originalEnv.GITHUB_REPO) process.env.GITHUB_REPO = originalEnv.GITHUB_REPO;
+    if (originalEnv.AZURE_DEVOPS_TOKEN) process.env.AZURE_DEVOPS_TOKEN = originalEnv.AZURE_DEVOPS_TOKEN;
   }
 });
 
 await testAsync('Azure and GitHub should have independent tokens', async () => {
+  // Clear environment variables that could interfere with tests
+  const originalEnv = {
+    GITHUB_TOKEN: process.env.GITHUB_TOKEN,
+    AZURE_DEVOPS_TOKEN: process.env.AZURE_DEVOPS_TOKEN
+  };
+  delete process.env.GITHUB_TOKEN;
+  delete process.env.AZURE_DEVOPS_TOKEN;
+
   const { tempDir, cleanup } = createTempSettings({
     github: {
       enabled: true,
-      token: 'github-secret-token'
+      token: 'github-secret-token',
+      owner: 'test-owner',
+      repo: 'test-repo'
     },
     azureDevOps: {
       enabled: true,
-      token: 'azure-secret-pat'
+      token: 'azure-secret-pat',
+      organization: 'test-org',
+      project: 'test-project'
     }
   });
 
@@ -261,9 +310,9 @@ await testAsync('Azure and GitHub should have independent tokens', async () => {
     const githubToken = githubConfig.getToken();
     const azureToken = azureConfig.getToken();
 
-    assert(githubToken !== azureToken, 'GitHub and Azure must use different tokens');
-    assertEqual(githubToken, 'github-secret-token', 'GitHub token should be correct');
-    assertEqual(azureToken, 'azure-secret-pat', 'Azure token should be correct');
+    assert(githubToken !== azureToken, `GitHub and Azure must use different tokens (GH: ${githubToken}, Azure: ${azureToken})`);
+    assertEqual(githubToken, 'github-secret-token', `GitHub token should be correct (got: ${githubToken})`);
+    assertEqual(azureToken, 'azure-secret-pat', `Azure token should be correct (got: ${azureToken})`);
   } catch (error) {
     if (error.message.includes('not found') || error.code === 'ERR_MODULE_NOT_FOUND') {
       throw new Error('AzureDevOpsConfig not implemented yet');
@@ -271,6 +320,9 @@ await testAsync('Azure and GitHub should have independent tokens', async () => {
     throw error;
   } finally {
     cleanup();
+    // Restore environment variables
+    if (originalEnv.GITHUB_TOKEN) process.env.GITHUB_TOKEN = originalEnv.GITHUB_TOKEN;
+    if (originalEnv.AZURE_DEVOPS_TOKEN) process.env.AZURE_DEVOPS_TOKEN = originalEnv.AZURE_DEVOPS_TOKEN;
   }
 });
 

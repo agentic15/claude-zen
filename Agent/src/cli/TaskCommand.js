@@ -53,14 +53,37 @@ export class TaskCommand {
       process.exit(1);
     }
 
-    // Create feature branch
+    // Get main branch name
+    const mainBranch = this.getMainBranch();
+    console.log(`\n📥 Syncing with remote ${mainBranch}...\n`);
+
+    try {
+      // Switch to main branch
+      console.log(`   → Switching to ${mainBranch}`);
+      execSync(`git checkout ${mainBranch}`, { stdio: 'inherit' });
+
+      // Pull latest changes from remote
+      console.log(`   → Pulling latest changes`);
+      execSync(`git pull origin ${mainBranch}`, { stdio: 'inherit' });
+
+      console.log(`\n✓ ${mainBranch} is up to date\n`);
+    } catch (error) {
+      console.log(`\n⚠️  Warning: Could not sync with remote ${mainBranch}`);
+      console.log(`   Continuing with local ${mainBranch}...\n`);
+    }
+
+    // Create feature branch from updated main
     const branchName = `feature/${taskId.toLowerCase()}`;
+    console.log(`🌿 Creating branch: ${branchName}\n`);
+
     try {
       execSync(`git checkout -b ${branchName}`, { stdio: 'inherit' });
+      console.log(`\n✓ Created and switched to ${branchName}\n`);
     } catch (error) {
       // Branch might already exist
       try {
         execSync(`git checkout ${branchName}`, { stdio: 'inherit' });
+        console.log(`\n✓ Switched to existing branch ${branchName}\n`);
       } catch (e) {
         console.log(`\n❌ Failed to create/checkout branch: ${branchName}\n`);
         process.exit(1);
@@ -300,6 +323,23 @@ export class TaskCommand {
       console.log('\n   4. Then start your task:');
       console.log('      npx agentic15 task next\n');
       process.exit(1);
+    }
+  }
+
+  static getMainBranch() {
+    try {
+      // Try to detect main branch
+      const branches = execSync('git branch -r', { encoding: 'utf-8' });
+
+      if (branches.includes('origin/main')) {
+        return 'main';
+      } else if (branches.includes('origin/master')) {
+        return 'master';
+      }
+
+      return 'main'; // Default
+    } catch (e) {
+      return 'main';
     }
   }
 }
