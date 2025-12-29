@@ -1,12 +1,12 @@
 {
   "planId": "plan-001-generated",
   "projectName": "agentic15-claude-zen",
-  "activeTask": "TASK-001",
+  "activeTask": null,
   "lockedAt": "2025-12-29T14:06:34.725Z",
   "statistics": {
     "totalTasks": 17,
-    "completed": 0,
-    "inProgress": 1,
+    "completed": 1,
+    "inProgress": 0,
     "pending": 16
   },
   "taskFiles": [
@@ -14,9 +14,10 @@
       "id": "TASK-001",
       "title": "Design feature flag configuration schema",
       "phase": "design",
-      "status": "in_progress",
+      "status": "completed",
       "description": "Define configuration structure for enabling/disabling Azure DevOps integration",
-      "startedAt": "2025-12-29T14:06:52.224Z"
+      "startedAt": "2025-12-29T14:06:52.224Z",
+      "completedAt": "2025-12-29T14:47:42.788Z"
     },
     {
       "id": "TASK-002",
