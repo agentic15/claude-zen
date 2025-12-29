@@ -1,0 +1,43 @@
+PROJECT REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+i would like add support for azure devops. i do not want to affect my github integration, please create a seperate folder for azure files. lets also add a feature flag for this to be more safe, if this feature flag is enabled only then azure integration is enabled. How will you detect if it is github or azure?. The critical must have is that our current github integration which is working very good should not be affected or changed at all
+
+Generated: 2025-12-29T14:03:09.558Z
+PLAN ID: plan-001-generated
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+INSTRUCTIONS FOR CLAUDE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Please analyze the requirements above and create a comprehensive project plan.
+
+1. Read the PLAN-SCHEMA.json to understand the plan structure
+2. Read the PROJECT-PLAN-TEMPLATE.json for the format
+3. Create a PROJECT-PLAN.json file in this directory with:
+   - Clear project/subproject/milestone hierarchy
+   - Detailed tasks with IDs (TASK-001, TASK-002, etc.)
+   - Proper dependencies between tasks
+   - Realistic time estimates
+   - Phases: design, implementation, testing, deployment
+   - Completion criteria for each task
+
+4. Structure the plan to follow these phases:
+   - DESIGN: Architecture, UI/UX, database schema
+   - IMPLEMENTATION: Core features, API, frontend
+   - TESTING: Unit tests, integration tests, E2E tests
+   - DEPLOYMENT: Build, CI/CD, documentation
+
+5. Ensure tasks are:
+   - Granular (2-8 hours each)
+   - Clearly defined with specific deliverables
+   - Properly sequenced with dependencies
+   - Grouped logically by feature/component
+
+6. After creating the plan, tell the user to run:
+   npx agentic15 plan
+
+This will lock the plan and generate the task tracker.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+GENERATED: 2025-12-29T14:03:09.559Z

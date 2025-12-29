@@ -1,0 +1,549 @@
+{
+  "version": "2.0",
+  "project": {
+    "id": "PROJ-001",
+    "name": "Azure DevOps Integration",
+    "description": "Add Azure DevOps support with feature flag, separate file structure, and platform detection without affecting existing GitHub integration",
+    "status": "planning",
+    "createdAt": "2025-12-29T14:03:09.558Z",
+    "createdBy": "Claude",
+    "locked": false,
+    "subprojects": [
+      {
+        "id": "SUB-001",
+        "name": "Feature Flag System",
+        "description": "Implement feature flag to safely enable/disable Azure DevOps integration",
+        "status": "pending",
+        "dependencies": [],
+        "milestones": [
+          {
+            "id": "MILE-001",
+            "name": "Feature Flag Configuration",
+            "description": "Design and implement feature flag for Azure DevOps",
+            "status": "pending",
+            "dependencies": [],
+            "tasks": [
+              {
+                "id": "TASK-001",
+                "title": "Design feature flag configuration schema",
+                "description": "Define configuration structure for enabling/disabling Azure DevOps integration",
+                "status": "pending",
+                "phase": "design",
+                "dependencies": [],
+                "estimatedHours": 2,
+                "completionCriteria": [
+                  "Configuration schema documented",
+                  "Feature flag placement in settings.json defined",
+                  "Default values specified (Azure disabled by default)",
+                  "Reviewed for compatibility with existing GitHub settings"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": [],
+                  "documentation": ["./docs/feature-flags.md"]
+                }
+              },
+              {
+                "id": "TASK-002",
+                "title": "Write tests for feature flag validation (TDD)",
+                "description": "Write tests BEFORE implementing feature flag validation logic",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-001"],
+                "estimatedHours": 3,
+                "completionCriteria": [
+                  "Test suite for feature flag validation created",
+                  "Tests verify flag is read from settings.json",
+                  "Tests verify default value (disabled)",
+                  "Tests verify GitHub integration unaffected when Azure enabled",
+                  "Tests verify Azure features only work when flag enabled"
+                ],
+                "testCases": [
+                  "Feature flag defaults to false/disabled",
+                  "Can read azureDevOps.enabled from settings.json",
+                  "GitHub integration works when Azure flag is true",
+                  "GitHub integration works when Azure flag is false",
+                  "Azure features throw error when flag is false"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": ["./tests/config/feature-flags.test.js"],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-003",
+                "title": "Implement feature flag validation",
+                "description": "Implement feature flag logic to make tests pass",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-002"],
+                "estimatedHours": 4,
+                "completionCriteria": [
+                  "All tests from TASK-002 pass",
+                  "Feature flag read from settings.json or settings.local.json",
+                  "Azure features protected by flag check",
+                  "No changes to existing GitHub integration code"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": ["./src/config/FeatureFlags.js"],
+                  "tests": [],
+                  "documentation": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "SUB-002",
+        "name": "Azure DevOps File Structure",
+        "description": "Create separate folder structure for Azure DevOps integration files",
+        "status": "pending",
+        "dependencies": [],
+        "milestones": [
+          {
+            "id": "MILE-002",
+            "name": "Azure Folder Architecture",
+            "description": "Design and implement separate Azure folder structure",
+            "status": "pending",
+            "dependencies": [],
+            "tasks": [
+              {
+                "id": "TASK-004",
+                "title": "Design Azure DevOps folder structure",
+                "description": "Plan folder organization for Azure files parallel to GitHub integration",
+                "status": "pending",
+                "phase": "design",
+                "dependencies": [],
+                "estimatedHours": 2,
+                "completionCriteria": [
+                  "Folder structure documented",
+                  "Naming conventions defined",
+                  "File organization mirrors GitHub structure where applicable",
+                  "No conflicts with existing GitHub files",
+                  "Clear separation of concerns"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": [],
+                  "documentation": ["./docs/azure-folder-structure.md"]
+                }
+              },
+              {
+                "id": "TASK-005",
+                "title": "Create Azure DevOps directory structure",
+                "description": "Create folder structure for Azure integration files",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-004"],
+                "estimatedHours": 2,
+                "completionCriteria": [
+                  "Azure folder created (e.g., ./src/integrations/azure/)",
+                  "Subfolders for services, models, utils created",
+                  "README.md added to Azure folder",
+                  "No modifications to GitHub integration folder"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [
+                    "./src/integrations/azure/README.md",
+                    "./src/integrations/azure/services/",
+                    "./src/integrations/azure/models/",
+                    "./src/integrations/azure/utils/"
+                  ],
+                  "tests": [],
+                  "documentation": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "SUB-003",
+        "name": "Platform Detection System",
+        "description": "Implement logic to detect whether current repository is GitHub or Azure DevOps",
+        "status": "pending",
+        "dependencies": ["SUB-001"],
+        "milestones": [
+          {
+            "id": "MILE-003",
+            "name": "Repository Detection",
+            "description": "Detect platform based on repository metadata",
+            "status": "pending",
+            "dependencies": ["MILE-001"],
+            "tasks": [
+              {
+                "id": "TASK-006",
+                "title": "Design platform detection strategy",
+                "description": "Define how to detect GitHub vs Azure DevOps repositories",
+                "status": "pending",
+                "phase": "design",
+                "dependencies": ["TASK-003"],
+                "estimatedHours": 3,
+                "completionCriteria": [
+                  "Detection methods documented (git remote URL, .git/config, API endpoints)",
+                  "Fallback strategy defined",
+                  "Edge cases identified (both remotes, no remote, etc.)",
+                  "Performance considerations documented"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": [],
+                  "documentation": ["./docs/platform-detection.md"]
+                }
+              },
+              {
+                "id": "TASK-007",
+                "title": "Write tests for platform detection (TDD)",
+                "description": "Write tests BEFORE implementing platform detection logic",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-006"],
+                "estimatedHours": 4,
+                "completionCriteria": [
+                  "Test suite for platform detection created",
+                  "Tests verify GitHub URL patterns (github.com)",
+                  "Tests verify Azure DevOps URL patterns (dev.azure.com, visualstudio.com)",
+                  "Tests handle no remote case",
+                  "Tests handle multiple remotes",
+                  "Tests verify caching of detection result"
+                ],
+                "testCases": [
+                  "Detects GitHub from https://github.com/user/repo.git",
+                  "Detects GitHub from git@github.com:user/repo.git",
+                  "Detects Azure from https://dev.azure.com/org/project/_git/repo",
+                  "Detects Azure from https://org.visualstudio.com/project/_git/repo",
+                  "Returns null when no remote configured",
+                  "Handles multiple remotes gracefully",
+                  "Caches result for performance"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": ["./tests/platform/detection.test.js"],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-008",
+                "title": "Implement platform detection",
+                "description": "Implement platform detection to make tests pass",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-007"],
+                "estimatedHours": 5,
+                "completionCriteria": [
+                  "All tests from TASK-007 pass",
+                  "Detects GitHub repositories",
+                  "Detects Azure DevOps repositories",
+                  "Handles edge cases (no remote, multiple remotes)",
+                  "Result cached for performance",
+                  "No impact on existing GitHub code"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": ["./src/platform/PlatformDetector.js"],
+                  "tests": [],
+                  "documentation": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "SUB-004",
+        "name": "Azure DevOps Core Integration",
+        "description": "Implement Azure DevOps integration features",
+        "status": "pending",
+        "dependencies": ["SUB-001", "SUB-002", "SUB-003"],
+        "milestones": [
+          {
+            "id": "MILE-004",
+            "name": "Azure Authentication",
+            "description": "Azure DevOps authentication and authorization",
+            "status": "pending",
+            "dependencies": ["MILE-001", "MILE-002", "MILE-003"],
+            "tasks": [
+              {
+                "id": "TASK-009",
+                "title": "Design Azure authentication flow",
+                "description": "Plan PAT token handling for Azure DevOps",
+                "status": "pending",
+                "phase": "design",
+                "dependencies": ["TASK-005", "TASK-008"],
+                "estimatedHours": 3,
+                "completionCriteria": [
+                  "PAT token storage method defined",
+                  "Environment variable vs settings.json approach decided",
+                  "Security considerations documented",
+                  "Similarity with GitHub auth noted for consistency"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": [],
+                  "documentation": ["./docs/azure-authentication.md"]
+                }
+              },
+              {
+                "id": "TASK-010",
+                "title": "Write tests for Azure authentication (TDD)",
+                "description": "Write tests BEFORE implementing Azure auth",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-009"],
+                "estimatedHours": 4,
+                "completionCriteria": [
+                  "Test suite for Azure auth created",
+                  "Tests verify PAT token validation",
+                  "Tests verify auth header construction",
+                  "Tests verify feature flag check before auth",
+                  "Tests verify no interference with GitHub auth"
+                ],
+                "testCases": [
+                  "Azure auth requires feature flag enabled",
+                  "Valid PAT token creates auth header",
+                  "Invalid PAT token throws error",
+                  "GitHub auth still works independently",
+                  "Missing PAT token handled gracefully"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": ["./tests/integrations/azure/auth.test.js"],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-011",
+                "title": "Implement Azure authentication",
+                "description": "Implement Azure auth to make tests pass",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-010"],
+                "estimatedHours": 6,
+                "completionCriteria": [
+                  "All tests from TASK-010 pass",
+                  "PAT token read from config",
+                  "Auth header constructed correctly",
+                  "Feature flag checked before enabling",
+                  "GitHub auth completely unaffected"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": ["./src/integrations/azure/services/AzureAuthService.js"],
+                  "tests": [],
+                  "documentation": []
+                }
+              }
+            ]
+          },
+          {
+            "id": "MILE-005",
+            "name": "Azure Work Items Integration",
+            "description": "Basic Azure work item operations",
+            "status": "pending",
+            "dependencies": ["MILE-004"],
+            "tasks": [
+              {
+                "id": "TASK-012",
+                "title": "Write tests for Azure work item API (TDD)",
+                "description": "Write tests BEFORE implementing work item fetching",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-011"],
+                "estimatedHours": 4,
+                "completionCriteria": [
+                  "Test suite for work items created",
+                  "Tests verify fetching work items",
+                  "Tests verify creating work items",
+                  "Tests verify updating work item status",
+                  "Tests verify error handling"
+                ],
+                "testCases": [
+                  "Can fetch work items by ID",
+                  "Can create new work item",
+                  "Can update work item status",
+                  "Invalid work item ID returns error",
+                  "Feature flag required for Azure operations"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": ["./tests/integrations/azure/work-items.test.js"],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-013",
+                "title": "Implement Azure work item operations",
+                "description": "Implement work item API to make tests pass",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-012"],
+                "estimatedHours": 8,
+                "completionCriteria": [
+                  "All tests from TASK-012 pass",
+                  "Can fetch work items",
+                  "Can create work items",
+                  "Can update work items",
+                  "Error handling implemented"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [
+                    "./src/integrations/azure/services/AzureWorkItemService.js",
+                    "./src/integrations/azure/models/WorkItem.js"
+                  ],
+                  "tests": [],
+                  "documentation": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "SUB-005",
+        "name": "Integration Router & Regression Testing",
+        "description": "Route to correct integration based on detection and ensure GitHub integration unaffected",
+        "status": "pending",
+        "dependencies": ["SUB-003", "SUB-004"],
+        "milestones": [
+          {
+            "id": "MILE-006",
+            "name": "Platform Router",
+            "description": "Route operations to GitHub or Azure based on detection",
+            "status": "pending",
+            "dependencies": ["MILE-003", "MILE-005"],
+            "tasks": [
+              {
+                "id": "TASK-014",
+                "title": "Write tests for platform router (TDD)",
+                "description": "Write tests BEFORE implementing routing logic",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-008", "TASK-013"],
+                "estimatedHours": 3,
+                "completionCriteria": [
+                  "Test suite for router created",
+                  "Tests verify GitHub detection routes to GitHub integration",
+                  "Tests verify Azure detection routes to Azure integration (when flag enabled)",
+                  "Tests verify Azure detection with flag disabled uses fallback/error",
+                  "Tests verify existing GitHub functionality unchanged"
+                ],
+                "testCases": [
+                  "GitHub repo routes to GitHub integration",
+                  "Azure repo with flag enabled routes to Azure integration",
+                  "Azure repo with flag disabled throws error",
+                  "Unknown platform handled gracefully",
+                  "Routing decision cached for performance"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": ["./tests/platform/router.test.js"],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-015",
+                "title": "Implement platform router",
+                "description": "Implement routing logic to make tests pass",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-014"],
+                "estimatedHours": 5,
+                "completionCriteria": [
+                  "All tests from TASK-014 pass",
+                  "Routes to GitHub or Azure based on detection",
+                  "Checks feature flag before enabling Azure",
+                  "GitHub integration completely unaffected",
+                  "Clean abstraction for adding future platforms"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": ["./src/platform/PlatformRouter.js"],
+                  "tests": [],
+                  "documentation": []
+                }
+              }
+            ]
+          },
+          {
+            "id": "MILE-007",
+            "name": "GitHub Integration Regression Testing",
+            "description": "Ensure GitHub integration remains completely unaffected",
+            "status": "pending",
+            "dependencies": ["MILE-006"],
+            "tasks": [
+              {
+                "id": "TASK-016",
+                "title": "Run full GitHub integration test suite",
+                "description": "Execute all existing GitHub tests to verify no regression",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-015"],
+                "estimatedHours": 2,
+                "completionCriteria": [
+                  "All existing GitHub tests pass",
+                  "No GitHub integration code modified",
+                  "GitHub functionality works with Azure flag enabled",
+                  "GitHub functionality works with Azure flag disabled",
+                  "Performance unchanged for GitHub operations"
+                ],
+                "testCases": [
+                  "All existing GitHub tests pass",
+                  "GitHub auth works independently",
+                  "GitHub PR creation works",
+                  "GitHub issue tracking works",
+                  "No performance degradation"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": [],
+                  "documentation": ["./docs/regression-test-report.md"]
+                }
+              },
+              {
+                "id": "TASK-017",
+                "title": "Create integration documentation",
+                "description": "Document how to use GitHub vs Azure integrations",
+                "status": "pending",
+                "phase": "deployment",
+                "dependencies": ["TASK-016"],
+                "estimatedHours": 3,
+                "completionCriteria": [
+                  "README updated with Azure DevOps setup instructions",
+                  "Feature flag configuration documented",
+                  "Platform detection explained",
+                  "Troubleshooting guide created",
+                  "Migration guide for Azure users created"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": [],
+                  "documentation": [
+                    "./docs/azure-devops-setup.md",
+                    "./docs/platform-detection.md",
+                    "./README.md"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

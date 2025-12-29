@@ -1,0 +1,33 @@
+{
+  "id": "TASK-012",
+  "title": "Write tests for Azure work item API (TDD)",
+  "description": "Write tests BEFORE implementing work item fetching",
+  "status": "pending",
+  "phase": "testing",
+  "dependencies": [
+    "TASK-011"
+  ],
+  "estimatedHours": 4,
+  "completionCriteria": [
+    "Test suite for work items created",
+    "Tests verify fetching work items",
+    "Tests verify creating work items",
+    "Tests verify updating work item status",
+    "Tests verify error handling"
+  ],
+  "testCases": [
+    "Can fetch work items by ID",
+    "Can create new work item",
+    "Can update work item status",
+    "Invalid work item ID returns error",
+    "Feature flag required for Azure operations"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [
+      "./tests/integrations/azure/work-items.test.js"
+    ],
+    "documentation": []
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "TASK-006",
+  "title": "Design platform detection strategy",
+  "description": "Define how to detect GitHub vs Azure DevOps repositories",
+  "status": "pending",
+  "phase": "design",
+  "dependencies": [
+    "TASK-003"
+  ],
+  "estimatedHours": 3,
+  "completionCriteria": [
+    "Detection methods documented (git remote URL, .git/config, API endpoints)",
+    "Fallback strategy defined",
+    "Edge cases identified (both remotes, no remote, etc.)",
+    "Performance considerations documented"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [],
+    "documentation": [
+      "./docs/platform-detection.md"
+    ]
+  }
+}

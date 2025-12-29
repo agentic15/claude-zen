@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
+import { readFileSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { AuthCommand } from '../src/cli/AuthCommand.js';
 import { TaskCommand } from '../src/cli/TaskCommand.js';
 import { CommitCommand } from '../src/cli/CommitCommand.js';
@@ -10,12 +13,16 @@ import { VisualTestCommand } from '../src/cli/VisualTestCommand.js';
 import { SyncCommand } from '../src/cli/SyncCommand.js';
 import { UpdateSettingsCommand } from '../src/cli/UpdateSettingsCommand.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const packageJson = JSON.parse(readFileSync(join(__dirname, '../package.json'), 'utf-8'));
+
 const program = new Command();
 
 program
   .name('agentic15')
   .description('Agentic15 Claude Zen - Automated AI development workflow')
-  .version('2.0.0');
+  .version(packageJson.version);
 
 // GitHub authentication setup
 program

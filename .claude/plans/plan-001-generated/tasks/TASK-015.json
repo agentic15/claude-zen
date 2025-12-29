@@ -1,0 +1,26 @@
+{
+  "id": "TASK-015",
+  "title": "Implement platform router",
+  "description": "Implement routing logic to make tests pass",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-014"
+  ],
+  "estimatedHours": 5,
+  "completionCriteria": [
+    "All tests from TASK-014 pass",
+    "Routes to GitHub or Azure based on detection",
+    "Checks feature flag before enabling Azure",
+    "GitHub integration completely unaffected",
+    "Clean abstraction for adding future platforms"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [
+      "./src/platform/PlatformRouter.js"
+    ],
+    "tests": [],
+    "documentation": []
+  }
+}

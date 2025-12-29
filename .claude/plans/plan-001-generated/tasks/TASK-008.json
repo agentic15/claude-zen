@@ -1,0 +1,27 @@
+{
+  "id": "TASK-008",
+  "title": "Implement platform detection",
+  "description": "Implement platform detection to make tests pass",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-007"
+  ],
+  "estimatedHours": 5,
+  "completionCriteria": [
+    "All tests from TASK-007 pass",
+    "Detects GitHub repositories",
+    "Detects Azure DevOps repositories",
+    "Handles edge cases (no remote, multiple remotes)",
+    "Result cached for performance",
+    "No impact on existing GitHub code"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [
+      "./src/platform/PlatformDetector.js"
+    ],
+    "tests": [],
+    "documentation": []
+  }
+}

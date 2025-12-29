@@ -1,0 +1,36 @@
+{
+  "id": "TASK-007",
+  "title": "Write tests for platform detection (TDD)",
+  "description": "Write tests BEFORE implementing platform detection logic",
+  "status": "pending",
+  "phase": "testing",
+  "dependencies": [
+    "TASK-006"
+  ],
+  "estimatedHours": 4,
+  "completionCriteria": [
+    "Test suite for platform detection created",
+    "Tests verify GitHub URL patterns (github.com)",
+    "Tests verify Azure DevOps URL patterns (dev.azure.com, visualstudio.com)",
+    "Tests handle no remote case",
+    "Tests handle multiple remotes",
+    "Tests verify caching of detection result"
+  ],
+  "testCases": [
+    "Detects GitHub from https://github.com/user/repo.git",
+    "Detects GitHub from git@github.com:user/repo.git",
+    "Detects Azure from https://dev.azure.com/org/project/_git/repo",
+    "Detects Azure from https://org.visualstudio.com/project/_git/repo",
+    "Returns null when no remote configured",
+    "Handles multiple remotes gracefully",
+    "Caches result for performance"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [
+      "./tests/platform/detection.test.js"
+    ],
+    "documentation": []
+  }
+}
