@@ -1,0 +1,26 @@
+{
+  "id": "TASK-011",
+  "title": "Implement Azure authentication",
+  "description": "Implement Azure auth to make tests pass",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-010"
+  ],
+  "estimatedHours": 6,
+  "completionCriteria": [
+    "All tests from TASK-010 pass",
+    "PAT token read from config",
+    "Auth header constructed correctly",
+    "Feature flag checked before enabling",
+    "GitHub auth completely unaffected"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [
+      "./src/integrations/azure/services/AzureAuthService.js"
+    ],
+    "tests": [],
+    "documentation": []
+  }
+}

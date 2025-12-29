@@ -1,0 +1,33 @@
+{
+  "id": "TASK-016",
+  "title": "Run full GitHub integration test suite",
+  "description": "Execute all existing GitHub tests to verify no regression",
+  "status": "pending",
+  "phase": "testing",
+  "dependencies": [
+    "TASK-015"
+  ],
+  "estimatedHours": 2,
+  "completionCriteria": [
+    "All existing GitHub tests pass",
+    "No GitHub integration code modified",
+    "GitHub functionality works with Azure flag enabled",
+    "GitHub functionality works with Azure flag disabled",
+    "Performance unchanged for GitHub operations"
+  ],
+  "testCases": [
+    "All existing GitHub tests pass",
+    "GitHub auth works independently",
+    "GitHub PR creation works",
+    "GitHub issue tracking works",
+    "No performance degradation"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [],
+    "documentation": [
+      "./docs/regression-test-report.md"
+    ]
+  }
+}

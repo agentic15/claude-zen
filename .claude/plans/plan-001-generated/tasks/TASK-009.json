@@ -1,0 +1,26 @@
+{
+  "id": "TASK-009",
+  "title": "Design Azure authentication flow",
+  "description": "Plan PAT token handling for Azure DevOps",
+  "status": "pending",
+  "phase": "design",
+  "dependencies": [
+    "TASK-005",
+    "TASK-008"
+  ],
+  "estimatedHours": 3,
+  "completionCriteria": [
+    "PAT token storage method defined",
+    "Environment variable vs settings.json approach decided",
+    "Security considerations documented",
+    "Similarity with GitHub auth noted for consistency"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [],
+    "documentation": [
+      "./docs/azure-authentication.md"
+    ]
+  }
+}

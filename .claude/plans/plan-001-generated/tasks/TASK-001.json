@@ -1,0 +1,23 @@
+{
+  "id": "TASK-001",
+  "title": "Design feature flag configuration schema",
+  "description": "Define configuration structure for enabling/disabling Azure DevOps integration",
+  "status": "pending",
+  "phase": "design",
+  "dependencies": [],
+  "estimatedHours": 2,
+  "completionCriteria": [
+    "Configuration schema documented",
+    "Feature flag placement in settings.json defined",
+    "Default values specified (Azure disabled by default)",
+    "Reviewed for compatibility with existing GitHub settings"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [],
+    "documentation": [
+      "./docs/feature-flags.md"
+    ]
+  }
+}

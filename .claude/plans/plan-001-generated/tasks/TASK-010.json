@@ -1,0 +1,33 @@
+{
+  "id": "TASK-010",
+  "title": "Write tests for Azure authentication (TDD)",
+  "description": "Write tests BEFORE implementing Azure auth",
+  "status": "pending",
+  "phase": "testing",
+  "dependencies": [
+    "TASK-009"
+  ],
+  "estimatedHours": 4,
+  "completionCriteria": [
+    "Test suite for Azure auth created",
+    "Tests verify PAT token validation",
+    "Tests verify auth header construction",
+    "Tests verify feature flag check before auth",
+    "Tests verify no interference with GitHub auth"
+  ],
+  "testCases": [
+    "Azure auth requires feature flag enabled",
+    "Valid PAT token creates auth header",
+    "Invalid PAT token throws error",
+    "GitHub auth still works independently",
+    "Missing PAT token handled gracefully"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [
+      "./tests/integrations/azure/auth.test.js"
+    ],
+    "documentation": []
+  }
+}

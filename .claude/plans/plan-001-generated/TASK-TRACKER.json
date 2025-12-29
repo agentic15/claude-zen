@@ -1,0 +1,134 @@
+{
+  "planId": "plan-001-generated",
+  "projectName": "agentic15-claude-zen",
+  "activeTask": "TASK-001",
+  "lockedAt": "2025-12-29T14:06:34.725Z",
+  "statistics": {
+    "totalTasks": 17,
+    "completed": 0,
+    "inProgress": 1,
+    "pending": 16
+  },
+  "taskFiles": [
+    {
+      "id": "TASK-001",
+      "title": "Design feature flag configuration schema",
+      "phase": "design",
+      "status": "in_progress",
+      "description": "Define configuration structure for enabling/disabling Azure DevOps integration",
+      "startedAt": "2025-12-29T14:06:52.224Z"
+    },
+    {
+      "id": "TASK-002",
+      "title": "Write tests for feature flag validation (TDD)",
+      "phase": "testing",
+      "status": "pending",
+      "description": "Write tests BEFORE implementing feature flag validation logic"
+    },
+    {
+      "id": "TASK-003",
+      "title": "Implement feature flag validation",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Implement feature flag logic to make tests pass"
+    },
+    {
+      "id": "TASK-004",
+      "title": "Design Azure DevOps folder structure",
+      "phase": "design",
+      "status": "pending",
+      "description": "Plan folder organization for Azure files parallel to GitHub integration"
+    },
+    {
+      "id": "TASK-005",
+      "title": "Create Azure DevOps directory structure",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Create folder structure for Azure integration files"
+    },
+    {
+      "id": "TASK-006",
+      "title": "Design platform detection strategy",
+      "phase": "design",
+      "status": "pending",
+      "description": "Define how to detect GitHub vs Azure DevOps repositories"
+    },
+    {
+      "id": "TASK-007",
+      "title": "Write tests for platform detection (TDD)",
+      "phase": "testing",
+      "status": "pending",
+      "description": "Write tests BEFORE implementing platform detection logic"
+    },
+    {
+      "id": "TASK-008",
+      "title": "Implement platform detection",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Implement platform detection to make tests pass"
+    },
+    {
+      "id": "TASK-009",
+      "title": "Design Azure authentication flow",
+      "phase": "design",
+      "status": "pending",
+      "description": "Plan PAT token handling for Azure DevOps"
+    },
+    {
+      "id": "TASK-010",
+      "title": "Write tests for Azure authentication (TDD)",
+      "phase": "testing",
+      "status": "pending",
+      "description": "Write tests BEFORE implementing Azure auth"
+    },
+    {
+      "id": "TASK-011",
+      "title": "Implement Azure authentication",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Implement Azure auth to make tests pass"
+    },
+    {
+      "id": "TASK-012",
+      "title": "Write tests for Azure work item API (TDD)",
+      "phase": "testing",
+      "status": "pending",
+      "description": "Write tests BEFORE implementing work item fetching"
+    },
+    {
+      "id": "TASK-013",
+      "title": "Implement Azure work item operations",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Implement work item API to make tests pass"
+    },
+    {
+      "id": "TASK-014",
+      "title": "Write tests for platform router (TDD)",
+      "phase": "testing",
+      "status": "pending",
+      "description": "Write tests BEFORE implementing routing logic"
+    },
+    {
+      "id": "TASK-015",
+      "title": "Implement platform router",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Implement routing logic to make tests pass"
+    },
+    {
+      "id": "TASK-016",
+      "title": "Run full GitHub integration test suite",
+      "phase": "testing",
+      "status": "pending",
+      "description": "Execute all existing GitHub tests to verify no regression"
+    },
+    {
+      "id": "TASK-017",
+      "title": "Create integration documentation",
+      "phase": "deployment",
+      "status": "pending",
+      "description": "Document how to use GitHub vs Azure integrations"
+    }
+  ]
+}

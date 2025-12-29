@@ -1,0 +1,27 @@
+{
+  "id": "TASK-013",
+  "title": "Implement Azure work item operations",
+  "description": "Implement work item API to make tests pass",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-012"
+  ],
+  "estimatedHours": 8,
+  "completionCriteria": [
+    "All tests from TASK-012 pass",
+    "Can fetch work items",
+    "Can create work items",
+    "Can update work items",
+    "Error handling implemented"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [
+      "./src/integrations/azure/services/AzureWorkItemService.js",
+      "./src/integrations/azure/models/WorkItem.js"
+    ],
+    "tests": [],
+    "documentation": []
+  }
+}

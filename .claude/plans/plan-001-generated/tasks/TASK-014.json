@@ -1,0 +1,34 @@
+{
+  "id": "TASK-014",
+  "title": "Write tests for platform router (TDD)",
+  "description": "Write tests BEFORE implementing routing logic",
+  "status": "pending",
+  "phase": "testing",
+  "dependencies": [
+    "TASK-008",
+    "TASK-013"
+  ],
+  "estimatedHours": 3,
+  "completionCriteria": [
+    "Test suite for router created",
+    "Tests verify GitHub detection routes to GitHub integration",
+    "Tests verify Azure detection routes to Azure integration (when flag enabled)",
+    "Tests verify Azure detection with flag disabled uses fallback/error",
+    "Tests verify existing GitHub functionality unchanged"
+  ],
+  "testCases": [
+    "GitHub repo routes to GitHub integration",
+    "Azure repo with flag enabled routes to Azure integration",
+    "Azure repo with flag disabled throws error",
+    "Unknown platform handled gracefully",
+    "Routing decision cached for performance"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [
+      "./tests/platform/router.test.js"
+    ],
+    "documentation": []
+  }
+}

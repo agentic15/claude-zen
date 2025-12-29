@@ -1,0 +1,24 @@
+{
+  "id": "TASK-004",
+  "title": "Design Azure DevOps folder structure",
+  "description": "Plan folder organization for Azure files parallel to GitHub integration",
+  "status": "pending",
+  "phase": "design",
+  "dependencies": [],
+  "estimatedHours": 2,
+  "completionCriteria": [
+    "Folder structure documented",
+    "Naming conventions defined",
+    "File organization mirrors GitHub structure where applicable",
+    "No conflicts with existing GitHub files",
+    "Clear separation of concerns"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [],
+    "documentation": [
+      "./docs/azure-folder-structure.md"
+    ]
+  }
+}

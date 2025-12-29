@@ -1,0 +1,28 @@
+{
+  "id": "TASK-005",
+  "title": "Create Azure DevOps directory structure",
+  "description": "Create folder structure for Azure integration files",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-004"
+  ],
+  "estimatedHours": 2,
+  "completionCriteria": [
+    "Azure folder created (e.g., ./src/integrations/azure/)",
+    "Subfolders for services, models, utils created",
+    "README.md added to Azure folder",
+    "No modifications to GitHub integration folder"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [
+      "./src/integrations/azure/README.md",
+      "./src/integrations/azure/services/",
+      "./src/integrations/azure/models/",
+      "./src/integrations/azure/utils/"
+    ],
+    "tests": [],
+    "documentation": []
+  }
+}

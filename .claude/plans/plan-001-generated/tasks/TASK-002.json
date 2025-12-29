@@ -1,0 +1,33 @@
+{
+  "id": "TASK-002",
+  "title": "Write tests for feature flag validation (TDD)",
+  "description": "Write tests BEFORE implementing feature flag validation logic",
+  "status": "pending",
+  "phase": "testing",
+  "dependencies": [
+    "TASK-001"
+  ],
+  "estimatedHours": 3,
+  "completionCriteria": [
+    "Test suite for feature flag validation created",
+    "Tests verify flag is read from settings.json",
+    "Tests verify default value (disabled)",
+    "Tests verify GitHub integration unaffected when Azure enabled",
+    "Tests verify Azure features only work when flag enabled"
+  ],
+  "testCases": [
+    "Feature flag defaults to false/disabled",
+    "Can read azureDevOps.enabled from settings.json",
+    "GitHub integration works when Azure flag is true",
+    "GitHub integration works when Azure flag is false",
+    "Azure features throw error when flag is false"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [
+      "./tests/config/feature-flags.test.js"
+    ],
+    "documentation": []
+  }
+}

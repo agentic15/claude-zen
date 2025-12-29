@@ -1,0 +1,28 @@
+{
+  "id": "TASK-017",
+  "title": "Create integration documentation",
+  "description": "Document how to use GitHub vs Azure integrations",
+  "status": "pending",
+  "phase": "deployment",
+  "dependencies": [
+    "TASK-016"
+  ],
+  "estimatedHours": 3,
+  "completionCriteria": [
+    "README updated with Azure DevOps setup instructions",
+    "Feature flag configuration documented",
+    "Platform detection explained",
+    "Troubleshooting guide created",
+    "Migration guide for Azure users created"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [],
+    "documentation": [
+      "./docs/azure-devops-setup.md",
+      "./docs/platform-detection.md",
+      "./README.md"
+    ]
+  }
+}
