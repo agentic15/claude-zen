@@ -23,7 +23,13 @@ import { execSync } from 'child_process';
  *
  * Single Responsibility: Load and validate GitHub settings
  *
- * Configuration sources (in order of priority):
+ * Token authentication sources (in order of priority):
+ * 1. Environment variable GITHUB_TOKEN (highest)
+ * 2. .claude/settings.local.json (user-specific, gitignored)
+ * 3. .claude/settings.json (defaults)
+ * 4. GitHub CLI (`gh auth token`) - automatic fallback if authenticated
+ *
+ * Other configuration sources:
  * 1. Environment variables (highest)
  * 2. .claude/settings.local.json (user-specific, gitignored)
  * 3. .claude/settings.json (defaults)
@@ -103,6 +109,21 @@ export class GitHubConfig {
     }
     if (process.env.GITHUB_AUTO_CLOSE !== undefined) {
       config.autoClose = process.env.GITHUB_AUTO_CLOSE === 'true';
+    }
+
+    // If no token configured, try to get it from GitHub CLI
+    if (!config.token) {
+      try {
+        const cliToken = execSync('gh auth token', {
+          encoding: 'utf8',
+          stdio: 'pipe'
+        }).trim();
+        if (cliToken) {
+          config.token = cliToken;
+        }
+      } catch (error) {
+        // GitHub CLI not authenticated or not installed, continue without token
+      }
     }
 
     // Auto-detect owner/repo from git remote if not configured
