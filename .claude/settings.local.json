@@ -3,7 +3,8 @@
     "allow": [
       "WebSearch",
       "Bash(mkdir:*)",
-      "Bash(npm create:*)"
+      "Bash(npm create:*)",
+      "Bash(npm pack:*)"
     ]
   },
   "github": {
