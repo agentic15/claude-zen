@@ -5,9 +5,9 @@
   "lockedAt": "2025-12-29T14:06:34.725Z",
   "statistics": {
     "totalTasks": 17,
-    "completed": 6,
+    "completed": 7,
     "inProgress": 0,
-    "pending": 11
+    "pending": 10
   },
   "taskFiles": [
     {
@@ -68,8 +68,10 @@
       "id": "TASK-007",
       "title": "Write tests for platform detection (TDD)",
       "phase": "testing",
-      "status": "pending",
-      "description": "Write tests BEFORE implementing platform detection logic"
+      "status": "completed",
+      "description": "Write tests BEFORE implementing platform detection logic",
+      "startedAt": "2025-12-29T20:24:56.222Z",
+      "completedAt": "2025-12-29T20:28:59.915Z"
     },
     {
       "id": "TASK-008",
