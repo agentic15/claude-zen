@@ -5,9 +5,9 @@
   "lockedAt": "2025-12-29T14:06:34.725Z",
   "statistics": {
     "totalTasks": 17,
-    "completed": 5,
+    "completed": 6,
     "inProgress": 0,
-    "pending": 12
+    "pending": 11
   },
   "taskFiles": [
     {
@@ -59,8 +59,10 @@
       "id": "TASK-006",
       "title": "Design platform detection strategy",
       "phase": "design",
-      "status": "pending",
-      "description": "Define how to detect GitHub vs Azure DevOps repositories"
+      "status": "completed",
+      "description": "Define how to detect GitHub vs Azure DevOps repositories",
+      "startedAt": "2025-12-29T20:18:24.209Z",
+      "completedAt": "2025-12-29T20:22:56.042Z"
     },
     {
       "id": "TASK-007",
