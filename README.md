@@ -15,7 +15,7 @@
 
 ### What is Agentic15 Claude Zen?
 
-Agentic15 Claude Zen is a structured development framework designed to work seamlessly with Claude Code. It provides task tracking, workflow structure, and GitHub integration without enforcing rigid testing requirements.
+Agentic15 Claude Zen is a structured development framework designed to work seamlessly with Claude Code. It provides task tracking, workflow structure, and platform integration (GitHub or Azure DevOps) without enforcing rigid testing requirements.
 
 **Philosophy:** Structure, not enforcement. The framework provides commands and organization, while Claude decides when tests are appropriate.
 
@@ -26,7 +26,8 @@ Agentic15 Claude Zen is a structured development framework designed to work seam
 
 - ✅ **Task tracking** and organization
 - ✅ **Consistent workflow** structure
-- ✅ **GitHub integration** with automated PRs
+- ✅ **Dual-platform support** - GitHub or Azure DevOps
+- ✅ **Automated PRs** and issue tracking
 - ✅ **Manual UI testing** tools
 - ✅ **Flexible** - no mandatory testing
 - ✅ **Claude Code optimized** hooks
@@ -318,7 +319,14 @@ npx agentic15 update-settings
 
 ---
 
-## GitHub Integration
+## Platform Integration
+
+**Choose one platform for your project:**
+
+<details open>
+<summary><strong>📘 GitHub Integration Guide</strong> (Click to expand/collapse)</summary>
+
+##
 
 <table>
 <tr>
@@ -371,6 +379,218 @@ If you need to override the auto-detected values, create or edit `.claude/settin
 </td>
 </tr>
 </table>
+
+### Resources
+
+- **GitHub CLI:** https://cli.github.com/
+- **GitHub CLI Manual:** https://cli.github.com/manual/
+- **Authentication:** https://cli.github.com/manual/gh_auth_login
+
+</details>
+
+---
+
+<details>
+<summary><strong>📘 Azure DevOps Integration Guide</strong> (Click to expand/collapse)</summary>
+
+## Azure DevOps Setup
+
+<table>
+<tr>
+<td width="50%">
+
+### Authentication
+
+The framework uses **Azure CLI (`az`)** for authentication.
+
+**Setup:**
+```bash
+# Install Azure CLI
+# Windows: https://aka.ms/installazurecliwindows
+# Mac: brew install azure-cli
+# Linux: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+# Login to Azure
+az login
+
+# Login to Azure DevOps
+az devops login
+```
+
+**Configure your project:**
+```bash
+# Set default organization and project
+az devops configure --defaults organization=https://dev.azure.com/YOUR_ORG project=YOUR_PROJECT
+```
+
+**Create Personal Access Token (PAT):**
+1. Go to Azure DevOps → User Settings → Personal Access Tokens
+2. Click "New Token"
+3. Name: "Agentic15 CLI"
+4. Scopes:
+   - Work Items (Read, Write, Manage)
+   - Code (Read, Write, Status)
+5. Click "Create"
+6. Copy the token
+
+**Save token for authentication:**
+```bash
+# Set environment variable (add to ~/.bashrc or ~/.zshrc)
+export AZURE_DEVOPS_EXT_PAT=your-pat-token-here
+```
+
+</td>
+<td width="50%">
+
+### Configuration
+
+Create `.claude/settings.local.json` in your project:
+
+```json
+{
+  "azure": {
+    "enabled": true,
+    "organization": "YOUR_ORG",
+    "project": "YOUR_PROJECT",
+    "autoCreate": false,
+    "autoUpdate": false,
+    "autoClose": false
+  }
+}
+```
+
+**Configuration Options:**
+- `enabled`: Set to `true` to use Azure DevOps
+- `organization`: Your Azure DevOps organization name
+- `project`: Your project name
+- `autoCreate`: Auto-create work items when starting tasks
+- `autoUpdate`: Auto-update work items when creating PRs
+- `autoClose`: Auto-close work items when merging to main
+
+**Note:** Default settings have `autoCreate`, `autoUpdate`, and `autoClose` set to `false` to give you full control. Set them to `true` if you want automatic work item management.
+
+### Features (Optional - Enable in settings)
+- **Auto-create work items:** When starting tasks (set `autoCreate: true`)
+- **Auto-update work items:** When creating PRs (set `autoUpdate: true`)
+- **Auto-close work items:** When merging to main (set `autoClose: true`)
+- **Secure authentication:** Uses Azure CLI and PAT
+
+</td>
+</tr>
+</table>
+
+### Quick Start with Azure DevOps
+
+**1. Create Project**
+```bash
+npx @agentic15.com/agentic15-claude-zen my-project
+cd my-project
+```
+
+**2. Initialize Git and Azure Repos**
+```bash
+git init
+git branch -M main
+git add .
+git commit -m "Initial commit"
+
+# Create Azure Repo
+az repos create --name YOUR_REPO --org https://dev.azure.com/YOUR_ORG --project YOUR_PROJECT
+
+# Add remote and push
+git remote add origin https://dev.azure.com/YOUR_ORG/YOUR_PROJECT/_git/YOUR_REPO
+git push -u origin main
+```
+
+**3. Configure Branch Protection**
+```bash
+# Set main branch policies
+az repos policy create --org https://dev.azure.com/YOUR_ORG --project YOUR_PROJECT \
+  --repository-id YOUR_REPO_ID \
+  --branch main \
+  --blocking true \
+  --enabled true \
+  --policy-type "Require pull request reviews"
+```
+
+**4. Create Plan**
+```bash
+npx agentic15 plan "Build a todo app with add, remove, and list features"
+```
+
+**In Claude Code:**
+```
+Ask: "Create the project plan from the requirements file"
+```
+
+**Back in Terminal:**
+```bash
+npx agentic15 plan
+git add .
+git commit -m "Add initial project plan"
+git push
+```
+
+**5. Start First Task**
+```bash
+npx agentic15 task next
+```
+
+### Daily Development Workflow
+
+**1. Implement (Claude Code)**
+```
+Ask: "Implement the active task"
+```
+
+Claude writes code in `Agent/` directory.
+
+**2. Commit & PR (Your Terminal)**
+```bash
+npx agentic15 commit
+```
+
+Stages changes, commits, pushes, creates Azure DevOps PR.
+
+**3. Review (Azure DevOps)**
+Review and complete the PR in Azure DevOps portal.
+
+**4. Sync & Next (Your Terminal)**
+```bash
+npx agentic15 sync
+npx agentic15 task next
+```
+
+Syncs with main, deletes feature branch, starts next task.
+
+### Azure DevOps Commands
+
+| Command | Description |
+|---------|-------------|
+| `az devops login` | Authenticate to Azure DevOps |
+| `az devops configure` | Set default organization and project |
+| `az repos create` | Create new repository |
+| `az repos pr create` | Create pull request |
+| `az repos pr list` | List pull requests |
+| `az boards work-item create` | Create work item |
+| `az boards work-item update` | Update work item |
+
+### Requirements
+
+- **Node.js:** 18.0.0 or higher
+- **Git:** Any recent version
+- **Azure CLI:** `az` command-line tool
+- **Azure DevOps Account:** For work item and PR management
+- **Personal Access Token (PAT):** For authentication
+
+### Resources
+
+- **Detailed Integration Guide:** [Agent/docs/azure-integration-guide.md](Agent/docs/azure-integration-guide.md)
+- **Azure CLI Installation:** https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
+- **Azure DevOps Extension:** https://docs.microsoft.com/en-us/azure/devops/cli/
+- **Create PAT:** https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate
+
+</details>
 
 ---
 
