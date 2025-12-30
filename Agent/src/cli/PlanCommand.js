@@ -1,9 +1,21 @@
-import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, renameSync } from 'fs';
 import { join, basename } from 'path';
 import readline from 'readline';
+import { execSync } from 'child_process';
 
 export class PlanCommand {
-  static async handle(description) {
+  static async handle(action, description) {
+    // Handle subcommand: archive
+    if (action === 'archive') {
+      return this.archive(description); // description here is the reason
+    }
+
+    // If action is not a command, treat it as description (backward compatibility)
+    if (action && action !== 'archive') {
+      description = action;
+    }
+
+    // Original logic for generate/lock
     // Check if plan already exists
     const activePlanPath = join(process.cwd(), '.claude', 'ACTIVE-PLAN');
 
@@ -286,6 +298,101 @@ GENERATED: ${new Date().toISOString()}
       console.log(`   Pending:     ${pending}\n`);
     } catch (e) {
       // Ignore errors
+    }
+  }
+
+  static async archive(reason) {
+    console.log('\n📦 Archiving current plan...\n');
+
+    try {
+      // Get current plan
+      const activePlanPath = join(process.cwd(), '.claude', 'ACTIVE-PLAN');
+
+      if (!existsSync(activePlanPath)) {
+        console.log('❌ No active plan to archive\n');
+        process.exit(1);
+      }
+
+      const planId = readFileSync(activePlanPath, 'utf-8').trim();
+      const planPath = join(process.cwd(), '.claude', 'plans', planId);
+
+      if (!existsSync(planPath)) {
+        console.log(`❌ Plan directory not found: ${planId}\n`);
+        process.exit(1);
+      }
+
+      // Create branch for archive operation
+      const branchName = `admin/archive-plan-${planId}`;
+      console.log(`📍 Creating branch: ${branchName}`);
+
+      try {
+        execSync(`git checkout -b ${branchName}`, { stdio: 'inherit' });
+      } catch (error) {
+        console.log(`\n❌ Failed to create branch: ${error.message}\n`);
+        process.exit(1);
+      }
+
+      // Create archived directory
+      const archivedDir = join(process.cwd(), '.claude', 'plans', 'archived');
+      if (!existsSync(archivedDir)) {
+        mkdirSync(archivedDir, { recursive: true});
+      }
+
+      // Move plan to archived
+      const archivedPlanPath = join(archivedDir, planId);
+      console.log(`   Moving plan to: .claude/plans/archived/${planId}`);
+
+      try {
+        renameSync(planPath, archivedPlanPath);
+      } catch (error) {
+        console.log(`\n❌ Failed to move plan: ${error.message}\n`);
+        process.exit(1);
+      }
+
+      // Add archive metadata
+      const metadata = {
+        archivedAt: new Date().toISOString(),
+        reason: reason || 'Plan completed',
+        originalPath: `.claude/plans/${planId}`,
+        archivedPath: `.claude/plans/archived/${planId}`
+      };
+
+      const metadataPath = join(archivedPlanPath, 'ARCHIVE-META.json');
+      writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
+
+      // Clear active plan
+      writeFileSync(activePlanPath, '');
+
+      // Commit changes
+      console.log(`\n📝 Committing changes...`);
+
+      try {
+        execSync(`git add .claude/`, { stdio: 'inherit' });
+        execSync(`git commit -m "Archive plan ${planId}: ${reason || 'Plan completed'}"`, { stdio: 'inherit' });
+      } catch (error) {
+        console.log(`\n❌ Failed to commit: ${error.message}\n`);
+        process.exit(1);
+      }
+
+      // Push and create PR
+      console.log(`\n🚀 Pushing branch and creating PR...`);
+
+      try {
+        execSync(`git push origin ${branchName}`, { stdio: 'inherit' });
+        execSync(`gh pr create --title "Archive plan ${planId}" --body "Archiving completed plan: ${reason || 'Plan completed'}"`, { stdio: 'inherit' });
+      } catch (error) {
+        console.log(`\n⚠️  Branch pushed but PR creation failed: ${error.message}`);
+        console.log(`   Create PR manually: gh pr create\n`);
+      }
+
+      console.log(`\n✅ Plan archived successfully`);
+      console.log(`\n💡 Next steps:`);
+      console.log(`   1. Review and merge the PR`);
+      console.log(`   2. Create new plan when ready\n`);
+
+    } catch (error) {
+      console.log(`\n❌ Failed to archive plan: ${error.message}\n`);
+      process.exit(1);
     }
   }
 }
