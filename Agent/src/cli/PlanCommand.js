@@ -5,13 +5,17 @@ import { execSync } from 'child_process';
 
 export class PlanCommand {
   static async handle(action, description) {
-    // Handle subcommand: archive
+    // Handle subcommands: archive, new
     if (action === 'archive') {
       return this.archive(description); // description here is the reason
     }
 
+    if (action === 'new') {
+      return this.createNew(description); // description here is the plan description
+    }
+
     // If action is not a command, treat it as description (backward compatibility)
-    if (action && action !== 'archive') {
+    if (action && action !== 'archive' && action !== 'new') {
       description = action;
     }
 
@@ -388,10 +392,78 @@ GENERATED: ${new Date().toISOString()}
       console.log(`\n✅ Plan archived successfully`);
       console.log(`\n💡 Next steps:`);
       console.log(`   1. Review and merge the PR`);
-      console.log(`   2. Create new plan when ready\n`);
+      console.log(`   2. Run: npx agentic15 plan new\n`);
 
     } catch (error) {
       console.log(`\n❌ Failed to archive plan: ${error.message}\n`);
+      process.exit(1);
+    }
+  }
+
+  static async createNew(description) {
+    console.log('\n📋 Creating new plan...\n');
+
+    try {
+      // Check if there's an active plan
+      const activePlanPath = join(process.cwd(), '.claude', 'ACTIVE-PLAN');
+
+      if (existsSync(activePlanPath)) {
+        const currentPlan = readFileSync(activePlanPath, 'utf-8').trim();
+        if (currentPlan) {
+          console.log(`⚠️  Active plan exists: ${currentPlan}`);
+          console.log(`   Archive it first: npx agentic15 plan archive\n`);
+          process.exit(1);
+        }
+      }
+
+      // Create branch for new plan
+      const newPlanId = this.getNextPlanId();
+      const branchName = `admin/new-plan-${newPlanId}`;
+
+      console.log(`📍 Creating branch: ${branchName}`);
+
+      try {
+        execSync(`git checkout -b ${branchName}`, { stdio: 'inherit' });
+      } catch (error) {
+        console.log(`\n❌ Failed to create branch: ${error.message}\n`);
+        process.exit(1);
+      }
+
+      // Use existing generatePlan logic
+      this.generatePlan(description);
+
+      // Commit changes
+      console.log(`\n📝 Committing new plan...`);
+
+      try {
+        execSync(`git add .claude/`, { stdio: 'inherit' });
+        execSync(`git commit -m "Create new plan: ${newPlanId}"`, { stdio: 'inherit' });
+      } catch (error) {
+        console.log(`\n❌ Failed to commit: ${error.message}\n`);
+        process.exit(1);
+      }
+
+      // Push and create PR
+      console.log(`\n🚀 Pushing branch and creating PR...`);
+
+      try {
+        execSync(`git push origin ${branchName}`, { stdio: 'inherit' });
+        const prBody = description ? `Create new plan: ${description}` : `Create new plan: ${newPlanId}`;
+        execSync(`gh pr create --title "Create new plan ${newPlanId}" --body "${prBody}"`, { stdio: 'inherit' });
+      } catch (error) {
+        console.log(`\n⚠️  Branch pushed but PR creation failed: ${error.message}`);
+        console.log(`   Create PR manually: gh pr create\n`);
+      }
+
+      console.log(`\n✅ New plan created successfully`);
+      console.log(`\n💡 Next steps:`);
+      console.log(`   1. Review and merge the PR`);
+      console.log(`   2. Tell Claude: "Create the project plan"`);
+      console.log(`   3. Run: npx agentic15 plan`);
+      console.log(`   4. Run: npx agentic15 task next\n`);
+
+    } catch (error) {
+      console.log(`\n❌ Failed to create new plan: ${error.message}\n`);
       process.exit(1);
     }
   }
