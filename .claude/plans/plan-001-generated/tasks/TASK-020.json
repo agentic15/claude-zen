@@ -1,0 +1,34 @@
+{
+  "id": "TASK-020",
+  "title": "Fix command permissions to allow read-only git commands",
+  "description": "Update command restrictions to allow safe read-only git commands while blocking destructive ones",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-017"
+  ],
+  "estimatedHours": 3,
+  "completionCriteria": [
+    "Allow: git status, git branch --show-current, git log, git diff (read-only)",
+    "Allow: git remote get-url, git rev-parse, git describe",
+    "Block: git commit, git push, git checkout, git merge (write operations)",
+    "Block: git reset, git rebase, git cherry-pick (destructive)",
+    "Update settings.json with new permission rules",
+    "Test all read-only commands work",
+    "Test all write commands are blocked"
+  ],
+  "artifacts": {
+    "design": [
+      "Agent/docs/command-permissions.md"
+    ],
+    "code": [
+      "Agent/framework/settings.json"
+    ],
+    "tests": [
+      "Agent/test/permissions/git-commands.test.js"
+    ],
+    "documentation": [
+      "Agent/docs/command-permissions.md"
+    ]
+  }
+}
