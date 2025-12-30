@@ -85,19 +85,27 @@ export class PlatformDetector {
     }
 
     // Priority 1: Git remote URL
-    try {
-      const remote = execSync('git remote get-url origin', {
-        cwd: this.projectRoot,
-        encoding: 'utf-8',
-        stdio: 'pipe'
-      }).trim();
+    // Only use git command if .git is a directory (not a file)
+    // This prevents git from traversing up to parent repos in tests
+    const gitPath = path.join(this.projectRoot, '.git');
+    const isRealGitRepo = fs.existsSync(gitPath) && fs.statSync(gitPath).isDirectory();
 
-      const platform = PlatformDetector.parseRemoteURL(remote);
-      if (platform) {
-        return platform;
+    if (isRealGitRepo) {
+      try {
+        const remote = execSync('git remote get-url origin', {
+          cwd: this.projectRoot,
+          encoding: 'utf-8',
+          stdio: 'pipe',
+          env: { ...process.env, GIT_DIR: gitPath }
+        }).trim();
+
+        const platform = PlatformDetector.parseRemoteURL(remote);
+        if (platform) {
+          return platform;
+        }
+      } catch (error) {
+        // Git command failed, try next method
       }
-    } catch (error) {
-      // Git command failed, try next method
     }
 
     // Priority 2: .git/config file
