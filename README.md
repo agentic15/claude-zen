@@ -87,8 +87,13 @@ npx agentic15 auth
 ### 4. Create Plan
 Generates and locks project plan
 
-**In Terminal:**
+**Bash/Mac/Linux:**
 ```bash
+npx agentic15 plan "Build a todo app with add, remove, and list features"
+```
+
+**PowerShell (Windows):**
+```powershell
 npx agentic15 plan "Build a todo app with add, remove, and list features"
 ```
 
@@ -205,6 +210,50 @@ Starts next task
 
 ---
 
+## Plan Lifecycle Management
+
+### Archive Completed Plan
+
+When all tasks in a plan are complete:
+
+```bash
+npx agentic15 plan archive "Plan completed successfully"
+```
+
+This command:
+- Creates branch: `admin/archive-plan-{planId}`
+- Moves plan to `.claude/plans/archived/{planId}/`
+- Clears active plan
+- Commits, pushes, and creates PR
+
+### Create New Plan
+
+After archiving the completed plan:
+
+**Bash/Mac/Linux:**
+```bash
+npx agentic15 plan new "Build user dashboard with analytics"
+```
+
+**PowerShell (Windows):**
+```powershell
+npx agentic15 plan new "Build user dashboard with analytics"
+```
+
+This command:
+- Creates branch: `admin/new-plan-{newPlanId}`
+- Generates new plan with sequential ID (plan-002, plan-003, etc.)
+- Creates PROJECT-REQUIREMENTS.txt
+- Sets as active plan
+- Commits, pushes, and creates PR
+
+**Workflow:**
+```
+complete tasks → archive plan → merge PR → create new plan → merge PR → continue
+```
+
+---
+
 ## Core Features
 
 <table>
@@ -215,7 +264,9 @@ Starts next task
 
 | Command | Description |
 |---------|-------------|
-| `npx agentic15 plan` | Generate and lock project plan |
+| `npx agentic15 plan [description]` | Generate and lock project plan |
+| `npx agentic15 plan archive [reason]` | Archive completed plan |
+| `npx agentic15 plan new [description]` | Create new plan |
 | `npx agentic15 task next` | Start next pending task |
 | `npx agentic15 task start TASK-XXX` | Start specific task |
 | `npx agentic15 task status` | View current progress |
