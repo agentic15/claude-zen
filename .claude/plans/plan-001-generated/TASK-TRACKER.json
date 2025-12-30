@@ -5,9 +5,9 @@
   "lockedAt": "2025-12-29T14:06:34.725Z",
   "statistics": {
     "totalTasks": 22,
-    "completed": 19,
+    "completed": 20,
     "inProgress": 0,
-    "pending": 3
+    "pending": 2
   },
   "taskFiles": [
     {
@@ -200,7 +200,7 @@
       "id": "TASK-020",
       "title": "Fix command permissions to allow read-only git commands",
       "phase": "implementation",
-      "status": "pending",
+      "status": "completed",
       "description": "Update command restrictions to allow safe read-only git commands while blocking destructive ones",
       "completionCriteria": [
         "Allow: git status, git branch --show-current, git log, git diff (read-only)",
@@ -210,7 +210,9 @@
         "Update settings.json with new permission rules",
         "Test all read-only commands work",
         "Test all write commands are blocked"
-      ]
+      ],
+      "startedAt": "2025-12-30T15:05:07.266Z",
+      "completedAt": "2025-12-30T15:28:34.512Z"
     },
     {
       "id": "TASK-021",
