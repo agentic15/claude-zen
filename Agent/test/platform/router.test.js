@@ -161,10 +161,14 @@ await testAsync('Router should detect Azure DevOps platform', async () => {
   try {
     createMockGitRepo(tempDir, 'https://dev.azure.com/org/project/_git/repo');
 
+    // Clear cache before detection
+    const { PlatformDetector } = await import('../../src/core/Platform/PlatformDetector.js');
+    PlatformDetector.clearCache();
+
     const { PlatformRouter } = await import('../../src/core/Platform/PlatformRouter.js');
     const router = new PlatformRouter(tempDir);
 
-    assertEqual(router.getPlatform(), 'azure', 'Should detect Azure DevOps');
+    assertEqual(router.getPlatform(), 'azure', `Should detect Azure DevOps (got: ${router.getPlatform()})`);
   } finally {
     cleanup();
   }
@@ -177,10 +181,14 @@ await testAsync('Router should handle no platform detected', async () => {
   });
 
   try {
+    // Clear cache before detection
+    const { PlatformDetector } = await import('../../src/core/Platform/PlatformDetector.js');
+    PlatformDetector.clearCache();
+
     const { PlatformRouter } = await import('../../src/core/Platform/PlatformRouter.js');
     const router = new PlatformRouter(tempDir);
 
-    assertEqual(router.getPlatform(), null, 'Should return null when no platform');
+    assertEqual(router.getPlatform(), null, `Should return null when no platform (got: ${router.getPlatform()})`);
   } finally {
     cleanup();
   }
@@ -227,12 +235,16 @@ await testAsync('Router should provide Azure client when platform is Azure', asy
   try {
     createMockGitRepo(tempDir, 'https://dev.azure.com/org/project/_git/repo');
 
+    // Clear cache before detection
+    const { PlatformDetector } = await import('../../src/core/Platform/PlatformDetector.js');
+    PlatformDetector.clearCache();
+
     const { PlatformRouter } = await import('../../src/core/Platform/PlatformRouter.js');
     const router = new PlatformRouter(tempDir);
 
     const client = router.getClient();
 
-    assert(client !== null, 'Should provide Azure client');
+    assert(client !== null, `Should provide Azure client (platform: ${router.getPlatform()}, client: ${client})`);
   } finally {
     cleanup();
   }
@@ -462,10 +474,14 @@ await testAsync('Router should respect platform override in config', async () =>
     // Even with GitHub remote, should use Azure due to override
     createMockGitRepo(tempDir, 'https://github.com/owner/repo.git');
 
+    // Clear cache before detection
+    const { PlatformDetector } = await import('../../src/core/Platform/PlatformDetector.js');
+    PlatformDetector.clearCache();
+
     const { PlatformRouter } = await import('../../src/core/Platform/PlatformRouter.js');
     const router = new PlatformRouter(tempDir);
 
-    assertEqual(router.getPlatform(), 'azure', 'Should respect platform override');
+    assertEqual(router.getPlatform(), 'azure', `Should respect platform override (got: ${router.getPlatform()})`);
   } finally {
     cleanup();
   }
