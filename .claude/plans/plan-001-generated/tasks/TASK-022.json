@@ -1,0 +1,34 @@
+{
+  "id": "TASK-022",
+  "title": "Prepare and publish npm package",
+  "description": "Version bump, build, test, and publish package to npm registry",
+  "status": "pending",
+  "phase": "deployment",
+  "dependencies": [
+    "TASK-018",
+    "TASK-019",
+    "TASK-020",
+    "TASK-021"
+  ],
+  "estimatedHours": 2,
+  "completionCriteria": [
+    "Bump version in package.json (minor version for new feature)",
+    "Run all tests to verify package integrity",
+    "Test package locally with 'npm pack'",
+    "Update CHANGELOG.md with Azure integration release notes",
+    "Publish to npm with 'npm publish --access public'",
+    "Verify package is available on npm registry",
+    "Test installation from npm"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [
+      "package.json"
+    ],
+    "tests": [],
+    "documentation": [
+      "CHANGELOG.md",
+      "README.md"
+    ]
+  }
+}

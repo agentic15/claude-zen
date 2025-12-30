@@ -1,0 +1,29 @@
+{
+  "id": "TASK-021",
+  "title": "Create separate Azure DevOps README section",
+  "description": "Add Azure DevOps integration documentation to main README.md with clear separation from GitHub",
+  "status": "pending",
+  "phase": "documentation",
+  "dependencies": [
+    "TASK-017"
+  ],
+  "estimatedHours": 2,
+  "completionCriteria": [
+    "Add 'Platform Integration' section to README",
+    "Separate subsections for GitHub and Azure (no mixing)",
+    "Include Azure setup instructions (az CLI, authentication)",
+    "Include Azure configuration examples",
+    "Add platform detection explanation",
+    "Link to detailed docs in Agent/docs/",
+    "Update overview to mention dual-platform support"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [],
+    "documentation": [
+      "README.md",
+      "Agent/docs/azure-integration-guide.md"
+    ]
+  }
+}

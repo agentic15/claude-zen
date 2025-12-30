@@ -1,0 +1,31 @@
+{
+  "id": "TASK-018",
+  "title": "Implement 'npx agentic15 plan archive' command",
+  "description": "Create command to archive completed plan with auto-branch creation and PR workflow",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-017"
+  ],
+  "estimatedHours": 4,
+  "completionCriteria": [
+    "Command creates branch automatically (admin/archive-plan-{id})",
+    "Archives plan to .claude/plans/archived/{planId}/",
+    "Updates ACTIVE-PLAN file",
+    "Commits, pushes, and creates PR",
+    "Provides clear next-step instructions"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [
+      "Agent/src/commands/plan-archive.js",
+      "Agent/src/core/PlanArchiver.js"
+    ],
+    "tests": [
+      "Agent/test/commands/plan-archive.test.js"
+    ],
+    "documentation": [
+      "README.md"
+    ]
+  }
+}

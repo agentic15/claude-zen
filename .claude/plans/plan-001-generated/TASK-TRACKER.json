@@ -4,10 +4,10 @@
   "activeTask": null,
   "lockedAt": "2025-12-29T14:06:34.725Z",
   "statistics": {
-    "totalTasks": 17,
+    "totalTasks": 22,
     "completed": 17,
     "inProgress": 0,
-    "pending": 0
+    "pending": 5
   },
   "taskFiles": [
     {
@@ -162,6 +162,83 @@
       "description": "Document how to use GitHub vs Azure integrations",
       "startedAt": "2025-12-30T00:44:51.218Z",
       "completedAt": "2025-12-30T00:56:25.914Z"
+    },
+    {
+      "id": "TASK-018",
+      "title": "Implement 'npx agentic15 plan archive' command",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Create command to archive completed plan with auto-branch creation and PR workflow",
+      "completionCriteria": [
+        "Command creates branch automatically (admin/archive-plan-{id})",
+        "Archives plan to .claude/plans/archived/{planId}/",
+        "Updates ACTIVE-PLAN file",
+        "Commits, pushes, and creates PR",
+        "Provides clear next-step instructions"
+      ]
+    },
+    {
+      "id": "TASK-019",
+      "title": "Implement 'npx agentic15 plan new' command",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Create command to start new plan with auto-branch creation and PR workflow",
+      "completionCriteria": [
+        "Command creates branch automatically (admin/new-plan or feature/plan-{id})",
+        "Creates new plan structure with unique ID",
+        "Prompts for initial tasks or generates from description",
+        "Updates ACTIVE-PLAN file",
+        "Commits, pushes, and creates PR",
+        "Provides clear next-step instructions"
+      ]
+    },
+    {
+      "id": "TASK-020",
+      "title": "Fix command permissions to allow read-only git commands",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Update command restrictions to allow safe read-only git commands while blocking destructive ones",
+      "completionCriteria": [
+        "Allow: git status, git branch --show-current, git log, git diff (read-only)",
+        "Allow: git remote get-url, git rev-parse, git describe",
+        "Block: git commit, git push, git checkout, git merge (write operations)",
+        "Block: git reset, git rebase, git cherry-pick (destructive)",
+        "Update settings.json with new permission rules",
+        "Test all read-only commands work",
+        "Test all write commands are blocked"
+      ]
+    },
+    {
+      "id": "TASK-021",
+      "title": "Create separate Azure DevOps README section",
+      "phase": "documentation",
+      "status": "pending",
+      "description": "Add Azure DevOps integration documentation to main README.md with clear separation from GitHub",
+      "completionCriteria": [
+        "Add 'Platform Integration' section to README",
+        "Separate subsections for GitHub and Azure (no mixing)",
+        "Include Azure setup instructions (az CLI, authentication)",
+        "Include Azure configuration examples",
+        "Add platform detection explanation",
+        "Link to detailed docs in Agent/docs/",
+        "Update overview to mention dual-platform support"
+      ]
+    },
+    {
+      "id": "TASK-022",
+      "title": "Prepare and publish npm package",
+      "phase": "deployment",
+      "status": "pending",
+      "description": "Version bump, build, test, and publish package to npm registry",
+      "completionCriteria": [
+        "Bump version in package.json (minor version for new feature)",
+        "Run all tests to verify package integrity",
+        "Test package locally with 'npm pack'",
+        "Update CHANGELOG.md with Azure integration release notes",
+        "Publish to npm with 'npm publish --access public'",
+        "Verify package is available on npm registry",
+        "Test installation from npm"
+      ]
     }
   ]
 }
