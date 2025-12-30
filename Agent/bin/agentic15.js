@@ -50,12 +50,12 @@ program
   .description('Show current task status and progress')
   .action(() => StatusCommand.show());
 
-// Plan management (generate, lock, archive)
+// Plan management (generate, lock, archive, new)
 program
   .command('plan')
-  .description('Plan management: generate, lock, or archive')
-  .argument('[action]', 'Action: archive, or project description for generate')
-  .argument('[description]', 'Description/reason for archive')
+  .description('Plan management: generate, lock, archive, or new')
+  .argument('[action]', 'Action: archive, new, or project description for generate')
+  .argument('[description]', 'Description for new plan or reason for archive')
   .action((action, description) => PlanCommand.handle(action, description));
 
 // Visual testing - capture screenshots and console errors
