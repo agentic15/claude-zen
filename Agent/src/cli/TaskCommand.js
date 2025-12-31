@@ -8,7 +8,7 @@ import { AzureDevOpsConfig } from '../core/AzureDevOpsConfig.js';
 import { TaskIssueMapper } from '../core/TaskIssueMapper.js';
 
 export class TaskCommand {
-  static async handle(action, taskId) {
+  static async handle(action, taskId, options = {}) {
     switch (action) {
       case 'start':
         return this.startTask(taskId);
@@ -17,7 +17,7 @@ export class TaskCommand {
       case 'status':
         return this.showStatus();
       case 'reset':
-        return this.resetTask(taskId);
+        return this.resetTask(taskId, options.force);
       default:
         console.log(`\n❌ Unknown action: ${action}`);
         console.log('   Valid actions: start, next, status, reset\n');
@@ -177,7 +177,7 @@ export class TaskCommand {
     console.log('');
   }
 
-  static async resetTask(taskId) {
+  static async resetTask(taskId, force = false) {
     const tracker = this.loadTracker();
 
     // Find task to reset
@@ -194,13 +194,20 @@ export class TaskCommand {
       if (!task) {
         console.log('\n❌ No task is currently in progress\n');
         console.log('   Specify a task ID: agentic15 task reset TASK-001\n');
+        console.log('   To reset a completed task: agentic15 task reset TASK-001 --force\n');
         process.exit(1);
       }
     }
 
-    if (task.status !== 'in_progress') {
+    if (task.status !== 'in_progress' && !force) {
       console.log(`\n⚠️  Task ${task.id} is not in progress (status: ${task.status})\n`);
+      console.log('   To reset this task anyway, use --force:\n');
+      console.log(`   agentic15 task reset ${task.id} --force\n`);
       process.exit(1);
+    }
+
+    if (force && task.status !== 'in_progress') {
+      console.log(`\n⚠️  Forcing reset of ${task.status} task: ${task.id}\n`);
     }
 
     console.log(`\n🔄 Resetting task: ${task.id}`);
@@ -232,31 +239,69 @@ export class TaskCommand {
 
     const featureBranch = `feature/${task.id.toLowerCase()}`;
 
+    // Check if branch was pushed to remote
+    let remoteBranchExists = false;
+    try {
+      const remoteBranches = execSync('git branch -r', { encoding: 'utf-8' });
+      remoteBranchExists = remoteBranches.includes(`origin/${featureBranch}`);
+    } catch (e) {
+      // Ignore
+    }
+
+    console.log('═'.repeat(70));
+    console.log('🧹 CLEANUP INSTRUCTIONS');
+    console.log('═'.repeat(70) + '\n');
+
+    console.log('📋 Step 1: Clean up git branches\n');
+
     // If on feature branch, offer to clean up
     if (currentBranch === featureBranch) {
-      console.log(`⚠️  You are still on branch: ${featureBranch}\n`);
-      console.log('To complete the reset:\n');
+      console.log(`   Current branch: ${featureBranch}`);
       console.log(`   1. Switch to main: git checkout main`);
-      console.log(`   2. Delete branch: git branch -D ${featureBranch}\n`);
-      console.log('Or run these commands together:');
-      console.log(`   git checkout main && git branch -D ${featureBranch}\n`);
+      console.log(`      (If you have uncommitted changes: git checkout -f main)`);
+      console.log(`   2. Delete local branch: git branch -D ${featureBranch}`);
+      if (remoteBranchExists) {
+        console.log(`   3. Delete remote branch: git push origin --delete ${featureBranch}`);
+      }
     } else {
-      // Check if feature branch exists
+      // Check if feature branch exists locally
       try {
         const branches = execSync('git branch', { encoding: 'utf-8' });
         if (branches.includes(featureBranch)) {
-          console.log(`💡 Feature branch still exists: ${featureBranch}\n`);
-          console.log('To delete it:');
-          console.log(`   git branch -D ${featureBranch}\n`);
+          console.log(`   Delete local branch: git branch -D ${featureBranch}`);
         }
       } catch (e) {
         // Ignore
       }
+
+      if (remoteBranchExists) {
+        console.log(`   Delete remote branch: git push origin --delete ${featureBranch}`);
+      }
     }
 
-    console.log('✅ Task reset complete!\n');
+    console.log('\n📋 Step 2: Clean up any unwanted files\n');
+    console.log('   Preview files to be deleted:');
+    console.log('   git clean -fd --dry-run');
+    console.log('');
+    console.log('   If files look correct to delete:');
+    console.log('   git clean -fd');
+    console.log('');
+    console.log('   Or reset to clean main state:');
+    console.log('   git checkout main');
+    console.log('   git reset --hard origin/main');
+    console.log('   git clean -fd');
+
+    console.log('\n📋 Step 3: Verify clean state\n');
+    console.log('   git status');
+    console.log('   # Should show "nothing to commit, working tree clean"');
+
+    console.log('\n' + '═'.repeat(70));
+    console.log('✅ Task reset complete!');
+    console.log('═'.repeat(70) + '\n');
+
     console.log('Next steps:');
-    console.log(`   - Run: agentic15 task next\n`);
+    console.log('   1. Follow cleanup instructions above');
+    console.log('   2. Run: agentic15 task next\n');
   }
 
   static async createGitHubIssue(task, config) {

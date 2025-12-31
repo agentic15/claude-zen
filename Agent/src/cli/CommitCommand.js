@@ -232,11 +232,22 @@ export class CommitCommand {
   }
 
   static async createPullRequest(task, commitMessage) {
-    try {
-      // Get main branch name
-      const mainBranch = this.getMainBranch();
+    const platform = this.detectPlatform();
 
-      // Load task for issue number
+    if (platform === 'github') {
+      return this.createGitHubPR(task, commitMessage);
+    } else if (platform === 'azure') {
+      return this.createAzureDevOpsPR(task, commitMessage);
+    } else {
+      console.log('\n⚠️  Could not detect platform (GitHub or Azure DevOps)');
+      console.log('   PR creation skipped\n');
+      return null;
+    }
+  }
+
+  static async createGitHubPR(task, commitMessage) {
+    try {
+      const mainBranch = this.getMainBranch();
       const activePlanPath = join(process.cwd(), '.claude', 'ACTIVE-PLAN');
       const planId = readFileSync(activePlanPath, 'utf-8').trim();
       const taskPath = join(process.cwd(), '.claude', 'plans', planId, 'tasks', `${task.id}.json`);
@@ -248,58 +259,47 @@ export class CommitCommand {
         taskData = task;
       }
 
-      // Check if PR already exists for this branch
       const currentBranch = execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf-8' }).trim();
-      let existingPR = null;
 
+      // Check if PR already exists
       try {
         const prCheckOutput = execSync(`gh pr list --head ${currentBranch} --json number,url,state`, { encoding: 'utf-8' });
         const prs = JSON.parse(prCheckOutput);
 
         if (prs.length > 0) {
-          existingPR = prs[0];
+          const existingPR = prs[0];
 
           if (existingPR.state === 'MERGED') {
             console.log(`⚠️  PR already exists and was merged: ${existingPR.url}`);
-            console.log(`   Branch ${currentBranch} should start a new task with a new branch\n`);
             return existingPR.url;
           } else if (existingPR.state === 'OPEN') {
             console.log(`✅ PR already exists (open): ${existingPR.url}`);
             return existingPR.url;
-          } else if (existingPR.state === 'CLOSED') {
-            console.log(`⚠️  PR exists but was closed: ${existingPR.url}`);
-            console.log(`   Consider reopening with: gh pr reopen ${existingPR.number}\n`);
-            return existingPR.url;
           }
         }
       } catch (error) {
-        // No existing PR found or gh CLI error - continue with PR creation
+        // Continue with PR creation
       }
 
-      // Try to read PR template
+      // Build PR body
       const templatePath = join(process.cwd(), '.github', 'PULL_REQUEST_TEMPLATE.md');
       let prBody = '';
 
       if (existsSync(templatePath)) {
-        // Use the PR template and populate it with task data
         console.log('📋 Using PR template from .github/PULL_REQUEST_TEMPLATE.md');
         const template = readFileSync(templatePath, 'utf-8');
         prBody = this.populatePRTemplate(template, taskData, task, commitMessage);
       } else {
-        // Fallback to custom body if template doesn't exist
         console.log('📋 PR template not found, using default format');
         prBody = this.buildCustomPRBody(taskData, task, commitMessage);
       }
 
-      // Write PR body to temp file to avoid shell escaping issues
       const tempBodyFile = join(process.cwd(), '.git', 'PR_BODY.md');
       writeFileSync(tempBodyFile, prBody);
 
-      // Create PR using gh CLI with body from file
       const prCommand = `gh pr create --title "${commitMessage}" --body-file "${tempBodyFile}" --base ${mainBranch}`;
       const prOutput = execSync(prCommand, { encoding: 'utf-8' });
 
-      // Extract PR URL from output
       const prUrl = prOutput.match(/https:\/\/github\.com\/[^\s]+/)?.[0];
 
       if (prUrl) {
@@ -310,8 +310,68 @@ export class CommitCommand {
       console.log('✅ Pull request created');
       return null;
     } catch (error) {
-      console.log(`\n⚠️  Failed to create PR: ${error.message}`);
+      console.log(`\n⚠️  Failed to create GitHub PR: ${error.message}`);
       console.log('   You may need to install GitHub CLI: https://cli.github.com/\n');
+      return null;
+    }
+  }
+
+  static async createAzureDevOpsPR(task, commitMessage) {
+    try {
+      const mainBranch = this.getMainBranch();
+      const currentBranch = execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf-8' }).trim();
+      const azureInfo = this.extractAzureOrgAndProject();
+
+      if (!azureInfo) {
+        console.log('\n⚠️  Could not extract Azure DevOps org/project from remote URL');
+        return null;
+      }
+
+      // Extract repository name from git remote
+      const remote = execSync('git remote get-url origin', { encoding: 'utf-8' }).trim();
+      const repoMatch = remote.match(/_git\/([^\/\s]+?)(?:\.git)?$/);
+      const repoName = repoMatch ? repoMatch[1] : null;
+
+      if (!repoName) {
+        console.log('\n⚠️  Could not extract repository name from remote URL');
+        return null;
+      }
+
+      // Build PR description
+      const activePlanPath = join(process.cwd(), '.claude', 'ACTIVE-PLAN');
+      const planId = readFileSync(activePlanPath, 'utf-8').trim();
+      const taskPath = join(process.cwd(), '.claude', 'plans', planId, 'tasks', `${task.id}.json`);
+
+      let taskData;
+      try {
+        taskData = JSON.parse(readFileSync(taskPath, 'utf-8'));
+      } catch (e) {
+        taskData = task;
+      }
+
+      const prBody = this.buildCustomPRBody(taskData, task, commitMessage);
+
+      // Create PR using Azure CLI
+      console.log('📋 Creating Azure DevOps pull request...');
+
+      const azCommand = `az repos pr create --source-branch ${currentBranch} --target-branch ${mainBranch} --title "${commitMessage}" --description "${prBody.replace(/"/g, '\\"')}" --organization https://dev.azure.com/${azureInfo.organization} --project ${azureInfo.project}`;
+
+      const prOutput = execSync(azCommand, { encoding: 'utf-8' });
+      const prData = JSON.parse(prOutput);
+
+      if (prData && prData.pullRequestId) {
+        // Construct web UI URL instead of using API URL
+        const webUrl = `https://dev.azure.com/${azureInfo.organization}/${azureInfo.project}/_git/${repoName}/pullrequest/${prData.pullRequestId}`;
+        console.log(`✅ Pull request created: ${webUrl}`);
+        return webUrl;
+      }
+
+      console.log('✅ Pull request created');
+      return null;
+    } catch (error) {
+      console.log(`\n⚠️  Failed to create Azure DevOps PR: ${error.message}`);
+      console.log('   You may need to install Azure CLI: https://aka.ms/azure-cli');
+      console.log('   And login: az login\n');
       return null;
     }
   }
@@ -606,9 +666,13 @@ export class CommitCommand {
 
     console.log(`\n📊 Progress: ${completed}/${total} completed\n`);
 
+    const platform = this.detectPlatform();
+    const platformName = platform === 'github' ? 'GitHub' : platform === 'azure' ? 'Azure DevOps' : 'your platform';
+
     console.log('💡 Next steps:');
-    console.log('   1. Review and merge PR on GitHub');
-    console.log('   2. After merge, run: agentic15 task next\n');
+    console.log(`   1. Review and merge PR on ${platformName}`);
+    console.log('   2. After merge, run: agentic15 sync');
+    console.log('   3. Then run: agentic15 task next\n');
   }
 
   static getMainBranch() {
@@ -626,5 +690,38 @@ export class CommitCommand {
     } catch (e) {
       return 'main';
     }
+  }
+
+  static detectPlatform() {
+    try {
+      const remote = execSync('git remote get-url origin', { encoding: 'utf-8' }).trim();
+
+      if (remote.includes('github.com')) {
+        return 'github';
+      } else if (remote.includes('dev.azure.com')) {
+        return 'azure';
+      }
+
+      return 'unknown';
+    } catch (e) {
+      return 'unknown';
+    }
+  }
+
+  static extractAzureOrgAndProject() {
+    try {
+      const remote = execSync('git remote get-url origin', { encoding: 'utf-8' }).trim();
+      // Format: https://dev.azure.com/{org}/{project}/_git/{repo}
+      const match = remote.match(/dev\.azure\.com\/([^\/]+)\/([^\/]+)\/_git/);
+      if (match) {
+        return {
+          organization: match[1],
+          project: match[2]
+        };
+      }
+    } catch (e) {
+      // Ignore
+    }
+    return null;
   }
 }

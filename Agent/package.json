@@ -1,7 +1,7 @@
 {
   "name": "@agentic15.com/agentic15-claude-zen",
   "version": "6.0.0",
-  "description": "Structured AI-assisted development framework for Claude Code with enforced quality standards",
+  "description": "Structured AI-assisted development framework for Claude Code with dual-platform support (GitHub and Azure DevOps)",
   "main": "src/index.js",
   "bin": {
     "agentic15-claude-zen": "./bin/create-agentic15-claude-zen.js",
@@ -26,7 +26,10 @@
     "development-framework",
     "quality-automation",
     "git-hooks",
-    "test-driven-development"
+    "test-driven-development",
+    "github-integration",
+    "azure-devops",
+    "dual-platform"
   ],
   "author": "Agentic15 <developers@agentic15.com>",
   "license": "Apache-2.0",
