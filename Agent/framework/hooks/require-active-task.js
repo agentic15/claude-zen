@@ -8,8 +8,8 @@
  * This is the enforcement mechanism that prevents workflow violations
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 // Read tool use from stdin
 let input = '';

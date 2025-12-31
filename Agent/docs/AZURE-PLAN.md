@@ -214,6 +214,14 @@ cat .claude/ACTIVE-PLAN  # Check plan ID
 ls .claude/plans/*/TASK-TRACKER.json  # Verify tracker exists
 ```
 
+### Task stuck in progress / Need to restart task
+
+If you need to reset a task and start over:
+```bash
+npx agentic15 task reset
+```
+This resets the current task to pending and provides cleanup instructions.
+
 ---
 
 **Need help?** [Open an issue](https://github.com/agentic15/claude-zen/issues)

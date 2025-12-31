@@ -242,6 +242,7 @@ Starts next task
 | `npx agentic15 plan` | Generate and lock project plan |
 | `npx agentic15 task next` | Start next pending task |
 | `npx agentic15 task start TASK-XXX` | Start specific task |
+| `npx agentic15 task reset [TASK-XXX]` | Reset in-progress task to pending |
 | `npx agentic15 task status` | View current progress |
 | `npx agentic15 commit` | Commit, push, and create PR |
 | `npx agentic15 sync` | Sync with main branch after PR merge |

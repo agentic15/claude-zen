@@ -9,11 +9,19 @@
     ]
   },
   "github": {
-    "enabled": true,
+    "enabled": false,
     "autoCreate": false,
     "autoUpdate": false,
     "autoClose": false,
     "owner": "agentic15",
     "repo": "claude-zen"
+  },
+  "azureDevOps": {
+    "enabled": true,
+    "autoCreate":false,
+    "autoUpdate": false,
+    "autoClose": false,
+    "organization": "agentic15",
+    "project": "Playground"
   }
 }

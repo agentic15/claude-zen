@@ -12,8 +12,8 @@
  * 4. No custom formats allowed
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 // Read the tool input
 const input = process.argv[2] || '{}';
