@@ -1,13 +1,13 @@
 # GitHub Setup Guide
 
-Complete guide for setting up Agentic15 Claude Zen with GitHub integration.
+Repository setup and authentication for Agentic15 with GitHub.
 
 ---
 
 ## Prerequisites
 
 - **Node.js** 18.0.0 or higher
-- **Git** installed and configured
+- **Git** installed
 - **GitHub Account**
 - **GitHub CLI** (`gh`) - [Install here](https://cli.github.com/)
 
@@ -15,7 +15,7 @@ Complete guide for setting up Agentic15 Claude Zen with GitHub integration.
 
 ## 1. Create GitHub Repository
 
-### Option A: Create via GitHub CLI (Recommended)
+### Option A: Via GitHub CLI (Recommended)
 
 ```bash
 # Navigate to your project
@@ -33,15 +33,14 @@ git commit -m "Initial commit: Agentic15 project setup"
 gh repo create OWNER/REPO --public --source=. --push
 ```
 
-Replace `OWNER/REPO` with your GitHub username and repository name (e.g., `myusername/my-project`).
+Replace `OWNER/REPO` with your GitHub username/repository name.
 
-### Option B: Create via GitHub Web UI
+### Option B: Via GitHub Web UI
 
 1. Go to https://github.com/new
-2. Create a new repository
-3. **Do NOT** initialize with README, .gitignore, or license
-4. Copy the repository URL
-5. In your project:
+2. Create repository (don't initialize with README/gitignore)
+3. Copy the repository URL
+4. In your project:
 
 ```bash
 git init
@@ -56,40 +55,35 @@ git push -u origin main
 
 ## 2. Authenticate with GitHub
 
-Agentic15 uses **GitHub CLI** for authentication - no personal access tokens needed!
-
 ```bash
 npx agentic15 auth
 ```
 
-This command will:
-1. ✅ Check if `gh` CLI is installed
-2. ✅ Run `gh auth login` if not already authenticated
-3. ✅ Auto-detect your repository owner/repo from git remote
-4. ✅ Save configuration to `.claude/settings.local.json`
+This command:
+- ✅ Checks if `gh` CLI is installed
+- ✅ Runs `gh auth login` if needed
+- ✅ Auto-detects owner/repo from git remote
+- ✅ Saves to `.claude/settings.local.json`
 
 ### Manual Authentication (if needed)
 
-If `gh` CLI is not installed:
-
 ```bash
-# Install GitHub CLI first
+# Install GitHub CLI first (if not installed)
 # Mac: brew install gh
 # Windows: winget install GitHub.cli
-# Linux: See https://github.com/cli/cli#installation
 
-# Then authenticate
+# Authenticate
 gh auth login
 
-# Then run agentic15 auth
+# Configure agentic15
 npx agentic15 auth
 ```
 
 ---
 
-## 3. Configure GitHub Integration
+## 3. Configure Settings (Optional)
 
-The `agentic15 auth` command auto-creates `.claude/settings.local.json`:
+`.claude/settings.local.json` created by `npx agentic15 auth`:
 
 ```json
 {
@@ -104,213 +98,105 @@ The `agentic15 auth` command auto-creates `.claude/settings.local.json`:
 }
 ```
 
-### Configuration Options
+**Settings:**
+- `enabled`: Enable/disable GitHub integration
+- `autoCreate`: Auto-create issues when starting tasks
+- `autoUpdate`: Auto-update issues with PR links
+- `autoClose`: Auto-close issues when PRs merge
+- `owner/repo`: Auto-detected from git remote
 
-| Setting | Default | Description |
-|---------|---------|-------------|
-| `enabled` | `true` | Enable/disable GitHub integration |
-| `autoCreate` | `false` | Auto-create GitHub issues when starting tasks |
-| `autoUpdate` | `false` | Auto-update issues when creating PRs |
-| `autoClose` | `false` | Auto-close issues when PRs are merged |
-| `owner` | auto-detected | GitHub username or organization |
-| `repo` | auto-detected | Repository name |
-
-### Enable Auto-Features (Optional)
-
-To enable automatic issue management, edit `.claude/settings.local.json`:
-
+**Enable auto-features** (optional):
 ```json
 {
   "github": {
-    "enabled": true,
-    "autoCreate": true,    // ← Create issues automatically
-    "autoUpdate": true,    // ← Update issues with PR links
-    "autoClose": true,     // ← Close issues when merged
-    "owner": "your-username",
-    "repo": "your-repo"
+    "autoCreate": true,
+    "autoUpdate": true,
+    "autoClose": true
   }
 }
 ```
 
-**Recommended:** Start with auto-features disabled and enable them once comfortable with the workflow.
-
 ---
 
-## 4. Enable Branch Protection (Recommended)
+## 4. Enable Branch Protection (Do Later)
 
-Protect your main branch to enforce PR workflow:
+⚠️ **Do this AFTER creating your first plan** (see [GitHub Plan Guide](GITHUB-PLAN.md))
 
-### Via GitHub CLI
+Branch protection enforces PR workflow:
 
 ```bash
-gh api repos/OWNER/REPO/branches/main/protection \
-  --method PUT \
-  --field required_pull_request_reviews[required_approving_review_count]=0 \
-  --field required_pull_request_reviews[dismiss_stale_reviews]=false \
-  --field required_pull_request_reviews[require_code_owner_reviews]=false \
-  --field enforce_admins=false \
-  --field restrictions=null
+# After plan is committed to main
+gh api repos/OWNER/REPO/branches/main/protection -X PUT \
+  -H "Accept: application/vnd.github+json" \
+  --input - << 'EOF'
+{
+  "required_pull_request_reviews": {
+    "required_approving_review_count": 0
+  },
+  "enforce_admins": false,
+  "allow_force_pushes": false,
+  "allow_deletions": false,
+  "required_status_checks": null,
+  "restrictions": null
+}
+EOF
+
+# Enable auto-delete merged branches
+gh api repos/OWNER/REPO -X PATCH \
+  -f delete_branch_on_merge=true
 ```
 
-### Via GitHub Web UI
-
-1. Go to repository **Settings** → **Branches**
-2. Click **Add rule** under "Branch protection rules"
-3. Branch name pattern: `main`
-4. Check **"Require a pull request before merging"**
-5. Uncheck **"Require approvals"** (for solo projects)
-6. Click **Save changes**
-
 ---
 
-## 5. Verify Setup
-
-Test that everything is working:
+## Verify Setup
 
 ```bash
-# Check GitHub CLI authentication
+# Check authentication
 gh auth status
 
-# Check repository connection
+# Check remote
 git remote -v
 
-# Check agentic15 configuration
+# Check agentic15
 npx agentic15 status
 ```
 
-Expected output:
+Expected:
 - ✅ GitHub CLI authenticated
-- ✅ Remote points to your GitHub repo
-- ✅ Agentic15 ready to create plans
+- ✅ Remote points to GitHub
+- ✅ Ready for plan creation
 
 ---
 
-## How It Works
+## Next Steps
 
-### Workflow Overview
+✅ **Setup complete!** Now:
 
-1. **Create tasks** → Optionally creates GitHub issues
-2. **Implement code** → Work in feature branches
-3. **Run `npx agentic15 commit`** → Creates PR automatically
-4. **Review & merge** → Optionally closes linked issues
-
-### GitHub Integration Features
-
-**Automatic PR Creation:**
-- Creates PR from feature branch to main
-- Uses `.github/PULL_REQUEST_TEMPLATE.md` if exists
-- Includes task details and completion criteria
-- Links to GitHub issues if `autoCreate: true`
-
-**Issue Management (if enabled):**
-- Creates issues from task descriptions
-- Updates issues with PR links
-- Closes issues when PRs merge to main
-- Syncs task status with issue labels
-
-**Branch Protection:**
-- Enforces PR workflow
-- Prevents direct commits to main
-- Maintains clean git history
+👉 **[Create Your First Plan](GITHUB-PLAN.md)** - GitHub workflow
 
 ---
 
 ## Troubleshooting
 
 ### "gh: command not found"
-
-Install GitHub CLI:
-- **Mac:** `brew install gh`
-- **Windows:** `winget install GitHub.cli`
-- **Linux:** See https://github.com/cli/cli#installation
+Install: `brew install gh` (Mac) or `winget install GitHub.cli` (Windows)
 
 ### "failed to create PR"
-
-Check:
 ```bash
-gh auth status          # Ensure authenticated
-git remote -v          # Ensure remote is set
-gh repo view           # Ensure repo exists
+gh auth status          # Check auth
+git remote -v          # Check remote
+gh repo view           # Check repo exists
 ```
 
-### "repository not found"
-
-Ensure `.claude/settings.local.json` has correct owner/repo:
+### Wrong owner/repo
+Edit `.claude/settings.local.json`:
 ```json
 {
   "github": {
     "owner": "correct-username",
-    "repo": "correct-repo-name"
+    "repo": "correct-repo"
   }
 }
-```
-
-### PRs not creating automatically
-
-1. Check `gh` CLI is installed: `gh --version`
-2. Check authentication: `gh auth status`
-3. Check branch protection allows PRs
-4. Run with verbose output to see errors
-
----
-
-## Next Steps
-
-✅ GitHub setup complete! Now you can:
-
-1. **[Create your first plan](../README.md#4-create-plan)**
-2. **[Start your first task](../README.md#6-start-first-task)**
-3. **[Learn the daily workflow](../README.md#daily-development-workflow)**
-
----
-
-## Advanced Configuration
-
-### Custom PR Templates
-
-Create `.github/PULL_REQUEST_TEMPLATE.md` to customize PR format:
-
-```markdown
-## Description
-<!-- Describe your changes -->
-
-## Type of Change
-- [ ] Bug fix
-- [ ] New feature
-- [ ] Breaking change
-
-## Testing
-<!-- How has this been tested? -->
-
-## Checklist
-- [ ] Code follows project style
-- [ ] Tests added/updated
-- [ ] Documentation updated
-```
-
-Agentic15 will automatically use this template when creating PRs.
-
-### Multiple Repositories
-
-Working with multiple repos? Each project has its own `.claude/settings.local.json`:
-
-```bash
-# Project A
-cd project-a
-npx agentic15 auth  # Configures for project-a
-
-# Project B
-cd ../project-b
-npx agentic15 auth  # Configures for project-b
-```
-
-### Organization Repositories
-
-Same process works for organization repos:
-
-```bash
-gh repo create my-org/my-project --public --source=. --push
-npx agentic15 auth  # Auto-detects org ownership
 ```
 
 ---
