@@ -83,8 +83,8 @@ export class AzureDevOpsConfig {
     }
 
     // Override with environment variables (highest priority)
-    if (process.env.AZURE_DEVOPS_TOKEN) {
-      config.token = process.env.AZURE_DEVOPS_TOKEN;
+    if (process.env.AZURE_DEVOPS_PAT) {
+      config.token = process.env.AZURE_DEVOPS_PAT;
     }
     if (process.env.AZURE_DEVOPS_ORGANIZATION) {
       config.organization = process.env.AZURE_DEVOPS_ORGANIZATION;

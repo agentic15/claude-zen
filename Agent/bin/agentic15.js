@@ -34,9 +34,10 @@ program
 program
   .command('task')
   .description('Task management')
-  .argument('<action>', 'Action: start, next, status')
-  .argument('[taskId]', 'Task ID (e.g., TASK-001) - required for "start"')
-  .action((action, taskId) => TaskCommand.handle(action, taskId));
+  .argument('<action>', 'Action: start, next, status, reset')
+  .argument('[taskId]', 'Task ID (e.g., TASK-001) - required for "start" and "reset"')
+  .option('--force', 'Force reset of completed/pending tasks')
+  .action((action, taskId, options) => TaskCommand.handle(action, taskId, options));
 
 // Auto-commit workflow
 program

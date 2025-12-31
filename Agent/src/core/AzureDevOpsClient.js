@@ -32,6 +32,7 @@ export class AzureDevOpsClient {
    */
   constructor(config) {
     this.config = config;
+    this.apiVersion = '7.0';
   }
 
   /**
@@ -44,23 +45,90 @@ export class AzureDevOpsClient {
   }
 
   /**
+   * Get base URL for Azure DevOps API
+   *
+   * @returns {string} Base URL
+   */
+  getBaseUrl() {
+    const org = this.config.getOrganization();
+    const project = this.config.getProject();
+    return `https://dev.azure.com/${org}/${project}/_apis`;
+  }
+
+  /**
+   * Get authorization header for API requests
+   *
+   * @returns {Object} Authorization header
+   */
+  getAuthHeader() {
+    const token = this.config.getToken();
+    const encoded = Buffer.from(`:${token}`).toString('base64');
+    return {
+      'Authorization': `Basic ${encoded}`,
+      'Content-Type': 'application/json-patch+json'
+    };
+  }
+
+  /**
    * Create a work item in Azure DevOps
    *
    * @param {string} title - Work item title
    * @param {string} description - Work item description
    * @param {Array<string>} tags - Work item tags (optional)
-   * @returns {Promise<Object|null>} Work item object or null if not configured
+   * @param {string} workItemType - Work item type (default: 'Task')
+   * @returns {Promise<Object|null>} Work item object with { id, url } or null if failed
    */
-  async createWorkItem(title, description, tags = []) {
+  async createWorkItem(title, description, tags = [], workItemType = 'Task') {
     if (!this.isConfigured()) {
       return null;
     }
 
-    // Placeholder for actual Azure DevOps API implementation
-    // This would use the Azure DevOps REST API:
-    // POST https://dev.azure.com/{organization}/{project}/_apis/wit/workitems/${type}?api-version=7.0
-    console.log('Azure DevOps: Would create work item:', title);
-    return null;
+    try {
+      const url = `${this.getBaseUrl()}/wit/workitems/$${workItemType}?api-version=${this.apiVersion}`;
+
+      // Build JSON Patch document
+      const patchDocument = [
+        {
+          op: 'add',
+          path: '/fields/System.Title',
+          value: title
+        },
+        {
+          op: 'add',
+          path: '/fields/System.Description',
+          value: description
+        }
+      ];
+
+      // Add tags if provided
+      if (tags && tags.length > 0) {
+        patchDocument.push({
+          op: 'add',
+          path: '/fields/System.Tags',
+          value: tags.join('; ')
+        });
+      }
+
+      const response = await fetch(url, {
+        method: 'PATCH',
+        headers: this.getAuthHeader(),
+        body: JSON.stringify(patchDocument)
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Azure DevOps API error: ${response.status} - ${errorText}`);
+      }
+
+      const workItem = await response.json();
+      return {
+        id: workItem.id,
+        url: workItem._links.html.href
+      };
+    } catch (error) {
+      console.error('Failed to create Azure DevOps work item:', error.message);
+      return null;
+    }
   }
 
   /**
@@ -75,9 +143,28 @@ export class AzureDevOpsClient {
       return false;
     }
 
-    // Placeholder for actual Azure DevOps API implementation
-    console.log('Azure DevOps: Would update work item tags:', workItemId, tags);
-    return false;
+    try {
+      const url = `${this.getBaseUrl()}/wit/workitems/${workItemId}?api-version=${this.apiVersion}`;
+
+      const patchDocument = [
+        {
+          op: 'add',
+          path: '/fields/System.Tags',
+          value: tags.join('; ')
+        }
+      ];
+
+      const response = await fetch(url, {
+        method: 'PATCH',
+        headers: this.getAuthHeader(),
+        body: JSON.stringify(patchDocument)
+      });
+
+      return response.ok;
+    } catch (error) {
+      console.error('Failed to update work item tags:', error.message);
+      return false;
+    }
   }
 
   /**
@@ -92,9 +179,23 @@ export class AzureDevOpsClient {
       return false;
     }
 
-    // Placeholder for actual Azure DevOps API implementation
-    console.log('Azure DevOps: Would add comment to work item:', workItemId);
-    return false;
+    try {
+      const url = `${this.getBaseUrl()}/wit/workitems/${workItemId}/comments?api-version=${this.apiVersion}`;
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          ...this.getAuthHeader(),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text: comment })
+      });
+
+      return response.ok;
+    } catch (error) {
+      console.error('Failed to add work item comment:', error.message);
+      return false;
+    }
   }
 
   /**
@@ -109,8 +210,32 @@ export class AzureDevOpsClient {
       return false;
     }
 
-    // Placeholder for actual Azure DevOps API implementation
-    console.log('Azure DevOps: Would close work item:', workItemId);
-    return false;
+    try {
+      const url = `${this.getBaseUrl()}/wit/workitems/${workItemId}?api-version=${this.apiVersion}`;
+
+      const patchDocument = [
+        {
+          op: 'add',
+          path: '/fields/System.State',
+          value: 'Closed'
+        }
+      ];
+
+      const response = await fetch(url, {
+        method: 'PATCH',
+        headers: this.getAuthHeader(),
+        body: JSON.stringify(patchDocument)
+      });
+
+      // Add comment if provided
+      if (response.ok && comment) {
+        await this.addWorkItemComment(workItemId, comment);
+      }
+
+      return response.ok;
+    } catch (error) {
+      console.error('Failed to close work item:', error.message);
+      return false;
+    }
   }
 }

@@ -5,6 +5,11 @@ import { execSync } from 'child_process';
 
 export class PlanCommand {
   static async handle(action, description) {
+    // Handle help command
+    if (action === 'help' || action === '--help' || action === '-h') {
+      return this.showHelp();
+    }
+
     // Handle subcommands: archive, new
     if (action === 'archive') {
       return this.archive(description); // description here is the reason
@@ -25,11 +30,16 @@ export class PlanCommand {
 
     if (existsSync(activePlanPath)) {
       const planId = readFileSync(activePlanPath, 'utf-8').trim();
-      const planPath = join(process.cwd(), '.claude', 'plans', planId);
-      const projectPlanPath = join(planPath, 'PROJECT-PLAN.json');
 
-      // Check if plan file exists
-      if (existsSync(projectPlanPath)) {
+      // If planId is empty (e.g., after archive), treat as no active plan
+      if (!planId) {
+        // No active plan - continue to create new one below
+      } else {
+        const planPath = join(process.cwd(), '.claude', 'plans', planId);
+        const projectPlanPath = join(planPath, 'PROJECT-PLAN.json');
+
+        // Check if plan file exists
+        if (existsSync(projectPlanPath)) {
         // Plan exists, check if it's locked
         const lockedPath = join(planPath, '.plan-locked');
 
@@ -43,11 +53,12 @@ export class PlanCommand {
         // Plan exists but not locked - lock it
         console.log('\n📋 Found existing plan, locking it...\n');
         return this.lockPlan(planId);
-      } else {
-        // Requirements exist but plan not created yet
-        console.log('\n⚠️  Waiting for PROJECT-PLAN.json');
-        console.log(`   Tell Claude: "Create the project plan"\n`);
-        process.exit(0);
+        } else {
+          // Requirements exist but plan not created yet
+          console.log('\n⚠️  Waiting for PROJECT-PLAN.json');
+          console.log(`   Tell Claude: "Create the project plan"\n`);
+          process.exit(0);
+        }
       }
     }
 
@@ -112,7 +123,42 @@ Generated: ${new Date().toISOString()}
 PLAN ID: ${planId}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-INSTRUCTIONS FOR CLAUDE
+ROLE DEFINITIONS - CRITICAL TO UNDERSTAND
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👤 HUMAN'S ROLE (Developer/User):
+   • RUN all agentic15 CLI commands (plan, task, commit, sync)
+   • MANAGE git operations (merge PRs, resolve conflicts, push, pull)
+   • REVIEW and approve code changes
+   • MAKE decisions about project direction
+   • DEPLOY applications
+
+🤖 CLAUDE'S ROLE (AI Assistant):
+   • READ files, documentation, and codebase
+   • WRITE code in ./Agent/** and ./scripts/**
+   • CREATE project plans and task breakdowns
+   • EXPLAIN code and architecture decisions
+   • SUGGEST improvements and best practices
+
+🚫 WHAT CLAUDE MUST NOT DO:
+   ❌ Run agentic15 commands (plan, task, commit, sync, status)
+   ❌ Run git commands (commit, push, checkout, merge, branch)
+   ❌ Make assumptions about what the human will do
+   ❌ Tell the human to "run git commit" or similar git commands
+
+✅ WORKFLOW AFTER CREATING PROJECT PLAN:
+   1. Claude creates PROJECT-PLAN.json
+   2. Claude tells human: "Run: npx agentic15 plan"
+   3. Human runs the command to lock the plan
+   4. Human runs: npx agentic15 task next
+   5. Claude writes code for the task
+   6. Human runs: npx agentic15 commit (this handles git operations)
+   7. Human merges the PR
+   8. Repeat steps 4-7 for each task
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+INSTRUCTIONS FOR CLAUDE - CREATE PROJECT PLAN
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Please analyze the requirements above and create a comprehensive project plan.
@@ -383,10 +429,22 @@ GENERATED: ${new Date().toISOString()}
 
       try {
         execSync(`git push origin ${branchName}`, { stdio: 'inherit' });
-        execSync(`gh pr create --title "Archive plan ${planId}" --body "Archiving completed plan: ${reason || 'Plan completed'}"`, { stdio: 'inherit' });
+
+        const platform = this.detectPlatform();
+        const prTitle = `Archive plan ${planId}`;
+        const prBody = `Archiving completed plan: ${reason || 'Plan completed'}`;
+
+        if (platform === 'github') {
+          execSync(`gh pr create --title "${prTitle}" --body "${prBody}"`, { stdio: 'inherit' });
+        } else if (platform === 'azure') {
+          const mainBranch = this.getMainBranch();
+          execSync(`az repos pr create --source-branch ${branchName} --target-branch ${mainBranch} --title "${prTitle}" --description "${prBody}"`, { stdio: 'inherit' });
+        } else {
+          console.log(`\n⚠️  Unknown platform - create PR manually`);
+        }
       } catch (error) {
         console.log(`\n⚠️  Branch pushed but PR creation failed: ${error.message}`);
-        console.log(`   Create PR manually: gh pr create\n`);
+        console.log(`   Create PR manually\n`);
       }
 
       console.log(`\n✅ Plan archived successfully`);
@@ -448,11 +506,22 @@ GENERATED: ${new Date().toISOString()}
 
       try {
         execSync(`git push origin ${branchName}`, { stdio: 'inherit' });
+
+        const platform = this.detectPlatform();
+        const prTitle = `Create new plan ${newPlanId}`;
         const prBody = description ? `Create new plan: ${description}` : `Create new plan: ${newPlanId}`;
-        execSync(`gh pr create --title "Create new plan ${newPlanId}" --body "${prBody}"`, { stdio: 'inherit' });
+
+        if (platform === 'github') {
+          execSync(`gh pr create --title "${prTitle}" --body "${prBody}"`, { stdio: 'inherit' });
+        } else if (platform === 'azure') {
+          const mainBranch = this.getMainBranch();
+          execSync(`az repos pr create --source-branch ${branchName} --target-branch ${mainBranch} --title "${prTitle}" --description "${prBody}"`, { stdio: 'inherit' });
+        } else {
+          console.log(`\n⚠️  Unknown platform - create PR manually`);
+        }
       } catch (error) {
         console.log(`\n⚠️  Branch pushed but PR creation failed: ${error.message}`);
-        console.log(`   Create PR manually: gh pr create\n`);
+        console.log(`   Create PR manually\n`);
       }
 
       console.log(`\n✅ New plan created successfully`);
@@ -466,5 +535,121 @@ GENERATED: ${new Date().toISOString()}
       console.log(`\n❌ Failed to create new plan: ${error.message}\n`);
       process.exit(1);
     }
+  }
+
+  static detectPlatform() {
+    try {
+      const remote = execSync('git remote get-url origin', { encoding: 'utf-8' }).trim();
+
+      if (remote.includes('github.com')) {
+        return 'github';
+      } else if (remote.includes('dev.azure.com')) {
+        return 'azure';
+      }
+
+      return 'unknown';
+    } catch (e) {
+      return 'unknown';
+    }
+  }
+
+  static getMainBranch() {
+    try {
+      // Try to detect main branch from remote
+      const remotes = execSync('git branch -r', { encoding: 'utf-8' });
+
+      if (remotes.includes('origin/main')) {
+        return 'main';
+      } else if (remotes.includes('origin/master')) {
+        return 'master';
+      }
+
+      // Default to main
+      return 'main';
+    } catch (error) {
+      return 'main';
+    }
+  }
+
+  static showHelp() {
+    console.log('\n📋 Plan Management - Help\n');
+    console.log('═'.repeat(70));
+    console.log('\nUSAGE:');
+    console.log('  npx agentic15 plan [command] [options]\n');
+
+    console.log('COMMANDS:\n');
+
+    console.log('  npx agentic15 plan "description"');
+    console.log('    Generate a new project plan from requirements');
+    console.log('    Example: npx agentic15 plan "Build a task management app"\n');
+
+    console.log('  npx agentic15 plan');
+    console.log('    Interactive mode - enter requirements via multi-line input');
+    console.log('    OR lock an existing plan (if PROJECT-PLAN.json exists)\n');
+
+    console.log('  npx agentic15 plan archive [reason]');
+    console.log('    Archive the current plan and prepare for a new one');
+    console.log('    Creates a branch, moves plan to archived/, commits & creates PR');
+    console.log('    Example: npx agentic15 plan archive "Project completed"\n');
+
+    console.log('  npx agentic15 plan new [description]');
+    console.log('    Start a new plan (must archive current plan first)');
+    console.log('    Creates a branch, generates plan, commits & creates PR');
+    console.log('    Example: npx agentic15 plan new "E-commerce website"\n');
+
+    console.log('  npx agentic15 plan help');
+    console.log('    Show this help message\n');
+
+    console.log('═'.repeat(70));
+    console.log('\nWORKFLOW:\n');
+
+    console.log('  1️⃣  GENERATE PLAN:');
+    console.log('     npx agentic15 plan "Your project requirements"');
+    console.log('     → Creates .claude/plans/plan-XXX-generated/PROJECT-REQUIREMENTS.txt\n');
+
+    console.log('  2️⃣  CREATE PLAN (via Claude):');
+    console.log('     Tell Claude: "Create the project plan"');
+    console.log('     → Claude creates PROJECT-PLAN.json following the template\n');
+
+    console.log('  3️⃣  LOCK PLAN:');
+    console.log('     npx agentic15 plan');
+    console.log('     → Validates plan, creates task tracker, locks plan\n');
+
+    console.log('  4️⃣  START WORKING:');
+    console.log('     npx agentic15 task next');
+    console.log('     → Starts first task, creates branch, creates GitHub issue\n');
+
+    console.log('  5️⃣  COMPLETE PROJECT:');
+    console.log('     When all tasks done, archive the plan:');
+    console.log('     npx agentic15 plan archive "Project completed"\n');
+
+    console.log('  6️⃣  START NEW PROJECT:');
+    console.log('     After archiving, start fresh:');
+    console.log('     npx agentic15 plan new "Next project requirements"\n');
+
+    console.log('═'.repeat(70));
+    console.log('\nEXAMPLES:\n');
+
+    console.log('  # Generate a new plan');
+    console.log('  npx agentic15 plan "Build a REST API for user management"\n');
+
+    console.log('  # Archive completed plan');
+    console.log('  npx agentic15 plan archive "MVP completed and deployed"\n');
+
+    console.log('  # Start a new plan after archiving');
+    console.log('  npx agentic15 plan new "Add payment integration"\n');
+
+    console.log('  # Lock an existing plan (after Claude creates PROJECT-PLAN.json)');
+    console.log('  npx agentic15 plan\n');
+
+    console.log('═'.repeat(70));
+    console.log('\nNOTES:\n');
+
+    console.log('  • Only one active plan allowed at a time');
+    console.log('  • Archive current plan before creating a new one');
+    console.log('  • Archive and new commands create PRs automatically');
+    console.log('  • Plan files are stored in .claude/plans/\n');
+
+    console.log('═'.repeat(70) + '\n');
   }
 }

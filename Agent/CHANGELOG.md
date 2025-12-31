@@ -7,6 +7,152 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Copyright 2024-2025 agentic15.com
 
+## [6.0.0] - 2025-12-31
+
+### 🎉 MAJOR RELEASE - Dual-Platform Support (GitHub + Azure DevOps)
+
+This is a **major release** that adds comprehensive Azure DevOps support while maintaining full backward compatibility with GitHub workflows.
+
+### ✨ What's New
+
+#### Azure DevOps Integration
+- **Platform Auto-Detection**: Automatically detects GitHub or Azure DevOps from git remote URL
+- **Azure PR Creation**: Uses Azure CLI (`az repos pr create`) with proper web UI URLs
+- **Azure Work Items**: Optional work item integration (disabled by default)
+- **Dual-Platform Commands**: All commands (`commit`, `sync`, `plan`) work with both platforms
+
+#### Enhanced Commands
+
+**CommitCommand** (`npx agentic15 commit`):
+- ✅ Platform detection (GitHub vs Azure DevOps)
+- ✅ Azure PR creation with web UI URLs (not API endpoints)
+- ✅ Extracts repository name from git remote
+- ✅ Backward compatible with GitHub
+
+**SyncCommand** (`npx agentic15 sync`):
+- ✅ Azure PR status checking (`az repos pr list`)
+- ✅ Admin branch support (`admin/*` for plan management)
+- ✅ Context-aware next steps based on branch type:
+  - After archive plan: "Start new project"
+  - After new plan: "Create project plan with Claude"
+  - After task: "Start next task"
+
+**PlanCommand** (`npx agentic15 plan`):
+- ✅ Help command (`npx agentic15 plan help`)
+- ✅ Azure PR creation for archive/new plan workflows
+- ✅ Fixed empty ACTIVE-PLAN handling after archive
+- ✅ Comprehensive role definitions in requirements file
+  - Explains Human's role (runs commands, manages git)
+  - Explains Claude's role (reads/writes code)
+  - Lists what Claude must NOT do (no agentic15/git commands)
+  - Complete workflow explanation for new projects
+
+### 🔧 Technical Improvements
+
+**Platform Detection**:
+- Added `detectPlatform()` method to all command classes
+- Detects based on git remote URL patterns
+- Returns `'github'`, `'azure'`, or `'unknown'`
+
+**Azure PR URLs**:
+- Fixed Azure CLI returning API endpoint URLs
+- Now constructs proper web UI URLs: `https://dev.azure.com/{org}/{project}/_git/{repo}/pullrequest/{id}`
+- Extracts repository name from git remote
+
+**Admin Branch Support**:
+- Sync command now handles `admin/*` branches (plan archive/new)
+- Prevents data loss by checking PR status before cleanup
+- Deletes admin branches after PR merge
+
+**Configuration**:
+- Added `azureDevOps` section to `framework/settings.json`
+- Default: `enabled: false` (opt-in)
+- Supports `autoCreate`, `autoUpdate`, `autoClose` for work items
+- Authentication via `AZURE_DEVOPS_PAT` environment variable
+
+### 📚 Documentation
+
+**New Documentation**:
+- `docs/AZURE-SETUP.md` - Complete Azure DevOps setup guide
+- `docs/GITHUB-SETUP.md` - Complete GitHub setup guide
+
+**Updated Documentation**:
+- README.md - Added dual-platform sections
+- Plan requirements file - Added role definitions and workflow explanation
+- Settings template - Added Azure DevOps configuration
+
+### 🐛 Bug Fixes
+
+1. **Plan Command**: Fixed handling of empty ACTIVE-PLAN file after archive
+2. **Azure PR URLs**: Fixed API endpoint URLs not opening in browser
+3. **Sync Command**: Fixed not recognizing admin branches
+4. **Context Awareness**: Fixed generic next steps after different workflows
+
+### ⚙️ Configuration Example
+
+**.claude/settings.local.json** (Azure DevOps):
+```json
+{
+  "github": {
+    "enabled": false
+  },
+  "azureDevOps": {
+    "enabled": true,
+    "autoCreate": false,
+    "autoUpdate": false,
+    "autoClose": false,
+    "organization": "your-org",
+    "project": "your-project"
+  }
+}
+```
+
+### 🚀 Upgrade Instructions
+
+**Existing Projects**:
+```bash
+# Update package
+npm install @agentic15.com/agentic15-claude-zen@6.0.0
+
+# Update settings.json
+npx agentic15 update-settings
+
+# Configure Azure DevOps (if needed)
+# Set AZURE_DEVOPS_PAT environment variable
+# Update .claude/settings.local.json
+```
+
+**New Azure DevOps Projects**:
+```bash
+npx @agentic15.com/agentic15-claude-zen my-project
+cd my-project
+
+# Follow docs/AZURE-SETUP.md for complete setup
+```
+
+### 📦 Package Details
+
+- **Size**: 70.0 kB compressed, 313.1 kB unpacked
+- **Files**: 50
+- **New Files**:
+  - `src/cli/PlanCommand.js` (24.2kB) - Enhanced with help & Azure support
+  - `src/cli/SyncCommand.js` (10.4kB) - Admin branch & context-aware
+  - `src/cli/CommitCommand.js` (28.0kB) - Azure PR URL fix
+
+### ⚠️ Breaking Changes
+
+None - fully backward compatible with GitHub workflows.
+
+### 🎯 Requirements
+
+- **Node.js**: 18.0.0 or higher
+- **Git**: Any recent version
+- **Platform** (choose one or both):
+  - **GitHub**: GitHub CLI (`gh`) + GitHub account
+  - **Azure DevOps**: Azure CLI (`az`) + Azure DevOps account + PAT token
+
+---
+
 ## [3.1.0] - 2025-12-26
 
 ### Summary

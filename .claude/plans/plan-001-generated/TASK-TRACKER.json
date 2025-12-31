@@ -5,9 +5,9 @@
   "lockedAt": "2025-12-29T14:06:34.725Z",
   "statistics": {
     "totalTasks": 22,
-    "completed": 21,
+    "completed": 22,
     "inProgress": 0,
-    "pending": 1
+    "pending": 0
   },
   "taskFiles": [
     {
@@ -236,7 +236,7 @@
       "id": "TASK-022",
       "title": "Prepare and publish npm package",
       "phase": "deployment",
-      "status": "pending",
+      "status": "completed",
       "description": "Version bump, build, test, and publish package to npm registry",
       "completionCriteria": [
         "Bump version in package.json (minor version for new feature)",
@@ -246,7 +246,9 @@
         "Publish to npm with 'npm publish --access public'",
         "Verify package is available on npm registry",
         "Test installation from npm"
-      ]
+      ],
+      "startedAt": "2025-12-30T19:21:36.681Z",
+      "completedAt": "2025-12-30T23:58:48.617Z"
     }
   ]
 }

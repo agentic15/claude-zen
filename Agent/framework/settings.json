@@ -89,6 +89,15 @@
     "repo": null,
     "comment": "GitHub Issues integration. Configure via 'npx agentic15 auth' or manually in .claude/settings.local.json. Authentication handled by gh CLI (no token needed). Owner/repo auto-detected from git remote."
   },
+  "azureDevOps": {
+    "enabled": false,
+    "autoCreate": false,
+    "autoUpdate": false,
+    "autoClose": false,
+    "organization": null,
+    "project": null,
+    "comment": "Azure DevOps Work Items integration. Configure in .claude/settings.local.json. Authentication via AZURE_DEVOPS_PAT environment variable. Org/project auto-detected from git remote."
+  },
   "hooks": {
     "SessionStart": [
       {

@@ -15,7 +15,7 @@
 
 ### What is Agentic15 Claude Zen?
 
-Agentic15 Claude Zen is a structured development framework designed to work seamlessly with Claude Code. It provides task tracking, workflow structure, and GitHub integration without enforcing rigid testing requirements.
+Agentic15 Claude Zen is a structured development framework designed to work seamlessly with Claude Code. It provides task tracking, workflow structure, and platform integration (GitHub or Azure DevOps) without enforcing rigid testing requirements.
 
 **Philosophy:** Structure, not enforcement. The framework provides commands and organization, while Claude decides when tests are appropriate.
 
@@ -26,7 +26,8 @@ Agentic15 Claude Zen is a structured development framework designed to work seam
 
 - ✅ **Task tracking** and organization
 - ✅ **Consistent workflow** structure
-- ✅ **GitHub integration** with automated PRs
+- ✅ **Dual-platform support** - GitHub or Azure DevOps
+- ✅ **Automated PRs** and issue tracking
 - ✅ **Manual UI testing** tools
 - ✅ **Flexible** - no mandatory testing
 - ✅ **Claude Code optimized** hooks
@@ -56,34 +57,48 @@ cd my-project
 
 ---
 
-### 2. Initialize Git
-Links project to GitHub (required for PRs)
+### 2. Choose Your Platform
 
-```bash
-git init
-git branch -M main
-git add .
-git commit -m "Initial commit"
+Agentic15 supports both **GitHub** and **Azure DevOps**. Choose your platform and follow the complete setup guide:
 
-gh repo create OWNER/REPO --public
-git remote add origin https://github.com/OWNER/REPO.git
-git push -u origin main
-```
+<table>
+<tr>
+<td width="50%">
 
-**Note:** Replace `OWNER/REPO` with your GitHub username/repo
+#### 📘 [GitHub Setup Guide](docs/GITHUB-SETUP.md)
+
+Complete guide for GitHub integration:
+- Repository creation & authentication
+- GitHub CLI setup
+- Automated PR creation
+- Issue tracking (optional)
+- Branch protection
+
+**Best for:** Open source, GitHub-native workflows
+
+</td>
+<td width="50%">
+
+#### 📗 [Azure DevOps Setup Guide](docs/AZURE-SETUP.md)
+
+Complete guide for Azure DevOps integration:
+- Project & repository setup
+- PAT authentication
+- Automated PR creation
+- Work item tracking (optional)
+- Branch policies
+
+**Best for:** Enterprise, Azure-native workflows
+
+</td>
+</tr>
+</table>
+
+**Note:** Platform is auto-detected from your git remote URL. Both can be enabled simultaneously.
 
 ---
 
-### 3. Configure Auth
-One-time GitHub authentication setup
-
-```bash
-npx agentic15 auth
-```
-
----
-
-### 4. Create Plan
+### 3. Create Plan
 Generates and locks project plan
 
 **In Terminal:**
@@ -108,8 +123,16 @@ git push
 
 ---
 
-### 5. Enable Branch Protection
-Enforces PR-only workflow for all future changes
+### 4. Enable Branch Protection (Recommended)
+
+**Platform-specific instructions:**
+- **GitHub:** See [GitHub Setup Guide - Branch Protection](docs/GITHUB-SETUP.md#4-enable-branch-protection-recommended)
+- **Azure DevOps:** See [Azure DevOps Setup Guide - Branch Policies](docs/AZURE-SETUP.md#6-enable-branch-policies-recommended)
+
+Branch protection enforces PR-only workflow for all future changes.
+
+<details>
+<summary><strong>GitHub Quick Setup (click to expand)</strong></summary>
 
 **Bash/Mac/Linux:**
 ```bash
@@ -155,9 +178,11 @@ echo $body | gh api repos/OWNER/REPO/branches/main/protection -X PUT -H "Accept:
 gh api repos/OWNER/REPO -X PATCH -H "Accept: application/vnd.github+json" -f delete_branch_on_merge=true
 ```
 
+</details>
+
 ---
 
-### 6. Start First Task
+### 5. Start First Task
 Creates feature branch for first task
 
 ```bash
@@ -184,8 +209,8 @@ Stages changes, commits, pushes, creates PR
 
 ---
 
-### 3. Review (GitHub)
-Review and merge the PR
+### 3. Review & Merge
+Review and merge the PR (GitHub or Azure DevOps)
 
 ---
 
@@ -217,12 +242,13 @@ Starts next task
 | `npx agentic15 plan` | Generate and lock project plan |
 | `npx agentic15 task next` | Start next pending task |
 | `npx agentic15 task start TASK-XXX` | Start specific task |
+| `npx agentic15 task reset [TASK-XXX]` | Reset in-progress task to pending |
 | `npx agentic15 task status` | View current progress |
 | `npx agentic15 commit` | Commit, push, and create PR |
 | `npx agentic15 sync` | Sync with main branch after PR merge |
 | `npx agentic15 update-settings` | Update `.claude/settings.json` from latest framework |
 | `npx agentic15 visual-test <url>` | Capture UI screenshots and console errors |
-| `npx agentic15 auth` | Configure GitHub authentication |
+| `npx agentic15 auth` | Configure platform authentication (GitHub only) |
 
 </td>
 <td width="50%">
@@ -232,9 +258,9 @@ Starts next task
 The framework automates:
 - **Feature branches:** `feature/task-001`, `feature/task-002`, etc.
 - **Commit messages:** `[TASK-001] Task title`
-- **GitHub push:** Automatic push to remote
+- **Remote push:** Automatic push to remote
 - **Pull requests:** Auto-generated with task details
-- **Issue tracking:** Optional GitHub Issues integration
+- **Issue tracking:** Optional (GitHub Issues or Azure Work Items)
 
 ### Standard Workflow
 
@@ -384,8 +410,9 @@ If you need to override the auto-detected values, create or edit `.claude/settin
 
 - **Node.js:** 18.0.0 or higher
 - **Git:** Any recent version
-- **GitHub CLI:** `gh` command-line tool
-- **GitHub Account:** For issue and PR management
+- **Platform:** Choose one:
+  - **GitHub:** GitHub CLI (`gh`) + GitHub account
+  - **Azure DevOps:** Azure DevOps account + PAT token
 
 ### Documentation
 

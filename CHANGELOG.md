@@ -5,6 +5,66 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.0.0] - 2025-12-30
+
+### Added
+- **🎉 MAJOR: Azure DevOps Integration** - Full dual-platform support for Azure DevOps alongside GitHub
+  - **Platform agnostic design**: Framework automatically detects platform based on git remote URL
+  - **Complete Azure support**: Work items, pull requests, authentication via Azure CLI
+  - **Configuration**: New `azure` settings in `.claude/settings.local.json` for organization, project, and feature toggles
+  - **Authentication**: Azure CLI (`az`) with Personal Access Token (PAT) support
+  - **Work item management**: Auto-create, auto-update, auto-close work items (optional, configurable)
+  - **Documentation**: Complete Azure DevOps guide in README with setup, workflow, and commands
+  - **Architecture**: Platform-agnostic core with GitHub and Azure implementations in `Agent/src/integrations/`
+  - **Platform detection**: Automatic detection via git remote URL patterns (github.com vs dev.azure.com)
+  - **No breaking changes**: Existing GitHub projects continue to work without modification
+
+- **Plan lifecycle management commands** - New commands for managing multiple project plans
+  - **`npx agentic15 plan archive [reason]`**: Archive completed plans with PR workflow
+    - Creates admin branch: `admin/archive-plan-{planId}`
+    - Moves plan to `.claude/plans/archived/{planId}/`
+    - Adds ARCHIVE-META.json with archival metadata
+    - Auto-commits, pushes, and creates PR
+  - **`npx agentic15 plan new [description]`**: Create new plans with PR workflow
+    - Creates admin branch: `admin/new-plan-{planId}`
+    - Generates sequential plan IDs (plan-001, plan-002, etc.)
+    - Creates PROJECT-REQUIREMENTS.txt
+    - Sets as active plan
+    - Auto-commits, pushes, and creates PR
+  - **Workflow**: `complete tasks → archive → merge → new plan → merge → continue`
+  - Solves the "completed plan deadlock" - no more manual branch/plan management needed
+
+- **Command permissions enhancement** - Fine-grained git command control
+  - **Read-only git commands now allowed**: `git status`, `git branch`, `git log`, `git diff`, `git remote get-url`, `git rev-parse`, `git describe`
+  - **Write/destructive commands blocked**: `git commit`, `git push`, `git checkout`, `git merge`, `git reset`, `git rebase`, `git cherry-pick`
+  - **Removed blanket git deny**: Previous `Bash(git:*)` deny blocked all git commands; now uses specific allow/deny rules
+  - **Documentation**: New `Agent/docs/command-permissions.md` explaining permission system
+  - **Tests**: Comprehensive test suite in `Agent/test/permissions/git-commands.test.js`
+  - Allows Claude to read repository state without risk of destructive operations
+
+- **Documentation improvements**
+  - **Dual-platform README**: Separate collapsible guides for GitHub and Azure DevOps
+  - **Platform Integration section**: Clear choice between platforms, no mixing
+  - **Azure setup guide**: Complete authentication, configuration, and workflow instructions
+  - **Plan lifecycle section**: New section explaining archive and new plan commands
+  - **PowerShell support**: Added PowerShell command variations throughout the guide
+  - **Command reference**: Updated with new plan lifecycle commands
+
+### Changed
+- **Framework architecture**: Refactored to support multiple platforms with platform-agnostic core
+- **Settings schema**: Enhanced to support dual-platform configuration
+- **Permission system**: More granular git command control instead of blanket deny
+
+### Documentation
+- **Agent/docs/azure-integration-guide.md**: Complete Azure DevOps integration guide
+- **Agent/docs/command-permissions.md**: Git command permissions documentation
+- **README.md**: Dual-platform guides with GitHub and Azure sections
+
+### Migration Notes
+- **From 5.x to 6.0**: No breaking changes for existing GitHub projects
+- **Azure DevOps users**: Follow the Azure Integration Guide in README
+- **Settings update**: Run `npx agentic15 update-settings` to get latest framework settings with new permissions
+
 ## [5.0.9] - 2025-12-29
 
 ### Fixed
