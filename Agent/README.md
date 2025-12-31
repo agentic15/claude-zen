@@ -57,52 +57,43 @@ cd my-project
 
 ---
 
-### 2. Choose Your Platform
+### 2. Initialize Git
+Links project to GitHub (required for PRs)
 
-Agentic15 supports both **GitHub** and **Azure DevOps**. Choose your platform and follow the complete setup guide:
+```bash
+git init
+git branch -M main
+git add .
+git commit -m "Initial commit"
 
-<table>
-<tr>
-<td width="50%">
+gh repo create OWNER/REPO --public
+git remote add origin https://github.com/OWNER/REPO.git
+git push -u origin main
+```
 
-#### 📘 [GitHub Setup Guide](docs/GITHUB-SETUP.md)
-
-Complete guide for GitHub integration:
-- Repository creation & authentication
-- GitHub CLI setup
-- Automated PR creation
-- Issue tracking (optional)
-- Branch protection
-
-**Best for:** Open source, GitHub-native workflows
-
-</td>
-<td width="50%">
-
-#### 📗 [Azure DevOps Setup Guide](docs/AZURE-SETUP.md)
-
-Complete guide for Azure DevOps integration:
-- Project & repository setup
-- PAT authentication
-- Automated PR creation
-- Work item tracking (optional)
-- Branch policies
-
-**Best for:** Enterprise, Azure-native workflows
-
-</td>
-</tr>
-</table>
-
-**Note:** Platform is auto-detected from your git remote URL. Both can be enabled simultaneously.
+**Note:** Replace `OWNER/REPO` with your GitHub username/repo
 
 ---
 
-### 3. Create Plan
+### 3. Configure Auth
+One-time GitHub authentication setup
+
+```bash
+npx agentic15 auth
+```
+
+---
+
+### 4. Create Plan
 Generates and locks project plan
 
-**In Terminal:**
+**Bash/Mac/Linux:**
 ```bash
+npx agentic15 plan "Build a todo app with add, remove, and list features"
+```
+
+**PowerShell (Windows):**
+```powershell
 npx agentic15 plan "Build a todo app with add, remove, and list features"
 ```
 
@@ -123,16 +114,8 @@ git push
 
 ---
 
-### 4. Enable Branch Protection (Recommended)
-
-**Platform-specific instructions:**
-- **GitHub:** See [GitHub Setup Guide - Branch Protection](docs/GITHUB-SETUP.md#4-enable-branch-protection-recommended)
-- **Azure DevOps:** See [Azure DevOps Setup Guide - Branch Policies](docs/AZURE-SETUP.md#6-enable-branch-policies-recommended)
-
-Branch protection enforces PR-only workflow for all future changes.
-
-<details>
-<summary><strong>GitHub Quick Setup (click to expand)</strong></summary>
+### 5. Enable Branch Protection
+Enforces PR-only workflow for all future changes
 
 **Bash/Mac/Linux:**
 ```bash
@@ -178,11 +161,9 @@ echo $body | gh api repos/OWNER/REPO/branches/main/protection -X PUT -H "Accept:
 gh api repos/OWNER/REPO -X PATCH -H "Accept: application/vnd.github+json" -f delete_branch_on_merge=true
 ```
 
-</details>
-
 ---
 
-### 5. Start First Task
+### 6. Start First Task
 Creates feature branch for first task
 
 ```bash
@@ -209,8 +190,8 @@ Stages changes, commits, pushes, creates PR
 
 ---
 
-### 3. Review & Merge
-Review and merge the PR (GitHub or Azure DevOps)
+### 3. Review (GitHub)
+Review and merge the PR
 
 ---
 
@@ -229,6 +210,50 @@ Starts next task
 
 ---
 
+## Plan Lifecycle Management
+
+### Archive Completed Plan
+
+When all tasks in a plan are complete:
+
+```bash
+npx agentic15 plan archive "Plan completed successfully"
+```
+
+This command:
+- Creates branch: `admin/archive-plan-{planId}`
+- Moves plan to `.claude/plans/archived/{planId}/`
+- Clears active plan
+- Commits, pushes, and creates PR
+
+### Create New Plan
+
+After archiving the completed plan:
+
+**Bash/Mac/Linux:**
+```bash
+npx agentic15 plan new "Build user dashboard with analytics"
+```
+
+**PowerShell (Windows):**
+```powershell
+npx agentic15 plan new "Build user dashboard with analytics"
+```
+
+This command:
+- Creates branch: `admin/new-plan-{newPlanId}`
+- Generates new plan with sequential ID (plan-002, plan-003, etc.)
+- Creates PROJECT-REQUIREMENTS.txt
+- Sets as active plan
+- Commits, pushes, and creates PR
+
+**Workflow:**
+```
+complete tasks → archive plan → merge PR → create new plan → merge PR → continue
+```
+
+---
+
 ## Core Features
 
 <table>
@@ -239,16 +264,17 @@ Starts next task
 
 | Command | Description |
 |---------|-------------|
-| `npx agentic15 plan` | Generate and lock project plan |
+| `npx agentic15 plan [description]` | Generate and lock project plan |
+| `npx agentic15 plan archive [reason]` | Archive completed plan |
+| `npx agentic15 plan new [description]` | Create new plan |
 | `npx agentic15 task next` | Start next pending task |
 | `npx agentic15 task start TASK-XXX` | Start specific task |
-| `npx agentic15 task reset [TASK-XXX]` | Reset in-progress task to pending |
 | `npx agentic15 task status` | View current progress |
 | `npx agentic15 commit` | Commit, push, and create PR |
 | `npx agentic15 sync` | Sync with main branch after PR merge |
 | `npx agentic15 update-settings` | Update `.claude/settings.json` from latest framework |
 | `npx agentic15 visual-test <url>` | Capture UI screenshots and console errors |
-| `npx agentic15 auth` | Configure platform authentication (GitHub only) |
+| `npx agentic15 auth` | Configure GitHub authentication |
 
 </td>
 <td width="50%">
@@ -258,9 +284,9 @@ Starts next task
 The framework automates:
 - **Feature branches:** `feature/task-001`, `feature/task-002`, etc.
 - **Commit messages:** `[TASK-001] Task title`
-- **Remote push:** Automatic push to remote
+- **GitHub push:** Automatic push to remote
 - **Pull requests:** Auto-generated with task details
-- **Issue tracking:** Optional (GitHub Issues or Azure Work Items)
+- **Issue tracking:** Optional GitHub Issues integration
 
 ### Standard Workflow
 
@@ -344,7 +370,14 @@ npx agentic15 update-settings
 
 ---
 
-## GitHub Integration
+## Platform Integration
+
+**Choose one platform for your project:**
+
+<details open>
+<summary><strong>📘 GitHub Integration Guide</strong> (Click to expand/collapse)</summary>
+
+##
 
 <table>
 <tr>
@@ -398,6 +431,218 @@ If you need to override the auto-detected values, create or edit `.claude/settin
 </tr>
 </table>
 
+### Resources
+
+- **GitHub CLI:** https://cli.github.com/
+- **GitHub CLI Manual:** https://cli.github.com/manual/
+- **Authentication:** https://cli.github.com/manual/gh_auth_login
+
+</details>
+
+---
+
+<details>
+<summary><strong>📘 Azure DevOps Integration Guide</strong> (Click to expand/collapse)</summary>
+
+## Azure DevOps Setup
+
+<table>
+<tr>
+<td width="50%">
+
+### Authentication
+
+The framework uses **Azure CLI (`az`)** for authentication.
+
+**Setup:**
+```bash
+# Install Azure CLI
+# Windows: https://aka.ms/installazurecliwindows
+# Mac: brew install azure-cli
+# Linux: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+# Login to Azure
+az login
+
+# Login to Azure DevOps
+az devops login
+```
+
+**Configure your project:**
+```bash
+# Set default organization and project
+az devops configure --defaults organization=https://dev.azure.com/YOUR_ORG project=YOUR_PROJECT
+```
+
+**Create Personal Access Token (PAT):**
+1. Go to Azure DevOps → User Settings → Personal Access Tokens
+2. Click "New Token"
+3. Name: "Agentic15 CLI"
+4. Scopes:
+   - Work Items (Read, Write, Manage)
+   - Code (Read, Write, Status)
+5. Click "Create"
+6. Copy the token
+
+**Save token for authentication:**
+```bash
+# Set environment variable (add to ~/.bashrc or ~/.zshrc)
+export AZURE_DEVOPS_EXT_PAT=your-pat-token-here
+```
+
+</td>
+<td width="50%">
+
+### Configuration
+
+Create `.claude/settings.local.json` in your project:
+
+```json
+{
+  "azure": {
+    "enabled": true,
+    "organization": "YOUR_ORG",
+    "project": "YOUR_PROJECT",
+    "autoCreate": false,
+    "autoUpdate": false,
+    "autoClose": false
+  }
+}
+```
+
+**Configuration Options:**
+- `enabled`: Set to `true` to use Azure DevOps
+- `organization`: Your Azure DevOps organization name
+- `project`: Your project name
+- `autoCreate`: Auto-create work items when starting tasks
+- `autoUpdate`: Auto-update work items when creating PRs
+- `autoClose`: Auto-close work items when merging to main
+
+**Note:** Default settings have `autoCreate`, `autoUpdate`, and `autoClose` set to `false` to give you full control. Set them to `true` if you want automatic work item management.
+
+### Features (Optional - Enable in settings)
+- **Auto-create work items:** When starting tasks (set `autoCreate: true`)
+- **Auto-update work items:** When creating PRs (set `autoUpdate: true`)
+- **Auto-close work items:** When merging to main (set `autoClose: true`)
+- **Secure authentication:** Uses Azure CLI and PAT
+
+</td>
+</tr>
+</table>
+
+### Quick Start with Azure DevOps
+
+**1. Create Project**
+```bash
+npx @agentic15.com/agentic15-claude-zen my-project
+cd my-project
+```
+
+**2. Initialize Git and Azure Repos**
+```bash
+git init
+git branch -M main
+git add .
+git commit -m "Initial commit"
+
+# Create Azure Repo
+az repos create --name YOUR_REPO --org https://dev.azure.com/YOUR_ORG --project YOUR_PROJECT
+
+# Add remote and push
+git remote add origin https://dev.azure.com/YOUR_ORG/YOUR_PROJECT/_git/YOUR_REPO
+git push -u origin main
+```
+
+**3. Configure Branch Protection**
+```bash
+# Set main branch policies
+az repos policy create --org https://dev.azure.com/YOUR_ORG --project YOUR_PROJECT \
+  --repository-id YOUR_REPO_ID \
+  --branch main \
+  --blocking true \
+  --enabled true \
+  --policy-type "Require pull request reviews"
+```
+
+**4. Create Plan**
+```bash
+npx agentic15 plan "Build a todo app with add, remove, and list features"
+```
+
+**In Claude Code:**
+```
+Ask: "Create the project plan from the requirements file"
+```
+
+**Back in Terminal:**
+```bash
+npx agentic15 plan
+git add .
+git commit -m "Add initial project plan"
+git push
+```
+
+**5. Start First Task**
+```bash
+npx agentic15 task next
+```
+
+### Daily Development Workflow
+
+**1. Implement (Claude Code)**
+```
+Ask: "Implement the active task"
+```
+
+Claude writes code in `Agent/` directory.
+
+**2. Commit & PR (Your Terminal)**
+```bash
+npx agentic15 commit
+```
+
+Stages changes, commits, pushes, creates Azure DevOps PR.
+
+**3. Review (Azure DevOps)**
+Review and complete the PR in Azure DevOps portal.
+
+**4. Sync & Next (Your Terminal)**
+```bash
+npx agentic15 sync
+npx agentic15 task next
+```
+
+Syncs with main, deletes feature branch, starts next task.
+
+### Azure DevOps Commands
+
+| Command | Description |
+|---------|-------------|
+| `az devops login` | Authenticate to Azure DevOps |
+| `az devops configure` | Set default organization and project |
+| `az repos create` | Create new repository |
+| `az repos pr create` | Create pull request |
+| `az repos pr list` | List pull requests |
+| `az boards work-item create` | Create work item |
+| `az boards work-item update` | Update work item |
+
+### Requirements
+
+- **Node.js:** 18.0.0 or higher
+- **Git:** Any recent version
+- **Azure CLI:** `az` command-line tool
+- **Azure DevOps Account:** For work item and PR management
+- **Personal Access Token (PAT):** For authentication
+
+### Resources
+
+- **Detailed Integration Guide:** [Agent/docs/azure-integration-guide.md](Agent/docs/azure-integration-guide.md)
+- **Azure CLI Installation:** https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
+- **Azure DevOps Extension:** https://docs.microsoft.com/en-us/azure/devops/cli/
+- **Create PAT:** https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate
+
+</details>
+
 ---
 
 ## Requirements & Philosophy
@@ -410,9 +655,8 @@ If you need to override the auto-detected values, create or edit `.claude/settin
 
 - **Node.js:** 18.0.0 or higher
 - **Git:** Any recent version
-- **Platform:** Choose one:
-  - **GitHub:** GitHub CLI (`gh`) + GitHub account
-  - **Azure DevOps:** Azure DevOps account + PAT token
+- **GitHub CLI:** `gh` command-line tool
+- **GitHub Account:** For issue and PR management
 
 ### Documentation
 

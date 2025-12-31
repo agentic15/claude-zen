@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Copyright 2024-2025 agentic15.com
 
+## [6.0.1] - 2025-12-31
+
+### Summary
+Patch release to fix README documentation sync for npm package.
+
+### Fixed
+- **README Sync Script**: Updated `sync-readme` script to use ESM syntax (`import()` instead of `require()`)
+- The prepublishOnly hook now correctly syncs the latest README.md before publishing
+- npm package page will now show complete dual-platform documentation
+
+### Changed
+- Package now includes full 17.3kB README with Azure DevOps documentation (was 11.5kB)
+
+---
+
 ## [6.0.0] - 2025-12-31
 
 ### 🎉 MAJOR RELEASE - Dual-Platform Support (GitHub + Azure DevOps)
