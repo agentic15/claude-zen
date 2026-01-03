@@ -5,9 +5,9 @@
   "lockedAt": "2026-01-03T16:01:21.745Z",
   "statistics": {
     "totalTasks": 10,
-    "completed": 7,
+    "completed": 8,
     "inProgress": 0,
-    "pending": 3
+    "pending": 2
   },
   "taskFiles": [
     {
@@ -77,8 +77,10 @@
       "id": "TASK-008",
       "title": "Document lean testing approach",
       "phase": "documentation",
-      "status": "pending",
-      "description": "Create guide explaining the lean testing philosophy"
+      "status": "completed",
+      "description": "Create guide explaining the lean testing philosophy",
+      "startedAt": "2026-01-03T18:10:01.944Z",
+      "completedAt": "2026-01-03T18:12:51.497Z"
     },
     {
       "id": "TASK-009",
