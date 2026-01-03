@@ -5,9 +5,9 @@
   "lockedAt": "2026-01-03T16:01:21.745Z",
   "statistics": {
     "totalTasks": 10,
-    "completed": 5,
+    "completed": 6,
     "inProgress": 0,
-    "pending": 5
+    "pending": 4
   },
   "taskFiles": [
     {
@@ -59,8 +59,10 @@
       "id": "TASK-006",
       "title": "Add accessibility violations check",
       "phase": "implementation",
-      "status": "pending",
-      "description": "Run basic a11y checks and report violations"
+      "status": "completed",
+      "description": "Run basic a11y checks and report violations",
+      "startedAt": "2026-01-03T18:02:51.341Z",
+      "completedAt": "2026-01-03T18:05:03.144Z"
     },
     {
       "id": "TASK-007",

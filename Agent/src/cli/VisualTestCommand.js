@@ -87,6 +87,7 @@ const { join } = require('path');
   const consoleErrors = [];
   const consoleWarnings = [];
   const networkErrors = [];
+  const accessibilityViolations = [];
   const generatedFiles = [];
 
   const browser = await chromium.launch({ headless: true });
@@ -139,6 +140,46 @@ const { join } = require('path');
 
     // Wait for page to stabilize
     await page.waitForTimeout(2000);
+
+    // Run accessibility checks with axe-core
+    try {
+      await page.evaluate(() => {
+        // Inject axe-core from CDN
+        return new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = 'https://cdnjs.cloudflare.com/ajax/libs/axe-core/4.7.2/axe.min.js';
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
+      });
+
+      // Wait for axe to load
+      await page.waitForTimeout(500);
+
+      // Run axe accessibility audit
+      const axeResults = await page.evaluate(() => {
+        return new Promise((resolve) => {
+          window.axe.run().then(results => resolve(results));
+        });
+      });
+
+      // Store violations
+      if (axeResults.violations && axeResults.violations.length > 0) {
+        axeResults.violations.forEach(violation => {
+          accessibilityViolations.push({
+            impact: violation.impact,
+            description: violation.description,
+            help: violation.help,
+            helpUrl: violation.helpUrl,
+            nodes: violation.nodes.length,
+            targets: violation.nodes.map(n => n.target).slice(0, 3) // First 3 examples
+          });
+        });
+      }
+    } catch (error) {
+      console.log(\`⚠️  Accessibility check failed: \${error.message}\`);
+    }
 
     // Capture full page screenshot
     const fullpagePath = join(outputDir, 'fullpage.png');
@@ -194,6 +235,32 @@ const { join } = require('path');
       console.log(\`🌐 Found \${networkErrors.length} network errors (4xx/5xx)\`);
     } else {
       console.log('✅ No network errors detected');
+    }
+
+    // Save accessibility violations
+    if (accessibilityViolations.length > 0) {
+      const a11yLog = accessibilityViolations.map(v => {
+        const impactLabel = v.impact.toUpperCase();
+        return \`[\${impactLabel}] \${v.description}\\n  Help: \${v.help}\\n  URL: \${v.helpUrl}\\n  Affected elements: \${v.nodes}\\n  Examples: \${v.targets.join(', ')}\`;
+      }).join('\\n\\n');
+
+      const a11yLogPath = join(outputDir, 'accessibility.log');
+      writeFileSync(a11yLogPath, a11yLog);
+      generatedFiles.push(a11yLogPath);
+
+      // Count by impact level
+      const critical = accessibilityViolations.filter(v => v.impact === 'critical').length;
+      const serious = accessibilityViolations.filter(v => v.impact === 'serious').length;
+
+      console.log(\`♿ Found \${accessibilityViolations.length} accessibility violations\`);
+      if (critical > 0) {
+        console.log(\`   ❌ Critical: \${critical}\`);
+      }
+      if (serious > 0) {
+        console.log(\`   ⚠️  Serious: \${serious}\`);
+      }
+    } else {
+      console.log('✅ No accessibility violations detected');
     }
 
     // Capture page HTML for debugging
