@@ -1,33 +1,25 @@
 {
   "id": "TASK-008",
-  "title": "Write tests for result presentation (TDD)",
-  "description": "Write tests BEFORE implementing result presentation",
+  "title": "Document lean testing approach",
+  "description": "Create guide explaining the lean testing philosophy",
   "status": "pending",
-  "phase": "testing",
+  "phase": "documentation",
   "dependencies": [
     "TASK-007"
   ],
-  "estimatedHours": 3,
+  "estimatedHours": 2,
   "completionCriteria": [
-    "Test suite for result presentation created",
-    "Tests verify file paths formatted correctly",
-    "Tests verify analysis prompt generated",
-    "Tests verify console output includes all artifacts",
-    "Tests verify suggested next steps displayed"
-  ],
-  "testCases": [
-    "File paths formatted as absolute paths",
-    "Analysis prompt includes screenshot and log references",
-    "Console output lists all generated files",
-    "Suggested next steps displayed to user",
-    "Empty results handled gracefully"
+    "Explains necessity vs luxury testing",
+    "Provides UI testing examples",
+    "Documents when to use visual verification",
+    "Includes anti-patterns to avoid"
   ],
   "artifacts": {
     "design": [],
     "code": [],
-    "tests": [
-      "Agent/test/ui-verification/result-presenter.test.js"
-    ],
-    "documentation": []
+    "tests": [],
+    "documentation": [
+      "Agent/docs/lean-testing-philosophy.md"
+    ]
   }
 }

@@ -1,27 +1,38 @@
 {
   "id": "TASK-003",
-  "title": "Implement UI task detection",
-  "description": "Implement detection logic to make tests pass",
+  "title": "Enhance complete-task hook with UI detection",
+  "description": "Check if task is UI task and auto-run visual test",
   "status": "pending",
   "phase": "implementation",
   "dependencies": [
     "TASK-002"
   ],
-  "estimatedHours": 5,
+  "estimatedHours": 4,
   "completionCriteria": [
-    "All tests from TASK-002 pass",
-    "Detects UI tasks from metadata (uiUrl field)",
-    "Detects UI tasks from file changes",
-    "Detects UI tasks from description keywords",
-    "Returns confidence score for detection",
-    "No false positives on pure backend tasks"
+    "Hook checks task.uiTestRequired before committing",
+    "Runs VisualTestCommand if uiTestRequired is true",
+    "Uses task.uiUrl or prompts user for URL",
+    "Displays screenshot/log paths to user",
+    "8 focused tests (hook triggers, URL handling, error cases)"
+  ],
+  "testCases": [
+    "Hook runs visual test when uiTestRequired is true",
+    "Hook skips visual test when uiTestRequired is false",
+    "Uses task.uiUrl when provided",
+    "Prompts for URL when not provided",
+    "Displays file paths after capture",
+    "Handles unreachable URL gracefully",
+    "Handles visual test command failure",
+    "User can skip with --skip-ui flag"
   ],
   "artifacts": {
     "design": [],
     "code": [
-      "Agent/src/core/UITaskDetector.js"
+      "Agent/framework/hooks/complete-task.js"
     ],
-    "tests": [],
+    "tests": [
+      "Agent/test/hooks/ui-verification.test.js"
+    ],
     "documentation": []
   }
 }

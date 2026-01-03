@@ -1,32 +1,32 @@
 {
   "id": "TASK-002",
-  "title": "Write tests for UI task detection (TDD)",
-  "description": "Write tests BEFORE implementing detection logic",
+  "title": "Implement simple UI task detector",
+  "description": "Create UITaskDetector that checks uiTestRequired flag",
   "status": "pending",
-  "phase": "testing",
+  "phase": "implementation",
   "dependencies": [
     "TASK-001"
   ],
-  "estimatedHours": 4,
+  "estimatedHours": 3,
   "completionCriteria": [
-    "Test suite for UI task detection created",
-    "Tests verify detection from task metadata (uiUrl field)",
-    "Tests verify detection from file changes (*.jsx, *.tsx, *.vue, *.html, *.css)",
-    "Tests verify detection from task description keywords (UI, frontend, component, page)",
-    "Tests handle false positives (backend files that mention UI)"
+    "UITaskDetector.isUITask(task) checks uiTestRequired flag",
+    "Returns uiUrl if provided",
+    "5 focused tests written (metadata check, URL extraction, null handling)"
   ],
   "testCases": [
-    "Detects task with uiUrl metadata field",
-    "Detects task modifying React/Vue components",
-    "Detects task with 'UI' in description",
-    "Ignores pure backend tasks",
-    "Handles mixed backend+frontend tasks"
+    "Returns true when uiTestRequired is true",
+    "Returns false when uiTestRequired is false/undefined",
+    "Extracts uiUrl when provided",
+    "Returns null URL when not provided",
+    "Handles null/undefined task gracefully"
   ],
   "artifacts": {
     "design": [],
-    "code": [],
+    "code": [
+      "Agent/src/core/UITaskDetector.js"
+    ],
     "tests": [
-      "Agent/test/ui-detection/task-detector.test.js"
+      "Agent/test/ui-detection/detector.test.js"
     ],
     "documentation": []
   }

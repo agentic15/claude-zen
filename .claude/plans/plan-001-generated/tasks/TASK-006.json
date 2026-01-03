@@ -1,25 +1,20 @@
 {
   "id": "TASK-006",
-  "title": "Implement auto-verification hook",
-  "description": "Add auto-verification to complete-task hook to make tests pass",
+  "title": "Add accessibility violations check",
+  "description": "Run basic a11y checks and report violations",
   "status": "pending",
   "phase": "implementation",
-  "dependencies": [
-    "TASK-005"
-  ],
-  "estimatedHours": 6,
+  "dependencies": [],
+  "estimatedHours": 3,
   "completionCriteria": [
-    "All tests from TASK-005 pass",
-    "complete-task.js hook enhanced with auto-verification",
-    "Visual test runs automatically for UI tasks",
-    "Screenshots and logs captured",
-    "Results presented to user in terminal",
-    "Graceful failure handling implemented"
+    "Integrates axe-core for a11y testing",
+    "Logs violations to accessibility.log",
+    "Reports critical violations in terminal"
   ],
   "artifacts": {
     "design": [],
     "code": [
-      "Agent/framework/hooks/complete-task.js"
+      "Agent/src/cli/VisualTestCommand.js"
     ],
     "tests": [],
     "documentation": []

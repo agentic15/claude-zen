@@ -1,21 +1,22 @@
 {
   "id": "TASK-001",
-  "title": "Design UI task detection strategy",
-  "description": "Define how to detect UI-related tasks from metadata, file changes, and task descriptions",
+  "title": "Add uiTestRequired flag to task schema",
+  "description": "Update task schema to include uiTestRequired and uiUrl fields",
   "status": "pending",
   "phase": "design",
   "dependencies": [],
-  "estimatedHours": 3,
+  "estimatedHours": 2,
   "completionCriteria": [
-    "Detection criteria documented (keywords, file patterns, task metadata)",
-    "Edge cases identified (backend+frontend tasks, API with UI changes)",
-    "False positive/negative scenarios considered",
-    "Integration points with task workflow identified"
+    "Task schema updated with uiTestRequired (boolean)",
+    "Task schema updated with uiUrl (string, optional)",
+    "Example tasks documented"
   ],
   "artifacts": {
     "design": [],
     "code": [],
     "tests": [],
-    "documentation": []
+    "documentation": [
+      "Agent/docs/task-ui-metadata.md"
+    ]
   }
 }
