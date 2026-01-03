@@ -1,0 +1,797 @@
+{
+  "version": "2.0",
+  "project": {
+    "id": "PROJ-002",
+    "name": "Automatic UI Testing & Verification Framework",
+    "description": "Enhance agentic15-claude-zen to automatically run UI tests with screenshots and console logs when Claude completes UI-related tasks, enabling 100% working UI with minimal human intervention",
+    "status": "planning",
+    "createdAt": "2026-01-03T00:00:00.000Z",
+    "createdBy": "Claude",
+    "locked": false,
+    "subprojects": [
+      {
+        "id": "SUB-001",
+        "name": "Task Context Detection System",
+        "description": "Detect when a task involves UI development requiring visual verification",
+        "status": "pending",
+        "dependencies": [],
+        "milestones": [
+          {
+            "id": "MILE-001",
+            "name": "UI Task Detection Logic",
+            "description": "Identify tasks that require UI testing based on task metadata and code changes",
+            "status": "pending",
+            "dependencies": [],
+            "tasks": [
+              {
+                "id": "TASK-001",
+                "title": "Design UI task detection strategy",
+                "description": "Define how to detect UI-related tasks from metadata, file changes, and task descriptions",
+                "status": "pending",
+                "phase": "design",
+                "dependencies": [],
+                "estimatedHours": 3,
+                "completionCriteria": [
+                  "Detection criteria documented (keywords, file patterns, task metadata)",
+                  "Edge cases identified (backend+frontend tasks, API with UI changes)",
+                  "False positive/negative scenarios considered",
+                  "Integration points with task workflow identified"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": [],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-002",
+                "title": "Write tests for UI task detection (TDD)",
+                "description": "Write tests BEFORE implementing detection logic",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-001"],
+                "estimatedHours": 4,
+                "completionCriteria": [
+                  "Test suite for UI task detection created",
+                  "Tests verify detection from task metadata (uiUrl field)",
+                  "Tests verify detection from file changes (*.jsx, *.tsx, *.vue, *.html, *.css)",
+                  "Tests verify detection from task description keywords (UI, frontend, component, page)",
+                  "Tests handle false positives (backend files that mention UI)"
+                ],
+                "testCases": [
+                  "Detects task with uiUrl metadata field",
+                  "Detects task modifying React/Vue components",
+                  "Detects task with 'UI' in description",
+                  "Ignores pure backend tasks",
+                  "Handles mixed backend+frontend tasks"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": ["Agent/test/ui-detection/task-detector.test.js"],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-003",
+                "title": "Implement UI task detection",
+                "description": "Implement detection logic to make tests pass",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-002"],
+                "estimatedHours": 5,
+                "completionCriteria": [
+                  "All tests from TASK-002 pass",
+                  "Detects UI tasks from metadata (uiUrl field)",
+                  "Detects UI tasks from file changes",
+                  "Detects UI tasks from description keywords",
+                  "Returns confidence score for detection",
+                  "No false positives on pure backend tasks"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": ["Agent/src/core/UITaskDetector.js"],
+                  "tests": [],
+                  "documentation": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "SUB-002",
+        "name": "Automatic Visual Test Execution",
+        "description": "Automatically run visual tests (screenshots, console logs) when UI tasks complete",
+        "status": "pending",
+        "dependencies": ["SUB-001"],
+        "milestones": [
+          {
+            "id": "MILE-002",
+            "name": "Task Completion Hook Integration",
+            "description": "Integrate visual testing into task completion workflow",
+            "status": "pending",
+            "dependencies": ["MILE-001"],
+            "tasks": [
+              {
+                "id": "TASK-004",
+                "title": "Design auto-verification workflow",
+                "description": "Design how visual tests trigger automatically at task completion",
+                "status": "pending",
+                "phase": "design",
+                "dependencies": ["TASK-003"],
+                "estimatedHours": 3,
+                "completionCriteria": [
+                  "Workflow documented: task complete → detect UI → run visual test → present results",
+                  "Hook integration point identified (complete-task.js hook)",
+                  "URL source strategy defined (task metadata, package.json, default localhost)",
+                  "Failure handling strategy defined (test fails, URL unreachable)",
+                  "User override mechanism designed (skip auto-test flag)"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": [],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-005",
+                "title": "Write tests for auto-verification hook (TDD)",
+                "description": "Write tests BEFORE implementing auto-verification",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-004"],
+                "estimatedHours": 4,
+                "completionCriteria": [
+                  "Test suite for auto-verification created",
+                  "Tests verify hook triggers on UI task completion",
+                  "Tests verify hook skips on non-UI tasks",
+                  "Tests verify visual test execution",
+                  "Tests verify screenshot/log file generation",
+                  "Tests verify graceful failure when URL unreachable"
+                ],
+                "testCases": [
+                  "Hook triggers visual test when UI task completes",
+                  "Hook skips visual test for non-UI tasks",
+                  "Visual test captures screenshots and console logs",
+                  "Hook handles unreachable URL gracefully",
+                  "User can skip auto-verification with flag"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": ["Agent/test/hooks/auto-verify.test.js"],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-006",
+                "title": "Implement auto-verification hook",
+                "description": "Add auto-verification to complete-task hook to make tests pass",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-005"],
+                "estimatedHours": 6,
+                "completionCriteria": [
+                  "All tests from TASK-005 pass",
+                  "complete-task.js hook enhanced with auto-verification",
+                  "Visual test runs automatically for UI tasks",
+                  "Screenshots and logs captured",
+                  "Results presented to user in terminal",
+                  "Graceful failure handling implemented"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": ["Agent/framework/hooks/complete-task.js"],
+                  "tests": [],
+                  "documentation": []
+                }
+              }
+            ]
+          },
+          {
+            "id": "MILE-003",
+            "name": "Visual Test Result Analysis",
+            "description": "Automatically present visual test results to Claude for analysis",
+            "status": "pending",
+            "dependencies": ["MILE-002"],
+            "tasks": [
+              {
+                "id": "TASK-007",
+                "title": "Design result presentation strategy",
+                "description": "Define how visual test results are automatically shown to Claude",
+                "status": "pending",
+                "phase": "design",
+                "dependencies": ["TASK-006"],
+                "estimatedHours": 3,
+                "completionCriteria": [
+                  "Presentation format designed (terminal output, file references)",
+                  "Claude instructions template created for analyzing results",
+                  "Auto-prompt mechanism designed (inject analysis request)",
+                  "File path formatting standardized for Claude to read",
+                  "Integration with Claude Code's Read tool considered"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": [],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-008",
+                "title": "Write tests for result presentation (TDD)",
+                "description": "Write tests BEFORE implementing result presentation",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-007"],
+                "estimatedHours": 3,
+                "completionCriteria": [
+                  "Test suite for result presentation created",
+                  "Tests verify file paths formatted correctly",
+                  "Tests verify analysis prompt generated",
+                  "Tests verify console output includes all artifacts",
+                  "Tests verify suggested next steps displayed"
+                ],
+                "testCases": [
+                  "File paths formatted as absolute paths",
+                  "Analysis prompt includes screenshot and log references",
+                  "Console output lists all generated files",
+                  "Suggested next steps displayed to user",
+                  "Empty results handled gracefully"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": ["Agent/test/ui-verification/result-presenter.test.js"],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-009",
+                "title": "Implement result presentation",
+                "description": "Implement result presentation to make tests pass",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-008"],
+                "estimatedHours": 4,
+                "completionCriteria": [
+                  "All tests from TASK-008 pass",
+                  "Visual test results formatted for easy analysis",
+                  "File paths displayed as copyable absolute paths",
+                  "Analysis prompt suggests Claude review screenshots/logs",
+                  "User-friendly terminal output with next steps"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": ["Agent/src/core/UIResultPresenter.js"],
+                  "tests": [],
+                  "documentation": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "SUB-003",
+        "name": "Enhanced Playwright Test Framework",
+        "description": "Generate and execute proper Playwright UI tests with user flows",
+        "status": "pending",
+        "dependencies": ["SUB-002"],
+        "milestones": [
+          {
+            "id": "MILE-004",
+            "name": "Playwright Test Generation",
+            "description": "Generate Playwright tests for UI components and flows",
+            "status": "pending",
+            "dependencies": ["MILE-003"],
+            "tasks": [
+              {
+                "id": "TASK-010",
+                "title": "Design Playwright test template system",
+                "description": "Create test templates for common UI patterns",
+                "status": "pending",
+                "phase": "design",
+                "dependencies": ["TASK-009"],
+                "estimatedHours": 4,
+                "completionCriteria": [
+                  "Test templates for: form validation, navigation, button clicks, data display",
+                  "Template variables defined (selectors, expected outcomes, URLs)",
+                  "Test organization structure defined (by feature, by page, by flow)",
+                  "Template customization mechanism designed",
+                  "Integration with existing VisualTestCommand considered"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": [],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-011",
+                "title": "Write tests for Playwright test generator (TDD)",
+                "description": "Write tests BEFORE implementing test generator",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-010"],
+                "estimatedHours": 5,
+                "completionCriteria": [
+                  "Test suite for test generator created",
+                  "Tests verify template rendering",
+                  "Tests verify variable substitution",
+                  "Tests verify generated test syntax is valid",
+                  "Tests verify multiple test types generated correctly"
+                ],
+                "testCases": [
+                  "Generates form validation test from template",
+                  "Generates navigation flow test",
+                  "Substitutes variables correctly",
+                  "Generated test is syntactically valid Playwright code",
+                  "Multiple tests organized by feature"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": ["Agent/test/playwright/test-generator.test.js"],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-012",
+                "title": "Implement Playwright test generator",
+                "description": "Implement test generation to make tests pass",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-011"],
+                "estimatedHours": 6,
+                "completionCriteria": [
+                  "All tests from TASK-011 pass",
+                  "Test templates created for common patterns",
+                  "Template rendering engine implemented",
+                  "Variable substitution working",
+                  "Generated tests are valid Playwright code",
+                  "Tests organized in proper directory structure"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [
+                    "Agent/src/core/PlaywrightTestGenerator.js",
+                    "Agent/templates/playwright/form-validation.template.js",
+                    "Agent/templates/playwright/navigation.template.js",
+                    "Agent/templates/playwright/interaction.template.js"
+                  ],
+                  "tests": [],
+                  "documentation": []
+                }
+              }
+            ]
+          },
+          {
+            "id": "MILE-005",
+            "name": "Playwright Test Execution & Reporting",
+            "description": "Run Playwright tests and capture detailed results",
+            "status": "pending",
+            "dependencies": ["MILE-004"],
+            "tasks": [
+              {
+                "id": "TASK-013",
+                "title": "Design test execution workflow",
+                "description": "Define how Playwright tests are discovered and executed",
+                "status": "pending",
+                "phase": "design",
+                "dependencies": ["TASK-012"],
+                "estimatedHours": 3,
+                "completionCriteria": [
+                  "Test discovery mechanism defined (glob pattern, directory structure)",
+                  "Execution order defined (by priority, by dependency)",
+                  "Result aggregation strategy designed",
+                  "Screenshot/video capture on failure enabled",
+                  "Test retry mechanism designed for flaky tests"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": [],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-014",
+                "title": "Write tests for test execution engine (TDD)",
+                "description": "Write tests BEFORE implementing execution engine",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-013"],
+                "estimatedHours": 4,
+                "completionCriteria": [
+                  "Test suite for execution engine created",
+                  "Tests verify test discovery",
+                  "Tests verify test execution",
+                  "Tests verify result aggregation",
+                  "Tests verify failure screenshot capture",
+                  "Tests verify retry mechanism"
+                ],
+                "testCases": [
+                  "Discovers all Playwright tests in directory",
+                  "Executes tests in correct order",
+                  "Aggregates pass/fail results",
+                  "Captures screenshot on test failure",
+                  "Retries flaky tests up to 2 times"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": ["Agent/test/playwright/test-executor.test.js"],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-015",
+                "title": "Implement test execution engine",
+                "description": "Implement test execution to make tests pass",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-014"],
+                "estimatedHours": 6,
+                "completionCriteria": [
+                  "All tests from TASK-014 pass",
+                  "Tests discovered via glob pattern",
+                  "Tests executed with Playwright runner",
+                  "Results aggregated and formatted",
+                  "Screenshots captured on failure",
+                  "Retry mechanism implemented",
+                  "Execution time tracked"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": ["Agent/src/core/PlaywrightTestExecutor.js"],
+                  "tests": [],
+                  "documentation": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "SUB-004",
+        "name": "Task Metadata Enhancement",
+        "description": "Enhance task metadata to support UI testing requirements",
+        "status": "pending",
+        "dependencies": [],
+        "milestones": [
+          {
+            "id": "MILE-006",
+            "name": "UI Test Metadata Schema",
+            "description": "Add UI-specific fields to task metadata",
+            "status": "pending",
+            "dependencies": [],
+            "tasks": [
+              {
+                "id": "TASK-016",
+                "title": "Design UI test metadata schema",
+                "description": "Define metadata fields for UI testing in PROJECT-PLAN.json",
+                "status": "pending",
+                "phase": "design",
+                "dependencies": [],
+                "estimatedHours": 2,
+                "completionCriteria": [
+                  "Metadata fields defined: uiUrl, uiTestRequired, uiFlows, selectors",
+                  "Schema backward compatible with existing tasks",
+                  "Examples provided for common UI task types",
+                  "Validation rules defined for metadata",
+                  "Integration with PlanCommand considered"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": [],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-017",
+                "title": "Write tests for metadata validation (TDD)",
+                "description": "Write tests BEFORE implementing validation",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-016"],
+                "estimatedHours": 3,
+                "completionCriteria": [
+                  "Test suite for metadata validation created",
+                  "Tests verify required UI fields present",
+                  "Tests verify URL format validation",
+                  "Tests verify backward compatibility",
+                  "Tests verify optional fields handled correctly"
+                ],
+                "testCases": [
+                  "Valid UI metadata passes validation",
+                  "Missing required uiUrl field fails validation",
+                  "Invalid URL format fails validation",
+                  "Tasks without UI fields still valid",
+                  "Optional uiFlows field validated correctly"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": ["Agent/test/validation/ui-metadata.test.js"],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-018",
+                "title": "Implement UI metadata validation",
+                "description": "Add validation logic to make tests pass",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-017"],
+                "estimatedHours": 4,
+                "completionCriteria": [
+                  "All tests from TASK-017 pass",
+                  "UI metadata fields validated in PlanCommand",
+                  "Validation errors provide helpful messages",
+                  "Backward compatibility maintained",
+                  "Schema documentation updated"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": ["Agent/src/core/UIMetadataValidator.js"],
+                  "tests": [],
+                  "documentation": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "SUB-005",
+        "name": "Documentation Minimization & Code Intelligence",
+        "description": "Reduce human-facing docs, enhance code-facing documentation for Claude understanding",
+        "status": "pending",
+        "dependencies": ["SUB-003"],
+        "milestones": [
+          {
+            "id": "MILE-007",
+            "name": "Code Documentation Standards",
+            "description": "Define what documentation is necessary for Claude vs humans",
+            "status": "pending",
+            "dependencies": ["MILE-005"],
+            "tasks": [
+              {
+                "id": "TASK-019",
+                "title": "Define documentation standards",
+                "description": "Establish guidelines for minimal but effective documentation",
+                "status": "pending",
+                "phase": "design",
+                "dependencies": ["TASK-015"],
+                "estimatedHours": 3,
+                "completionCriteria": [
+                  "Documentation categories defined: code comments, architectural decisions, test descriptions",
+                  "Human-facing docs identified for removal/reduction",
+                  "Claude-facing docs requirements specified",
+                  "Example code snippets with proper documentation",
+                  "Documentation review checklist created"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": [],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-020",
+                "title": "Audit existing documentation",
+                "description": "Review and categorize existing documentation",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-019"],
+                "estimatedHours": 4,
+                "completionCriteria": [
+                  "All documentation files reviewed",
+                  "Human-facing docs identified for consolidation",
+                  "Code comments assessed for usefulness to Claude",
+                  "Redundant documentation marked for removal",
+                  "Critical architectural docs preserved"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": [],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-021",
+                "title": "Reduce human-facing documentation",
+                "description": "Consolidate and minimize documentation",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-020"],
+                "estimatedHours": 5,
+                "completionCriteria": [
+                  "Redundant markdown files removed",
+                  "Essential info consolidated into fewer files",
+                  "README kept minimal with quick start only",
+                  "Architecture decisions embedded in code comments",
+                  "Test descriptions self-explanatory"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": [],
+                  "documentation": []
+                }
+              }
+            ]
+          },
+          {
+            "id": "MILE-008",
+            "name": "Enhanced Code Comments for Claude",
+            "description": "Add inline documentation that helps Claude understand decisions",
+            "status": "pending",
+            "dependencies": ["MILE-007"],
+            "tasks": [
+              {
+                "id": "TASK-022",
+                "title": "Enhance UI testing code with Claude-friendly comments",
+                "description": "Add comments explaining why, not what, for UI testing code",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-021"],
+                "estimatedHours": 4,
+                "completionCriteria": [
+                  "All new UI testing code has 'why' comments",
+                  "Complex logic explained for future Claude sessions",
+                  "Edge cases documented inline",
+                  "Assumptions stated explicitly",
+                  "No redundant 'what' comments"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [
+                    "Agent/src/core/UITaskDetector.js",
+                    "Agent/src/core/PlaywrightTestGenerator.js",
+                    "Agent/src/core/PlaywrightTestExecutor.js",
+                    "Agent/framework/hooks/complete-task.js"
+                  ],
+                  "tests": [],
+                  "documentation": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "SUB-006",
+        "name": "Integration & End-to-End Testing",
+        "description": "Ensure all components work together seamlessly",
+        "status": "pending",
+        "dependencies": ["SUB-002", "SUB-003", "SUB-004", "SUB-005"],
+        "milestones": [
+          {
+            "id": "MILE-009",
+            "name": "End-to-End UI Testing Workflow",
+            "description": "Test complete workflow from task creation to auto-verification",
+            "status": "pending",
+            "dependencies": ["MILE-003", "MILE-005", "MILE-006", "MILE-008"],
+            "tasks": [
+              {
+                "id": "TASK-023",
+                "title": "Write E2E tests for full UI workflow (TDD)",
+                "description": "Write integration tests for complete UI testing workflow",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-018", "TASK-022"],
+                "estimatedHours": 6,
+                "completionCriteria": [
+                  "E2E test suite created",
+                  "Tests verify: create UI task → complete task → auto visual test → results presented",
+                  "Tests verify Playwright test generation and execution",
+                  "Tests verify screenshot/log capture and presentation",
+                  "Tests verify non-UI tasks skip auto-verification"
+                ],
+                "testCases": [
+                  "Complete UI task triggers auto visual test",
+                  "Visual test captures screenshots and logs",
+                  "Results presented to user with file paths",
+                  "Playwright tests generated and executed",
+                  "Non-UI task completion skips visual testing",
+                  "Unreachable URL handled gracefully"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": ["Agent/test/e2e/ui-workflow.test.js"],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-024",
+                "title": "Fix integration issues",
+                "description": "Debug and fix any integration issues found in E2E tests",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-023"],
+                "estimatedHours": 8,
+                "completionCriteria": [
+                  "All E2E tests from TASK-023 pass",
+                  "No regressions in existing functionality",
+                  "All components integrate smoothly",
+                  "Error handling robust across all integration points",
+                  "Performance acceptable (visual test < 10 seconds)"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [
+                    "Agent/src/core/UITaskDetector.js",
+                    "Agent/src/core/PlaywrightTestGenerator.js",
+                    "Agent/src/core/PlaywrightTestExecutor.js",
+                    "Agent/src/core/UIResultPresenter.js",
+                    "Agent/framework/hooks/complete-task.js"
+                  ],
+                  "tests": [],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-025",
+                "title": "Create sample UI project for testing",
+                "description": "Build a sample UI project to validate the framework",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-024"],
+                "estimatedHours": 6,
+                "completionCriteria": [
+                  "Sample React/Vue app created",
+                  "App includes: forms, navigation, data display",
+                  "Project plan created with UI tasks",
+                  "All UI tasks completed with auto-verification",
+                  "Demonstrates 100% working UI with minimal human intervention"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [
+                    "examples/sample-ui-app/",
+                    "examples/sample-ui-app/.claude/PROJECT-PLAN.json"
+                  ],
+                  "tests": [],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-026",
+                "title": "Validate framework with sample project",
+                "description": "Use the sample project to verify the framework works end-to-end",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-025"],
+                "estimatedHours": 4,
+                "completionCriteria": [
+                  "All UI tasks in sample project completed successfully",
+                  "Auto-verification ran for all UI tasks",
+                  "Screenshots and logs captured correctly",
+                  "Playwright tests generated and passed",
+                  "No manual intervention required",
+                  "Documentation updated with sample project walkthrough"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": [],
+                  "documentation": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,78 @@
+PROJECT REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+UI development is extremely important. We halready have commands to capture a screenshot and console log. But its not automatically used by claude. I wwould like this command to be included as a verifiecation step with claude that every time claude completes a task that involves UI testing which can be verified using a URL, claude should automatically run the UI Testing commands that will capture the screenshots , console logs and any thing else that can be captured which is helpfull for claude so that claude can investigate the screen and console log and make sure everything is working as expected. Also, we instructed TDD development to clade in requirements generation, Claude is generating a lot of tests and documentation. We do need human documentation, we need what is necessary for claude to help claude understand the code and decisions in future. Minimal Human facing documents. UI behavious and testing is more important. When we are developing a project that involves UI development, Proper Playwrite UI tests should be created and verified with UI by capturig the UI flows so that UI development thru claude is predictable.Claude should be able to develop, QA and make the UI 100% working with minial human intervention. I would like to enhance our Claude-Zen framework to support and facilitates this level of software development
+
+Generated: 2026-01-03T14:21:46.749Z
+PLAN ID: plan-001-generated
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ROLE DEFINITIONS - CRITICAL TO UNDERSTAND
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👤 HUMAN'S ROLE (Developer/User):
+   • RUN all agentic15 CLI commands (plan, task, commit, sync)
+   • MANAGE git operations (merge PRs, resolve conflicts, push, pull)
+   • REVIEW and approve code changes
+   • MAKE decisions about project direction
+   • DEPLOY applications
+
+🤖 CLAUDE'S ROLE (AI Assistant):
+   • READ files, documentation, and codebase
+   • WRITE code in ./Agent/** and ./scripts/**
+   • CREATE project plans and task breakdowns
+   • EXPLAIN code and architecture decisions
+   • SUGGEST improvements and best practices
+
+🚫 WHAT CLAUDE MUST NOT DO:
+   ❌ Run agentic15 commands (plan, task, commit, sync, status)
+   ❌ Run git commands (commit, push, checkout, merge, branch)
+   ❌ Make assumptions about what the human will do
+   ❌ Tell the human to "run git commit" or similar git commands
+
+✅ WORKFLOW AFTER CREATING PROJECT PLAN:
+   1. Claude creates PROJECT-PLAN.json
+   2. Claude tells human: "Run: npx agentic15 plan"
+   3. Human runs the command to lock the plan
+   4. Human runs: npx agentic15 task next
+   5. Claude writes code for the task
+   6. Human runs: npx agentic15 commit (this handles git operations)
+   7. Human merges the PR
+   8. Repeat steps 4-7 for each task
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+INSTRUCTIONS FOR CLAUDE - CREATE PROJECT PLAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Please analyze the requirements above and create a comprehensive project plan.
+
+1. Read the PLAN-SCHEMA.json to understand the plan structure
+2. Read the PROJECT-PLAN-TEMPLATE.json for the format
+3. Create a PROJECT-PLAN.json file in this directory with:
+   - Clear project/subproject/milestone hierarchy
+   - Detailed tasks with IDs (TASK-001, TASK-002, etc.)
+   - Proper dependencies between tasks
+   - Realistic time estimates
+   - Phases: design, implementation, testing, deployment
+   - Completion criteria for each task
+
+4. Structure the plan to follow these phases:
+   - DESIGN: Architecture, UI/UX, database schema
+   - IMPLEMENTATION: Core features, API, frontend
+   - TESTING: Unit tests, integration tests, E2E tests
+   - DEPLOYMENT: Build, CI/CD, documentation
+
+5. Ensure tasks are:
+   - Granular (2-8 hours each)
+   - Clearly defined with specific deliverables
+   - Properly sequenced with dependencies
+   - Grouped logically by feature/component
+
+6. After creating the plan, tell the user to run:
+   npx agentic15 plan
+
+This will lock the plan and generate the task tracker.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+GENERATED: 2026-01-03T14:21:46.750Z
