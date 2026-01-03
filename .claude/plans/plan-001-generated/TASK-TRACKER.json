@@ -5,17 +5,19 @@
   "lockedAt": "2026-01-03T16:01:21.745Z",
   "statistics": {
     "totalTasks": 10,
-    "completed": 0,
+    "completed": 1,
     "inProgress": 0,
-    "pending": 10
+    "pending": 9
   },
   "taskFiles": [
     {
       "id": "TASK-001",
-      "title": "Add uiTestRequired flag to task schema",
-      "phase": "design",
-      "status": "pending",
-      "description": "Update task schema to include uiTestRequired and uiUrl fields"
+      "title": "Update plan generation to include UI verification in all tasks",
+      "phase": "implementation",
+      "status": "completed",
+      "description": "Modify PlanCommand.js so every generated task includes UI verification checkpoint in completion criteria",
+      "startedAt": "2026-01-03T16:04:33.612Z",
+      "completedAt": "2026-01-03T17:36:47.211Z"
     },
     {
       "id": "TASK-002",

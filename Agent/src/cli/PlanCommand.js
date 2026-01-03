@@ -187,6 +187,13 @@ Please analyze the requirements above and create a LEAN, PRACTICAL project plan.
    - Properly sequenced with dependencies
    - Grouped logically by feature/component
 
+6. CRITICAL: Every task MUST include UI verification checkpoint in completionCriteria:
+   Add this as the LAST item in completionCriteria for ALL tasks:
+
+   "UI Verification: If you modified UI code (.jsx, .tsx, .vue, .css, .html), run 'npx agentic15 visual-test <url>' and verify screenshots/logs show no errors"
+
+   This enables Claude to self-check and verify UI changes autonomously.
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TESTING PHILOSOPHY - READ CAREFULLY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -234,8 +241,50 @@ Remember: You'll verify UI with SCREENSHOTS after task completion.
 Write tests for LOGIC, use VISUAL VERIFICATION for appearance.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DOCUMENTATION PHILOSOPHY - CLAUDE-FACING, NOT HUMAN-FACING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-6. After creating the plan, tell the user to run:
+✅ DO Document (For Claude's Memory):
+• Architectural decisions and WHY they were made
+• Infrastructure choices (which database, why this framework, etc.)
+• Complex business logic that isn't obvious from code
+• Gotchas and edge cases discovered during development
+• Integration points and external dependencies
+• Authentication/authorization strategy
+• Deployment configuration and environment setup
+
+Format: Brief markdown files in Agent/docs/ explaining DECISIONS, not tutorials
+
+Example Good Documentation:
+  Agent/docs/architecture-decisions.md
+  "We chose PostgreSQL over MongoDB because we need ACID transactions
+   for payment processing. The schema is normalized to 3NF."
+
+❌ DON'T Create (Human-Facing Fluff):
+• Comprehensive API documentation (code comments are enough)
+• User guides or tutorials (not Claude's job)
+• "Getting Started" guides (developers can read code)
+• Detailed README files (keep minimal: what, why, how to run)
+• Change logs (git history exists)
+• Contribution guidelines
+• Code of conduct documents
+
+❌ DON'T Over-Document:
+• Don't document obvious code ("this function adds two numbers")
+• Don't create documentation tasks unless absolutely necessary
+• Don't write documentation for documentation's sake
+• If the code is self-explanatory, don't document it
+
+Example - Login Form:
+  ❌ BAD: Create "Login Form Documentation" with screenshots, API docs, usage guide
+  ✅ GOOD: Add comment in code: "// Uses bcrypt with 12 rounds for password hashing"
+
+Remember: Future Claude sessions need context about DECISIONS,
+not tutorials about how to use the code.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+7. After creating the plan, tell the user to run:
    npx agentic15 plan
 
 This will lock the plan and generate the task tracker.
