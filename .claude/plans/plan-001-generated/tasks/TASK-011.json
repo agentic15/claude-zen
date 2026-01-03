@@ -1,0 +1,33 @@
+{
+  "id": "TASK-011",
+  "title": "Write tests for Playwright test generator (TDD)",
+  "description": "Write tests BEFORE implementing test generator",
+  "status": "pending",
+  "phase": "testing",
+  "dependencies": [
+    "TASK-010"
+  ],
+  "estimatedHours": 5,
+  "completionCriteria": [
+    "Test suite for test generator created",
+    "Tests verify template rendering",
+    "Tests verify variable substitution",
+    "Tests verify generated test syntax is valid",
+    "Tests verify multiple test types generated correctly"
+  ],
+  "testCases": [
+    "Generates form validation test from template",
+    "Generates navigation flow test",
+    "Substitutes variables correctly",
+    "Generated test is syntactically valid Playwright code",
+    "Multiple tests organized by feature"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [
+      "Agent/test/playwright/test-generator.test.js"
+    ],
+    "documentation": []
+  }
+}

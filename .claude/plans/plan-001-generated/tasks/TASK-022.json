@@ -1,0 +1,29 @@
+{
+  "id": "TASK-022",
+  "title": "Enhance UI testing code with Claude-friendly comments",
+  "description": "Add comments explaining why, not what, for UI testing code",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-021"
+  ],
+  "estimatedHours": 4,
+  "completionCriteria": [
+    "All new UI testing code has 'why' comments",
+    "Complex logic explained for future Claude sessions",
+    "Edge cases documented inline",
+    "Assumptions stated explicitly",
+    "No redundant 'what' comments"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [
+      "Agent/src/core/UITaskDetector.js",
+      "Agent/src/core/PlaywrightTestGenerator.js",
+      "Agent/src/core/PlaywrightTestExecutor.js",
+      "Agent/framework/hooks/complete-task.js"
+    ],
+    "tests": [],
+    "documentation": []
+  }
+}

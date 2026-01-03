@@ -1,0 +1,24 @@
+{
+  "id": "TASK-019",
+  "title": "Define documentation standards",
+  "description": "Establish guidelines for minimal but effective documentation",
+  "status": "pending",
+  "phase": "design",
+  "dependencies": [
+    "TASK-015"
+  ],
+  "estimatedHours": 3,
+  "completionCriteria": [
+    "Documentation categories defined: code comments, architectural decisions, test descriptions",
+    "Human-facing docs identified for removal/reduction",
+    "Claude-facing docs requirements specified",
+    "Example code snippets with proper documentation",
+    "Documentation review checklist created"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [],
+    "documentation": []
+  }
+}

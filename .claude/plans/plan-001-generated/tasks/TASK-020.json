@@ -1,0 +1,24 @@
+{
+  "id": "TASK-020",
+  "title": "Audit existing documentation",
+  "description": "Review and categorize existing documentation",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-019"
+  ],
+  "estimatedHours": 4,
+  "completionCriteria": [
+    "All documentation files reviewed",
+    "Human-facing docs identified for consolidation",
+    "Code comments assessed for usefulness to Claude",
+    "Redundant documentation marked for removal",
+    "Critical architectural docs preserved"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [],
+    "documentation": []
+  }
+}

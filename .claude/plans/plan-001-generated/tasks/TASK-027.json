@@ -1,0 +1,22 @@
+{
+  "id": "TASK-027",
+  "title": "Design plan command branch creation strategy",
+  "description": "Define how plan command should auto-create branches matching task command behavior",
+  "status": "pending",
+  "phase": "design",
+  "dependencies": [],
+  "estimatedHours": 2,
+  "completionCriteria": [
+    "Branch naming convention defined (e.g., plan/plan-001-generated)",
+    "Detection logic for when to create branch (on main, not on task branch)",
+    "User notification strategy (inform user of branch creation)",
+    "Consistency with TaskCommand behavior ensured",
+    "Edge cases handled (already on plan branch, detached HEAD)"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [],
+    "documentation": []
+  }
+}

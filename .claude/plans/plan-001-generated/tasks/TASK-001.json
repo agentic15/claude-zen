@@ -1,0 +1,21 @@
+{
+  "id": "TASK-001",
+  "title": "Design UI task detection strategy",
+  "description": "Define how to detect UI-related tasks from metadata, file changes, and task descriptions",
+  "status": "pending",
+  "phase": "design",
+  "dependencies": [],
+  "estimatedHours": 3,
+  "completionCriteria": [
+    "Detection criteria documented (keywords, file patterns, task metadata)",
+    "Edge cases identified (backend+frontend tasks, API with UI changes)",
+    "False positive/negative scenarios considered",
+    "Integration points with task workflow identified"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [],
+    "documentation": []
+  }
+}

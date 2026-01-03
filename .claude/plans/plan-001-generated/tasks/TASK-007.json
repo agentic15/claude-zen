@@ -1,0 +1,24 @@
+{
+  "id": "TASK-007",
+  "title": "Design result presentation strategy",
+  "description": "Define how visual test results are automatically shown to Claude",
+  "status": "pending",
+  "phase": "design",
+  "dependencies": [
+    "TASK-006"
+  ],
+  "estimatedHours": 3,
+  "completionCriteria": [
+    "Presentation format designed (terminal output, file references)",
+    "Claude instructions template created for analyzing results",
+    "Auto-prompt mechanism designed (inject analysis request)",
+    "File path formatting standardized for Claude to read",
+    "Integration with Claude Code's Read tool considered"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [],
+    "documentation": []
+  }
+}

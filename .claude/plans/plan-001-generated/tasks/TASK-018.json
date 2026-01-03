@@ -1,0 +1,26 @@
+{
+  "id": "TASK-018",
+  "title": "Implement UI metadata validation",
+  "description": "Add validation logic to make tests pass",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-017"
+  ],
+  "estimatedHours": 4,
+  "completionCriteria": [
+    "All tests from TASK-017 pass",
+    "UI metadata fields validated in PlanCommand",
+    "Validation errors provide helpful messages",
+    "Backward compatibility maintained",
+    "Schema documentation updated"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [
+      "Agent/src/core/UIMetadataValidator.js"
+    ],
+    "tests": [],
+    "documentation": []
+  }
+}

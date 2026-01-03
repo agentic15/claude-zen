@@ -1,0 +1,27 @@
+{
+  "id": "TASK-003",
+  "title": "Implement UI task detection",
+  "description": "Implement detection logic to make tests pass",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-002"
+  ],
+  "estimatedHours": 5,
+  "completionCriteria": [
+    "All tests from TASK-002 pass",
+    "Detects UI tasks from metadata (uiUrl field)",
+    "Detects UI tasks from file changes",
+    "Detects UI tasks from description keywords",
+    "Returns confidence score for detection",
+    "No false positives on pure backend tasks"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [
+      "Agent/src/core/UITaskDetector.js"
+    ],
+    "tests": [],
+    "documentation": []
+  }
+}

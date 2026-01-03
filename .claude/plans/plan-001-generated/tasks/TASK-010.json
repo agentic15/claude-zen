@@ -1,0 +1,24 @@
+{
+  "id": "TASK-010",
+  "title": "Design Playwright test template system",
+  "description": "Create test templates for common UI patterns",
+  "status": "pending",
+  "phase": "design",
+  "dependencies": [
+    "TASK-009"
+  ],
+  "estimatedHours": 4,
+  "completionCriteria": [
+    "Test templates for: form validation, navigation, button clicks, data display",
+    "Template variables defined (selectors, expected outcomes, URLs)",
+    "Test organization structure defined (by feature, by page, by flow)",
+    "Template customization mechanism designed",
+    "Integration with existing VisualTestCommand considered"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [],
+    "documentation": []
+  }
+}

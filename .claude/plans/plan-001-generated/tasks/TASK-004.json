@@ -1,0 +1,24 @@
+{
+  "id": "TASK-004",
+  "title": "Design auto-verification workflow",
+  "description": "Design how visual tests trigger automatically at task completion",
+  "status": "pending",
+  "phase": "design",
+  "dependencies": [
+    "TASK-003"
+  ],
+  "estimatedHours": 3,
+  "completionCriteria": [
+    "Workflow documented: task complete → detect UI → run visual test → present results",
+    "Hook integration point identified (complete-task.js hook)",
+    "URL source strategy defined (task metadata, package.json, default localhost)",
+    "Failure handling strategy defined (test fails, URL unreachable)",
+    "User override mechanism designed (skip auto-test flag)"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [],
+    "documentation": []
+  }
+}

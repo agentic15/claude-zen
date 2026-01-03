@@ -1,0 +1,33 @@
+{
+  "id": "TASK-002",
+  "title": "Write tests for UI task detection (TDD)",
+  "description": "Write tests BEFORE implementing detection logic",
+  "status": "pending",
+  "phase": "testing",
+  "dependencies": [
+    "TASK-001"
+  ],
+  "estimatedHours": 4,
+  "completionCriteria": [
+    "Test suite for UI task detection created",
+    "Tests verify detection from task metadata (uiUrl field)",
+    "Tests verify detection from file changes (*.jsx, *.tsx, *.vue, *.html, *.css)",
+    "Tests verify detection from task description keywords (UI, frontend, component, page)",
+    "Tests handle false positives (backend files that mention UI)"
+  ],
+  "testCases": [
+    "Detects task with uiUrl metadata field",
+    "Detects task modifying React/Vue components",
+    "Detects task with 'UI' in description",
+    "Ignores pure backend tasks",
+    "Handles mixed backend+frontend tasks"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [
+      "Agent/test/ui-detection/task-detector.test.js"
+    ],
+    "documentation": []
+  }
+}
