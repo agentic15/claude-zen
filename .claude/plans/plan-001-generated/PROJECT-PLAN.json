@@ -791,6 +791,152 @@
             ]
           }
         ]
+      },
+      {
+        "id": "SUB-007",
+        "name": "Workflow Consistency - Plan Command Auto-Branch Creation",
+        "description": "Fix workflow deficiency: PlanCommand should auto-create branches like TaskCommand does",
+        "status": "pending",
+        "dependencies": [],
+        "milestones": [
+          {
+            "id": "MILE-010",
+            "name": "Plan Command Branch Auto-Creation",
+            "description": "Make plan command automatically create branches instead of modifying main directly",
+            "status": "pending",
+            "dependencies": [],
+            "tasks": [
+              {
+                "id": "TASK-027",
+                "title": "Design plan command branch creation strategy",
+                "description": "Define how plan command should auto-create branches matching task command behavior",
+                "status": "pending",
+                "phase": "design",
+                "dependencies": [],
+                "estimatedHours": 2,
+                "completionCriteria": [
+                  "Branch naming convention defined (e.g., plan/plan-001-generated)",
+                  "Detection logic for when to create branch (on main, not on task branch)",
+                  "User notification strategy (inform user of branch creation)",
+                  "Consistency with TaskCommand behavior ensured",
+                  "Edge cases handled (already on plan branch, detached HEAD)"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": [],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-028",
+                "title": "Write tests for plan command branch creation (TDD)",
+                "description": "Write tests BEFORE implementing auto-branch creation",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-027"],
+                "estimatedHours": 4,
+                "completionCriteria": [
+                  "Test suite for plan command branch creation created",
+                  "Tests verify branch created when on main",
+                  "Tests verify branch naming follows convention",
+                  "Tests verify plan files modified on new branch, not main",
+                  "Tests verify user notified of branch creation",
+                  "Tests verify no branch creation when already on plan branch"
+                ],
+                "testCases": [
+                  "Plan command on main creates plan/plan-XXX branch",
+                  "Plan files modified on new branch",
+                  "Main branch remains unchanged",
+                  "User sees notification about branch creation",
+                  "Already on plan branch: no new branch created",
+                  "Branch name matches plan ID"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": ["Agent/test/cli/plan-branch-creation.test.js"],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-029",
+                "title": "Implement plan command auto-branch creation",
+                "description": "Add branch auto-creation to PlanCommand to make tests pass",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-028"],
+                "estimatedHours": 5,
+                "completionCriteria": [
+                  "All tests from TASK-028 pass",
+                  "PlanCommand detects when on main branch",
+                  "Creates branch automatically with plan/plan-ID naming",
+                  "All plan modifications happen on new branch",
+                  "User notified of branch creation with clear message",
+                  "No regression in existing plan command functionality"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": ["Agent/src/cli/PlanCommand.js"],
+                  "tests": [],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-030",
+                "title": "Update commit command to handle plan branches",
+                "description": "Ensure commit command recognizes and handles plan branches appropriately",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-029"],
+                "estimatedHours": 3,
+                "completionCriteria": [
+                  "CommitCommand detects plan branches (plan/*)",
+                  "Appropriate commit messages for plan changes",
+                  "PR creation uses correct base branch",
+                  "PR title and body formatted for plan changes",
+                  "Consistent with task branch handling"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": ["Agent/src/cli/CommitCommand.js"],
+                  "tests": ["Agent/test/cli/plan-commit.test.js"],
+                  "documentation": []
+                }
+              },
+              {
+                "id": "TASK-031",
+                "title": "Test workflow consistency end-to-end",
+                "description": "Verify complete workflow: create plan → lock plan → commit → PR → merge",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-030"],
+                "estimatedHours": 3,
+                "completionCriteria": [
+                  "E2E test for full plan workflow created",
+                  "Plan creation creates branch automatically",
+                  "Plan locking modifies files on plan branch",
+                  "Commit command works on plan branch",
+                  "PR created successfully",
+                  "No modifications to main branch until merge"
+                ],
+                "testCases": [
+                  "Full workflow: plan create → lock → commit → PR works",
+                  "Main branch never modified directly",
+                  "All changes go through PR workflow",
+                  "Branch naming consistent",
+                  "User experience smooth and clear"
+                ],
+                "artifacts": {
+                  "design": [],
+                  "code": [],
+                  "tests": ["Agent/test/e2e/plan-workflow.test.js"],
+                  "documentation": []
+                }
+              }
+            ]
+          }
+        ]
       }
     ]
   }

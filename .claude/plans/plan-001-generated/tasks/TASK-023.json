@@ -1,0 +1,35 @@
+{
+  "id": "TASK-023",
+  "title": "Write E2E tests for full UI workflow (TDD)",
+  "description": "Write integration tests for complete UI testing workflow",
+  "status": "pending",
+  "phase": "testing",
+  "dependencies": [
+    "TASK-018",
+    "TASK-022"
+  ],
+  "estimatedHours": 6,
+  "completionCriteria": [
+    "E2E test suite created",
+    "Tests verify: create UI task → complete task → auto visual test → results presented",
+    "Tests verify Playwright test generation and execution",
+    "Tests verify screenshot/log capture and presentation",
+    "Tests verify non-UI tasks skip auto-verification"
+  ],
+  "testCases": [
+    "Complete UI task triggers auto visual test",
+    "Visual test captures screenshots and logs",
+    "Results presented to user with file paths",
+    "Playwright tests generated and executed",
+    "Non-UI task completion skips visual testing",
+    "Unreachable URL handled gracefully"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [
+      "Agent/test/e2e/ui-workflow.test.js"
+    ],
+    "documentation": []
+  }
+}

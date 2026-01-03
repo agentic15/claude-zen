@@ -1,0 +1,30 @@
+{
+  "id": "TASK-012",
+  "title": "Implement Playwright test generator",
+  "description": "Implement test generation to make tests pass",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-011"
+  ],
+  "estimatedHours": 6,
+  "completionCriteria": [
+    "All tests from TASK-011 pass",
+    "Test templates created for common patterns",
+    "Template rendering engine implemented",
+    "Variable substitution working",
+    "Generated tests are valid Playwright code",
+    "Tests organized in proper directory structure"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [
+      "Agent/src/core/PlaywrightTestGenerator.js",
+      "Agent/templates/playwright/form-validation.template.js",
+      "Agent/templates/playwright/navigation.template.js",
+      "Agent/templates/playwright/interaction.template.js"
+    ],
+    "tests": [],
+    "documentation": []
+  }
+}

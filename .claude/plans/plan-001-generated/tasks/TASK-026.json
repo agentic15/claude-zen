@@ -1,0 +1,25 @@
+{
+  "id": "TASK-026",
+  "title": "Validate framework with sample project",
+  "description": "Use the sample project to verify the framework works end-to-end",
+  "status": "pending",
+  "phase": "testing",
+  "dependencies": [
+    "TASK-025"
+  ],
+  "estimatedHours": 4,
+  "completionCriteria": [
+    "All UI tasks in sample project completed successfully",
+    "Auto-verification ran for all UI tasks",
+    "Screenshots and logs captured correctly",
+    "Playwright tests generated and passed",
+    "No manual intervention required",
+    "Documentation updated with sample project walkthrough"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [],
+    "documentation": []
+  }
+}

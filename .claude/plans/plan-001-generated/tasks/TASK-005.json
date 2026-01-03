@@ -1,0 +1,34 @@
+{
+  "id": "TASK-005",
+  "title": "Write tests for auto-verification hook (TDD)",
+  "description": "Write tests BEFORE implementing auto-verification",
+  "status": "pending",
+  "phase": "testing",
+  "dependencies": [
+    "TASK-004"
+  ],
+  "estimatedHours": 4,
+  "completionCriteria": [
+    "Test suite for auto-verification created",
+    "Tests verify hook triggers on UI task completion",
+    "Tests verify hook skips on non-UI tasks",
+    "Tests verify visual test execution",
+    "Tests verify screenshot/log file generation",
+    "Tests verify graceful failure when URL unreachable"
+  ],
+  "testCases": [
+    "Hook triggers visual test when UI task completes",
+    "Hook skips visual test for non-UI tasks",
+    "Visual test captures screenshots and console logs",
+    "Hook handles unreachable URL gracefully",
+    "User can skip auto-verification with flag"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [],
+    "tests": [
+      "Agent/test/hooks/auto-verify.test.js"
+    ],
+    "documentation": []
+  }
+}

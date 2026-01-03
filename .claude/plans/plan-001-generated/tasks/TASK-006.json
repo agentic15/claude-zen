@@ -1,0 +1,27 @@
+{
+  "id": "TASK-006",
+  "title": "Implement auto-verification hook",
+  "description": "Add auto-verification to complete-task hook to make tests pass",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-005"
+  ],
+  "estimatedHours": 6,
+  "completionCriteria": [
+    "All tests from TASK-005 pass",
+    "complete-task.js hook enhanced with auto-verification",
+    "Visual test runs automatically for UI tasks",
+    "Screenshots and logs captured",
+    "Results presented to user in terminal",
+    "Graceful failure handling implemented"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [
+      "Agent/framework/hooks/complete-task.js"
+    ],
+    "tests": [],
+    "documentation": []
+  }
+}

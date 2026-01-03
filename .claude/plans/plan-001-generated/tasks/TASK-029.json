@@ -1,0 +1,27 @@
+{
+  "id": "TASK-029",
+  "title": "Implement plan command auto-branch creation",
+  "description": "Add branch auto-creation to PlanCommand to make tests pass",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-028"
+  ],
+  "estimatedHours": 5,
+  "completionCriteria": [
+    "All tests from TASK-028 pass",
+    "PlanCommand detects when on main branch",
+    "Creates branch automatically with plan/plan-ID naming",
+    "All plan modifications happen on new branch",
+    "User notified of branch creation with clear message",
+    "No regression in existing plan command functionality"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [
+      "Agent/src/cli/PlanCommand.js"
+    ],
+    "tests": [],
+    "documentation": []
+  }
+}

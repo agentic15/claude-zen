@@ -1,0 +1,231 @@
+{
+  "planId": "plan-001-generated",
+  "projectName": "agentic15-claude-zen",
+  "activeTask": null,
+  "lockedAt": "2026-01-03T14:59:39.563Z",
+  "statistics": {
+    "totalTasks": 31,
+    "completed": 0,
+    "inProgress": 0,
+    "pending": 31
+  },
+  "taskFiles": [
+    {
+      "id": "TASK-001",
+      "title": "Design UI task detection strategy",
+      "phase": "design",
+      "status": "pending",
+      "description": "Define how to detect UI-related tasks from metadata, file changes, and task descriptions"
+    },
+    {
+      "id": "TASK-002",
+      "title": "Write tests for UI task detection (TDD)",
+      "phase": "testing",
+      "status": "pending",
+      "description": "Write tests BEFORE implementing detection logic"
+    },
+    {
+      "id": "TASK-003",
+      "title": "Implement UI task detection",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Implement detection logic to make tests pass"
+    },
+    {
+      "id": "TASK-004",
+      "title": "Design auto-verification workflow",
+      "phase": "design",
+      "status": "pending",
+      "description": "Design how visual tests trigger automatically at task completion"
+    },
+    {
+      "id": "TASK-005",
+      "title": "Write tests for auto-verification hook (TDD)",
+      "phase": "testing",
+      "status": "pending",
+      "description": "Write tests BEFORE implementing auto-verification"
+    },
+    {
+      "id": "TASK-006",
+      "title": "Implement auto-verification hook",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Add auto-verification to complete-task hook to make tests pass"
+    },
+    {
+      "id": "TASK-007",
+      "title": "Design result presentation strategy",
+      "phase": "design",
+      "status": "pending",
+      "description": "Define how visual test results are automatically shown to Claude"
+    },
+    {
+      "id": "TASK-008",
+      "title": "Write tests for result presentation (TDD)",
+      "phase": "testing",
+      "status": "pending",
+      "description": "Write tests BEFORE implementing result presentation"
+    },
+    {
+      "id": "TASK-009",
+      "title": "Implement result presentation",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Implement result presentation to make tests pass"
+    },
+    {
+      "id": "TASK-010",
+      "title": "Design Playwright test template system",
+      "phase": "design",
+      "status": "pending",
+      "description": "Create test templates for common UI patterns"
+    },
+    {
+      "id": "TASK-011",
+      "title": "Write tests for Playwright test generator (TDD)",
+      "phase": "testing",
+      "status": "pending",
+      "description": "Write tests BEFORE implementing test generator"
+    },
+    {
+      "id": "TASK-012",
+      "title": "Implement Playwright test generator",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Implement test generation to make tests pass"
+    },
+    {
+      "id": "TASK-013",
+      "title": "Design test execution workflow",
+      "phase": "design",
+      "status": "pending",
+      "description": "Define how Playwright tests are discovered and executed"
+    },
+    {
+      "id": "TASK-014",
+      "title": "Write tests for test execution engine (TDD)",
+      "phase": "testing",
+      "status": "pending",
+      "description": "Write tests BEFORE implementing execution engine"
+    },
+    {
+      "id": "TASK-015",
+      "title": "Implement test execution engine",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Implement test execution to make tests pass"
+    },
+    {
+      "id": "TASK-016",
+      "title": "Design UI test metadata schema",
+      "phase": "design",
+      "status": "pending",
+      "description": "Define metadata fields for UI testing in PROJECT-PLAN.json"
+    },
+    {
+      "id": "TASK-017",
+      "title": "Write tests for metadata validation (TDD)",
+      "phase": "testing",
+      "status": "pending",
+      "description": "Write tests BEFORE implementing validation"
+    },
+    {
+      "id": "TASK-018",
+      "title": "Implement UI metadata validation",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Add validation logic to make tests pass"
+    },
+    {
+      "id": "TASK-019",
+      "title": "Define documentation standards",
+      "phase": "design",
+      "status": "pending",
+      "description": "Establish guidelines for minimal but effective documentation"
+    },
+    {
+      "id": "TASK-020",
+      "title": "Audit existing documentation",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Review and categorize existing documentation"
+    },
+    {
+      "id": "TASK-021",
+      "title": "Reduce human-facing documentation",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Consolidate and minimize documentation"
+    },
+    {
+      "id": "TASK-022",
+      "title": "Enhance UI testing code with Claude-friendly comments",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Add comments explaining why, not what, for UI testing code"
+    },
+    {
+      "id": "TASK-023",
+      "title": "Write E2E tests for full UI workflow (TDD)",
+      "phase": "testing",
+      "status": "pending",
+      "description": "Write integration tests for complete UI testing workflow"
+    },
+    {
+      "id": "TASK-024",
+      "title": "Fix integration issues",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Debug and fix any integration issues found in E2E tests"
+    },
+    {
+      "id": "TASK-025",
+      "title": "Create sample UI project for testing",
+      "phase": "testing",
+      "status": "pending",
+      "description": "Build a sample UI project to validate the framework"
+    },
+    {
+      "id": "TASK-026",
+      "title": "Validate framework with sample project",
+      "phase": "testing",
+      "status": "pending",
+      "description": "Use the sample project to verify the framework works end-to-end"
+    },
+    {
+      "id": "TASK-027",
+      "title": "Design plan command branch creation strategy",
+      "phase": "design",
+      "status": "pending",
+      "description": "Define how plan command should auto-create branches matching task command behavior"
+    },
+    {
+      "id": "TASK-028",
+      "title": "Write tests for plan command branch creation (TDD)",
+      "phase": "testing",
+      "status": "pending",
+      "description": "Write tests BEFORE implementing auto-branch creation"
+    },
+    {
+      "id": "TASK-029",
+      "title": "Implement plan command auto-branch creation",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Add branch auto-creation to PlanCommand to make tests pass"
+    },
+    {
+      "id": "TASK-030",
+      "title": "Update commit command to handle plan branches",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Ensure commit command recognizes and handles plan branches appropriately"
+    },
+    {
+      "id": "TASK-031",
+      "title": "Test workflow consistency end-to-end",
+      "phase": "testing",
+      "status": "pending",
+      "description": "Verify complete workflow: create plan → lock plan → commit → PR → merge"
+    }
+  ]
+}

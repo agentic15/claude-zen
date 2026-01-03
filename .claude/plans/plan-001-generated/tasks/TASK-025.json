@@ -1,0 +1,27 @@
+{
+  "id": "TASK-025",
+  "title": "Create sample UI project for testing",
+  "description": "Build a sample UI project to validate the framework",
+  "status": "pending",
+  "phase": "testing",
+  "dependencies": [
+    "TASK-024"
+  ],
+  "estimatedHours": 6,
+  "completionCriteria": [
+    "Sample React/Vue app created",
+    "App includes: forms, navigation, data display",
+    "Project plan created with UI tasks",
+    "All UI tasks completed with auto-verification",
+    "Demonstrates 100% working UI with minimal human intervention"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [
+      "examples/sample-ui-app/",
+      "examples/sample-ui-app/.claude/PROJECT-PLAN.json"
+    ],
+    "tests": [],
+    "documentation": []
+  }
+}

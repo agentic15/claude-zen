@@ -1,0 +1,26 @@
+{
+  "id": "TASK-009",
+  "title": "Implement result presentation",
+  "description": "Implement result presentation to make tests pass",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-008"
+  ],
+  "estimatedHours": 4,
+  "completionCriteria": [
+    "All tests from TASK-008 pass",
+    "Visual test results formatted for easy analysis",
+    "File paths displayed as copyable absolute paths",
+    "Analysis prompt suggests Claude review screenshots/logs",
+    "User-friendly terminal output with next steps"
+  ],
+  "artifacts": {
+    "design": [],
+    "code": [
+      "Agent/src/core/UIResultPresenter.js"
+    ],
+    "tests": [],
+    "documentation": []
+  }
+}
