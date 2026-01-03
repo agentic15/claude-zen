@@ -25,22 +25,23 @@
             "tasks": [
               {
                 "id": "TASK-001",
-                "title": "Add uiTestRequired flag to task schema",
-                "description": "Update task schema to include uiTestRequired and uiUrl fields",
+                "title": "Update plan generation to include UI verification in all tasks",
+                "description": "Modify PlanCommand.js so every generated task includes UI verification checkpoint in completion criteria",
                 "status": "pending",
-                "phase": "design",
+                "phase": "implementation",
                 "dependencies": [],
                 "estimatedHours": 2,
                 "completionCriteria": [
-                  "Task schema updated with uiTestRequired (boolean)",
-                  "Task schema updated with uiUrl (string, optional)",
-                  "Example tasks documented"
+                  "PlanCommand.js updated to include UI verification instruction",
+                  "Every future task will have: 'UI Verification: If you modified UI code, run visual-test and verify'",
+                  "No hardcoded URLs or ports in the instruction",
+                  "UI Verification: If you modified UI code (.jsx, .tsx, .vue, .css, .html), run 'npx agentic15 visual-test <url>' and verify screenshots/logs show no errors"
                 ],
                 "artifacts": {
                   "design": [],
-                  "code": [],
+                  "code": ["Agent/src/cli/PlanCommand.js"],
                   "tests": [],
-                  "documentation": ["Agent/docs/task-ui-metadata.md"]
+                  "documentation": []
                 }
               },
               {
