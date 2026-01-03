@@ -161,7 +161,9 @@ ROLE DEFINITIONS - CRITICAL TO UNDERSTAND
 INSTRUCTIONS FOR CLAUDE - CREATE PROJECT PLAN
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Please analyze the requirements above and create a comprehensive project plan.
+Please analyze the requirements above and create a LEAN, PRACTICAL project plan.
+
+⚠️  CRITICAL: This is a LEAN framework - prioritize NECESSITY over LUXURY.
 
 1. Read the PLAN-SCHEMA.json to understand the plan structure
 2. Read the PROJECT-PLAN-TEMPLATE.json for the format
@@ -176,14 +178,62 @@ Please analyze the requirements above and create a comprehensive project plan.
 4. Structure the plan to follow these phases:
    - DESIGN: Architecture, UI/UX, database schema
    - IMPLEMENTATION: Core features, API, frontend
-   - TESTING: Unit tests, integration tests, E2E tests
-   - DEPLOYMENT: Build, CI/CD, documentation
+   - TESTING: MINIMAL necessary tests (see testing philosophy below)
+   - DEPLOYMENT: Build, CI/CD, minimal documentation
 
 5. Ensure tasks are:
    - Granular (2-8 hours each)
    - Clearly defined with specific deliverables
    - Properly sequenced with dependencies
    - Grouped logically by feature/component
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TESTING PHILOSOPHY - READ CAREFULLY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ DO (Necessity-Level Testing):
+• Write 5-10 FOCUSED tests per task (NOT 50-100)
+• Test core logic and critical paths ONLY
+• For UI tasks: Use VISUAL VERIFICATION (screenshots, console logs)
+• For UI tasks: Write Playwright tests for USER FLOWS, not every edge case
+• TDD is good, but tests should be ESSENTIAL, not exhaustive
+
+❌ DON'T (Luxury/Over-Engineering):
+• Don't test every edge case "just in case"
+• Don't test every possible user input combination
+• Don't test things visual verification will catch
+• Don't create test utilities, helpers, or abstractions for simple tests
+• Don't write tests for trivial getters/setters
+• Don't aim for 100% code coverage - aim for 80% confidence
+
+🎯 UI TESTING SPECIAL RULES:
+Claude CANNOT SEE the UI - you're blind to visual bugs!
+
+• Rely on SCREENSHOTS + CONSOLE LOGS for UI verification
+• Write Playwright tests for key USER JOURNEYS only (login, checkout, etc.)
+• Don't unit test every React prop, CSS value, or DOM element
+• Don't test styling with code - use visual verification
+• Focus: Does the FLOW work? Can users complete their task?
+
+Example - Login Form Testing:
+  ✅ GOOD (5 tests):
+     - Submit with valid credentials → success
+     - Submit with invalid credentials → error shown
+     - Required fields validation works
+     - Form accessible via keyboard
+     - Error messages displayed correctly
+
+  ❌ BAD (50+ tests):
+     - Test every CSS class applied
+     - Test every prop passed to button component
+     - Test onChange handler called with exact args
+     - Test form state after every keystroke
+     - Test every edge case (123 character email, etc.)
+
+Remember: You'll verify UI with SCREENSHOTS after task completion.
+Write tests for LOGIC, use VISUAL VERIFICATION for appearance.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 6. After creating the plan, tell the user to run:
    npx agentic15 plan

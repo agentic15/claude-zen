@@ -1,6 +1,14 @@
 PROJECT REQUIREMENTS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+🔄 UPDATE (2026-01-03): Plan generation fixed to emphasize LEAN testing
+   - PlanCommand.js updated with testing philosophy (5-10 tests per task)
+   - Plan revised from 31 tasks → 10 tasks (lean approach)
+   - Focus: Visual verification for UI, not excessive unit tests
+   - See SUB-004 (Plan Generation Fix) for details
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 UI development is extremely important. We halready have commands to capture a screenshot and console log. But its not automatically used by claude. I wwould like this command to be included as a verifiecation step with claude that every time claude completes a task that involves UI testing which can be verified using a URL, claude should automatically run the UI Testing commands that will capture the screenshots , console logs and any thing else that can be captured which is helpfull for claude so that claude can investigate the screen and console log and make sure everything is working as expected. Also, we instructed TDD development to clade in requirements generation, Claude is generating a lot of tests and documentation. We do need human documentation, we need what is necessary for claude to help claude understand the code and decisions in future. Minimal Human facing documents. UI behavious and testing is more important. When we are developing a project that involves UI development, Proper Playwrite UI tests should be created and verified with UI by capturig the UI flows so that UI development thru claude is predictable.Claude should be able to develop, QA and make the UI 100% working with minial human intervention. I would like to enhance our Claude-Zen framework to support and facilitates this level of software development
 
 Generated: 2026-01-03T14:21:46.749Z
