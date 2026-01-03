@@ -5,9 +5,9 @@
   "lockedAt": "2026-01-03T16:01:21.745Z",
   "statistics": {
     "totalTasks": 10,
-    "completed": 2,
+    "completed": 3,
     "inProgress": 0,
-    "pending": 8
+    "pending": 7
   },
   "taskFiles": [
     {
@@ -32,8 +32,10 @@
       "id": "TASK-003",
       "title": "Enhance complete-task hook with UI detection",
       "phase": "implementation",
-      "status": "pending",
-      "description": "Check if task is UI task and auto-run visual test"
+      "status": "completed",
+      "description": "Check if task is UI task and auto-run visual test",
+      "startedAt": "2026-01-03T17:48:41.983Z",
+      "completedAt": "2026-01-03T17:51:20.502Z"
     },
     {
       "id": "TASK-004",

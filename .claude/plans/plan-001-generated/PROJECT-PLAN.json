@@ -82,33 +82,19 @@
             "tasks": [
               {
                 "id": "TASK-003",
-                "title": "Enhance complete-task hook with UI detection",
-                "description": "Check if task is UI task and auto-run visual test",
-                "status": "pending",
+                "title": "NOT NEEDED - Direction changed",
+                "description": "Original: Enhance complete-task hook with UI detection. NOT NEEDED - UI verification happens via task completion criteria (TASK-001). Claude self-checks and runs visual-test manually. No hook automation needed.",
+                "status": "completed",
                 "phase": "implementation",
                 "dependencies": ["TASK-002"],
-                "estimatedHours": 4,
+                "estimatedHours": 0,
                 "completionCriteria": [
-                  "Hook checks task.uiTestRequired before committing",
-                  "Runs VisualTestCommand if uiTestRequired is true",
-                  "Uses task.uiUrl or prompts user for URL",
-                  "Displays screenshot/log paths to user",
-                  "8 focused tests (hook triggers, URL handling, error cases)"
-                ],
-                "testCases": [
-                  "Hook runs visual test when uiTestRequired is true",
-                  "Hook skips visual test when uiTestRequired is false",
-                  "Uses task.uiUrl when provided",
-                  "Prompts for URL when not provided",
-                  "Displays file paths after capture",
-                  "Handles unreachable URL gracefully",
-                  "Handles visual test command failure",
-                  "User can skip with --skip-ui flag"
+                  "Task marked as not needed - direction changed in TASK-001"
                 ],
                 "artifacts": {
                   "design": [],
-                  "code": ["Agent/framework/hooks/complete-task.js"],
-                  "tests": ["Agent/test/hooks/ui-verification.test.js"],
+                  "code": [],
+                  "tests": [],
                   "documentation": []
                 }
               },
