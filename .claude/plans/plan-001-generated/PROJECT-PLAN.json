@@ -46,28 +46,19 @@
               },
               {
                 "id": "TASK-002",
-                "title": "Implement simple UI task detector",
-                "description": "Create UITaskDetector that checks uiTestRequired flag",
-                "status": "pending",
+                "title": "NOT NEEDED - Direction changed",
+                "description": "Original: Create UITaskDetector. NOT NEEDED - We implemented UI verification via task completion criteria instead (TASK-001). Claude self-checks, no detector needed.",
+                "status": "completed",
                 "phase": "implementation",
                 "dependencies": ["TASK-001"],
-                "estimatedHours": 3,
+                "estimatedHours": 0,
                 "completionCriteria": [
-                  "UITaskDetector.isUITask(task) checks uiTestRequired flag",
-                  "Returns uiUrl if provided",
-                  "5 focused tests written (metadata check, URL extraction, null handling)"
-                ],
-                "testCases": [
-                  "Returns true when uiTestRequired is true",
-                  "Returns false when uiTestRequired is false/undefined",
-                  "Extracts uiUrl when provided",
-                  "Returns null URL when not provided",
-                  "Handles null/undefined task gracefully"
+                  "Task marked as not needed - direction changed in TASK-001"
                 ],
                 "artifacts": {
                   "design": [],
-                  "code": ["Agent/src/core/UITaskDetector.js"],
-                  "tests": ["Agent/test/ui-detection/detector.test.js"],
+                  "code": [],
+                  "tests": [],
                   "documentation": []
                 }
               }

@@ -5,9 +5,9 @@
   "lockedAt": "2026-01-03T16:01:21.745Z",
   "statistics": {
     "totalTasks": 10,
-    "completed": 1,
+    "completed": 2,
     "inProgress": 0,
-    "pending": 9
+    "pending": 8
   },
   "taskFiles": [
     {
@@ -21,10 +21,12 @@
     },
     {
       "id": "TASK-002",
-      "title": "Implement simple UI task detector",
+      "title": "NOT NEEDED - Direction changed",
       "phase": "implementation",
-      "status": "pending",
-      "description": "Create UITaskDetector that checks uiTestRequired flag"
+      "status": "completed",
+      "description": "Original: Create UITaskDetector. NOT NEEDED - We implemented UI verification via task completion criteria instead (TASK-001). Claude self-checks, no detector needed.",
+      "startedAt": "2026-01-03T17:40:19.093Z",
+      "completedAt": "2026-01-03T17:40:20.000Z"
     },
     {
       "id": "TASK-003",
