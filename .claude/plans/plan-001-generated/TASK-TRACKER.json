@@ -5,17 +5,19 @@
   "lockedAt": "2026-01-03T14:59:39.563Z",
   "statistics": {
     "totalTasks": 31,
-    "completed": 0,
+    "completed": 1,
     "inProgress": 0,
-    "pending": 31
+    "pending": 30
   },
   "taskFiles": [
     {
       "id": "TASK-001",
       "title": "Design UI task detection strategy",
       "phase": "design",
-      "status": "pending",
-      "description": "Define how to detect UI-related tasks from metadata, file changes, and task descriptions"
+      "status": "completed",
+      "description": "Define how to detect UI-related tasks from metadata, file changes, and task descriptions",
+      "startedAt": "2026-01-03T15:01:57.736Z",
+      "completedAt": "2026-01-03T15:07:19.182Z"
     },
     {
       "id": "TASK-002",
