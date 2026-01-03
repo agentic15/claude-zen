@@ -5,9 +5,9 @@
   "lockedAt": "2026-01-03T16:01:21.745Z",
   "statistics": {
     "totalTasks": 10,
-    "completed": 3,
+    "completed": 4,
     "inProgress": 0,
-    "pending": 7
+    "pending": 6
   },
   "taskFiles": [
     {
@@ -41,8 +41,10 @@
       "id": "TASK-004",
       "title": "Add Claude-friendly result presentation",
       "phase": "implementation",
-      "status": "pending",
-      "description": "Format visual test results so Claude can easily analyze them"
+      "status": "completed",
+      "description": "Format visual test results so Claude can easily analyze them",
+      "startedAt": "2026-01-03T17:51:55.363Z",
+      "completedAt": "2026-01-03T17:53:52.139Z"
     },
     {
       "id": "TASK-005",
