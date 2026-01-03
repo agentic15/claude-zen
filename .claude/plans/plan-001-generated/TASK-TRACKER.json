@@ -5,9 +5,9 @@
   "lockedAt": "2026-01-03T16:01:21.745Z",
   "statistics": {
     "totalTasks": 10,
-    "completed": 4,
+    "completed": 5,
     "inProgress": 0,
-    "pending": 6
+    "pending": 5
   },
   "taskFiles": [
     {
@@ -50,8 +50,10 @@
       "id": "TASK-005",
       "title": "Add network request logging",
       "phase": "implementation",
-      "status": "pending",
-      "description": "Capture failed network requests (404, 500, etc.)"
+      "status": "completed",
+      "description": "Capture failed network requests (404, 500, etc.)",
+      "startedAt": "2026-01-03T17:54:44.802Z",
+      "completedAt": "2026-01-03T18:01:39.861Z"
     },
     {
       "id": "TASK-006",

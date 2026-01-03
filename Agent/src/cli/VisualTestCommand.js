@@ -86,6 +86,7 @@ const { join } = require('path');
 
   const consoleErrors = [];
   const consoleWarnings = [];
+  const networkErrors = [];
   const generatedFiles = [];
 
   const browser = await chromium.launch({ headless: true });
@@ -93,6 +94,20 @@ const { join } = require('path');
     viewport: { width: 1920, height: 1080 }
   });
   const page = await context.newPage();
+
+  // Capture network request failures (4xx, 5xx)
+  page.on('response', response => {
+    const status = response.status();
+    if (status >= 400) {
+      networkErrors.push({
+        timestamp: new Date().toISOString(),
+        url: response.url(),
+        method: response.request().method(),
+        status: status,
+        statusText: response.statusText()
+      });
+    }
+  });
 
   // Capture console errors
   page.on('console', msg => {
@@ -165,6 +180,20 @@ const { join } = require('path');
       writeFileSync(warningLogPath, warningLog);
       generatedFiles.push(warningLogPath);
       console.log(\`⚠️  Found \${consoleWarnings.length} console warnings\`);
+    }
+
+    // Save network errors (4xx, 5xx)
+    if (networkErrors.length > 0) {
+      const networkLog = networkErrors.map(e =>
+        \`[\${e.timestamp}] \${e.method} \${e.url}\\n  Status: \${e.status} \${e.statusText}\`
+      ).join('\\n\\n');
+
+      const networkLogPath = join(outputDir, 'network-errors.log');
+      writeFileSync(networkLogPath, networkLog);
+      generatedFiles.push(networkLogPath);
+      console.log(\`🌐 Found \${networkErrors.length} network errors (4xx/5xx)\`);
+    } else {
+      console.log('✅ No network errors detected');
     }
 
     // Capture page HTML for debugging
