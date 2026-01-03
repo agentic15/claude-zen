@@ -1,24 +1,28 @@
 {
   "id": "TASK-010",
-  "title": "Design Playwright test template system",
-  "description": "Create test templates for common UI patterns",
+  "title": "Validate complete workflow",
+  "description": "Run through complete task workflow with UI verification",
   "status": "pending",
-  "phase": "design",
+  "phase": "testing",
   "dependencies": [
     "TASK-009"
   ],
-  "estimatedHours": 4,
+  "estimatedHours": 2,
   "completionCriteria": [
-    "Test templates for: form validation, navigation, button clicks, data display",
-    "Template variables defined (selectors, expected outcomes, URLs)",
-    "Test organization structure defined (by feature, by page, by flow)",
-    "Template customization mechanism designed",
-    "Integration with existing VisualTestCommand considered"
+    "Task starts successfully",
+    "Visual test runs automatically on completion",
+    "Screenshots captured and displayed",
+    "Console errors logged",
+    "Network errors logged",
+    "A11y violations reported",
+    "Claude can analyze results and fix issues"
   ],
   "artifacts": {
     "design": [],
     "code": [],
     "tests": [],
-    "documentation": []
+    "documentation": [
+      "examples/test-ui/VALIDATION-REPORT.md"
+    ]
   }
 }

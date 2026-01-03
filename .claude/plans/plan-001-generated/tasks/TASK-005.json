@@ -1,34 +1,22 @@
 {
   "id": "TASK-005",
-  "title": "Write tests for auto-verification hook (TDD)",
-  "description": "Write tests BEFORE implementing auto-verification",
+  "title": "Add network request logging",
+  "description": "Capture failed network requests (404, 500, etc.)",
   "status": "pending",
-  "phase": "testing",
-  "dependencies": [
-    "TASK-004"
-  ],
-  "estimatedHours": 4,
+  "phase": "implementation",
+  "dependencies": [],
+  "estimatedHours": 3,
   "completionCriteria": [
-    "Test suite for auto-verification created",
-    "Tests verify hook triggers on UI task completion",
-    "Tests verify hook skips on non-UI tasks",
-    "Tests verify visual test execution",
-    "Tests verify screenshot/log file generation",
-    "Tests verify graceful failure when URL unreachable"
-  ],
-  "testCases": [
-    "Hook triggers visual test when UI task completes",
-    "Hook skips visual test for non-UI tasks",
-    "Visual test captures screenshots and console logs",
-    "Hook handles unreachable URL gracefully",
-    "User can skip auto-verification with flag"
+    "Captures HTTP errors (4xx, 5xx)",
+    "Logs failed requests to network-errors.log",
+    "Includes request URL, method, status code"
   ],
   "artifacts": {
     "design": [],
-    "code": [],
-    "tests": [
-      "Agent/test/hooks/auto-verify.test.js"
+    "code": [
+      "Agent/src/cli/VisualTestCommand.js"
     ],
+    "tests": [],
     "documentation": []
   }
 }

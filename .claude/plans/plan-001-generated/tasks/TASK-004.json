@@ -1,23 +1,23 @@
 {
   "id": "TASK-004",
-  "title": "Design auto-verification workflow",
-  "description": "Design how visual tests trigger automatically at task completion",
+  "title": "Add Claude-friendly result presentation",
+  "description": "Format visual test results so Claude can easily analyze them",
   "status": "pending",
-  "phase": "design",
+  "phase": "implementation",
   "dependencies": [
     "TASK-003"
   ],
-  "estimatedHours": 3,
+  "estimatedHours": 2,
   "completionCriteria": [
-    "Workflow documented: task complete → detect UI → run visual test → present results",
-    "Hook integration point identified (complete-task.js hook)",
-    "URL source strategy defined (task metadata, package.json, default localhost)",
-    "Failure handling strategy defined (test fails, URL unreachable)",
-    "User override mechanism designed (skip auto-test flag)"
+    "Terminal output shows absolute file paths",
+    "Suggests next step: Ask Claude to review files",
+    "Clear success/failure indicators"
   ],
   "artifacts": {
     "design": [],
-    "code": [],
+    "code": [
+      "Agent/framework/hooks/complete-task.js"
+    ],
     "tests": [],
     "documentation": []
   }

@@ -1,24 +1,25 @@
 {
   "id": "TASK-009",
-  "title": "Implement result presentation",
-  "description": "Implement result presentation to make tests pass",
+  "title": "Create sample UI task for testing",
+  "description": "Build a simple HTML page to test the workflow",
   "status": "pending",
-  "phase": "implementation",
+  "phase": "testing",
   "dependencies": [
-    "TASK-008"
+    "TASK-004",
+    "TASK-006"
   ],
-  "estimatedHours": 4,
+  "estimatedHours": 3,
   "completionCriteria": [
-    "All tests from TASK-008 pass",
-    "Visual test results formatted for easy analysis",
-    "File paths displayed as copyable absolute paths",
-    "Analysis prompt suggests Claude review screenshots/logs",
-    "User-friendly terminal output with next steps"
+    "Simple HTML page created (form, button, display)",
+    "Serves on localhost:3000",
+    "Has intentional issues (console error, a11y violation)",
+    "Task created with uiTestRequired: true"
   ],
   "artifacts": {
     "design": [],
     "code": [
-      "Agent/src/core/UIResultPresenter.js"
+      "examples/test-ui/index.html",
+      "examples/test-ui/server.js"
     ],
     "tests": [],
     "documentation": []

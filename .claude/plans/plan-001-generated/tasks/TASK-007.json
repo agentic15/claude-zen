@@ -1,23 +1,22 @@
 {
   "id": "TASK-007",
-  "title": "Design result presentation strategy",
-  "description": "Define how visual test results are automatically shown to Claude",
+  "title": "Update plan generation instructions",
+  "description": "Add lean testing philosophy to PlanCommand",
   "status": "pending",
-  "phase": "design",
-  "dependencies": [
-    "TASK-006"
-  ],
-  "estimatedHours": 3,
+  "phase": "implementation",
+  "dependencies": [],
+  "estimatedHours": 2,
   "completionCriteria": [
-    "Presentation format designed (terminal output, file references)",
-    "Claude instructions template created for analyzing results",
-    "Auto-prompt mechanism designed (inject analysis request)",
-    "File path formatting standardized for Claude to read",
-    "Integration with Claude Code's Read tool considered"
+    "PlanCommand.js includes testing philosophy",
+    "Emphasizes 5-10 tests per task",
+    "Explains UI visual verification approach",
+    "Provides good/bad examples"
   ],
   "artifacts": {
     "design": [],
-    "code": [],
+    "code": [
+      "Agent/src/cli/PlanCommand.js"
+    ],
     "tests": [],
     "documentation": []
   }
