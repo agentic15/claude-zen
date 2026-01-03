@@ -194,21 +194,18 @@
             "tasks": [
               {
                 "id": "TASK-007",
-                "title": "Update plan generation instructions",
-                "description": "Add lean testing philosophy to PlanCommand",
-                "status": "pending",
+                "title": "NOT NEEDED - Completed in TASK-001",
+                "description": "Original: Update plan generation instructions. ALREADY DONE in TASK-001 - PlanCommand.js already includes testing philosophy (lines 198-241), emphasizes 5-10 tests per task, explains UI visual verification, and provides good/bad examples.",
+                "status": "completed",
                 "phase": "implementation",
                 "dependencies": [],
-                "estimatedHours": 2,
+                "estimatedHours": 0,
                 "completionCriteria": [
-                  "PlanCommand.js includes testing philosophy",
-                  "Emphasizes 5-10 tests per task",
-                  "Explains UI visual verification approach",
-                  "Provides good/bad examples"
+                  "Task marked as not needed - already completed in TASK-001"
                 ],
                 "artifacts": {
                   "design": [],
-                  "code": ["Agent/src/cli/PlanCommand.js"],
+                  "code": [],
                   "tests": [],
                   "documentation": []
                 }

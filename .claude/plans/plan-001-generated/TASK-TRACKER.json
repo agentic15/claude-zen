@@ -5,9 +5,9 @@
   "lockedAt": "2026-01-03T16:01:21.745Z",
   "statistics": {
     "totalTasks": 10,
-    "completed": 6,
+    "completed": 7,
     "inProgress": 0,
-    "pending": 4
+    "pending": 3
   },
   "taskFiles": [
     {
@@ -68,8 +68,10 @@
       "id": "TASK-007",
       "title": "Update plan generation instructions",
       "phase": "implementation",
-      "status": "pending",
-      "description": "Add lean testing philosophy to PlanCommand"
+      "status": "completed",
+      "description": "Add lean testing philosophy to PlanCommand",
+      "startedAt": "2026-01-03T18:05:42.537Z",
+      "completedAt": "2026-01-03T18:09:25.576Z"
     },
     {
       "id": "TASK-008",
