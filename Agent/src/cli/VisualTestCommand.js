@@ -297,7 +297,8 @@ const { join } = require('path');
 `;
 
     // Write test script to temp file and execute
-    const tempScriptPath = join(process.cwd(), '.claude', 'temp-visual-test.js');
+    // Use .cjs extension to ensure CommonJS mode regardless of package.json type field
+    const tempScriptPath = join(process.cwd(), '.claude', 'temp-visual-test.cjs');
     const fileListPath = join(process.cwd(), '.claude', 'visual-test', '.file-list.json');
 
     mkdirSync(join(process.cwd(), '.claude'), { recursive: true });

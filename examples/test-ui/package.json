@@ -1,0 +1,14 @@
+{
+  "name": "test-ui",
+  "version": "1.0.0",
+  "description": "Sample UI for testing Claude's UI verification workflow",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["test", "ui", "verification"],
+  "author": "agentic15",
+  "license": "Apache-2.0"
+}
