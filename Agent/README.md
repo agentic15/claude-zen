@@ -5,6 +5,8 @@
 [![npm version](https://badge.fury.io/js/@agentic15.com%2Fagentic15-claude-zen.svg)](https://www.npmjs.com/package/@agentic15.com/agentic15-claude-zen)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
+> **Latest:** v7.0.1 - Token-Efficient Architecture & Autonomous UI Verification
+
 ---
 
 ## Overview
@@ -19,6 +21,8 @@ Agentic15 Claude Zen is a structured development framework designed to work seam
 
 **Philosophy:** Structure, not enforcement. The framework provides commands and organization, while Claude decides when tests are appropriate.
 
+**NEW in v7.0:** Token-efficient service layer pattern for data-driven apps - reduces Claude's token usage by 1000x when transitioning from mock to real data.
+
 </td>
 <td width="50%">
 
@@ -28,7 +32,9 @@ Agentic15 Claude Zen is a structured development framework designed to work seam
 - ✅ **Consistent workflow** structure
 - ✅ **Dual-platform support** - GitHub or Azure DevOps
 - ✅ **Automated PRs** and issue tracking
-- ✅ **Manual UI testing** tools
+- ✅ **Autonomous UI verification** - Screenshots + accessibility
+- ✅ **Token-efficient architecture** - 2K tokens (not 2M)
+- ✅ **Service layer pattern** - Production-ready from Day 1
 - ✅ **Flexible** - no mandatory testing
 - ✅ **Claude Code optimized** hooks
 
@@ -41,7 +47,6 @@ Agentic15 Claude Zen is a structured development framework designed to work seam
 ## Quick Start
 
 ### 1. Create Project
-Creates new project with framework structure
 
 **Bash/Mac/Linux:**
 ```bash
@@ -49,122 +54,45 @@ npx @agentic15.com/agentic15-claude-zen my-project
 cd my-project
 ```
 
-**PowerShell (Windows):**
+**Windows (PowerShell):**
 ```powershell
-npx "@agentic15.com/agentic15-claude-zen" my-project
+npx @agentic15.com/agentic15-claude-zen my-project
 cd my-project
 ```
 
----
+### 2. Setup Platform
 
-### 2. Initialize Git
-Links project to GitHub (required for PRs)
-
-```bash
-git init
-git branch -M main
-git add .
-git commit -m "Initial commit"
-
-gh repo create OWNER/REPO --public
-git remote add origin https://github.com/OWNER/REPO.git
-git push -u origin main
-```
-
-**Note:** Replace `OWNER/REPO` with your GitHub username/repo
-
----
-
-### 3. Configure Auth
-One-time GitHub authentication setup
-
+**GitHub:**
 ```bash
 npx agentic15 auth
 ```
 
----
+**Azure DevOps:**
+```bash
+az login && az devops login
+```
 
-### 4. Create Plan
-Generates and locks project plan
+**📘 Detailed Setup Guides:**
+- [GitHub Setup Guide](./Agent/docs/GITHUB-SETUP.md)
+- [Azure DevOps Setup Guide](./Agent/docs/AZURE-SETUP.md)
 
-**Bash/Mac/Linux:**
+### 3. Create First Plan
+
 ```bash
 npx agentic15 plan "Build a todo app with add, remove, and list features"
 ```
 
-**PowerShell (Windows):**
-```powershell
-npx agentic15 plan "Build a todo app with add, remove, and list features"
-```
-
-**In Claude Code (launch from project directory):**
+In Claude Code:
 ```
 Ask: "Create the project plan from the requirements file"
 ```
 
-**Back in Terminal:**
+Then lock the plan:
 ```bash
 npx agentic15 plan
-git add .
-git commit -m "Add initial project plan"
-git push
 ```
 
-**Important:** Commit plan to main BEFORE enabling branch protection
-
----
-
-### 5. Enable Branch Protection
-Enforces PR-only workflow for all future changes
-
-**Bash/Mac/Linux:**
-```bash
-cat > /tmp/protection.json << 'EOF'
-{
-  "required_pull_request_reviews": {
-    "required_approving_review_count": 0
-  },
-  "enforce_admins": false,
-  "allow_force_pushes": false,
-  "allow_deletions": false,
-  "required_status_checks": null,
-  "restrictions": null
-}
-EOF
-
-gh api repos/OWNER/REPO/branches/main/protection -X PUT \
-  -H "Accept: application/vnd.github+json" \
-  --input /tmp/protection.json
-
-gh api repos/OWNER/REPO -X PATCH \
-  -H "Accept: application/vnd.github+json" \
-  -f delete_branch_on_merge=true
-```
-
-**PowerShell (Windows):**
-```powershell
-$body = @"
-{
-  "required_pull_request_reviews": {
-    "required_approving_review_count": 0
-  },
-  "enforce_admins": false,
-  "allow_force_pushes": false,
-  "allow_deletions": false,
-  "required_status_checks": null,
-  "restrictions": null
-}
-"@
-
-echo $body | gh api repos/OWNER/REPO/branches/main/protection -X PUT -H "Accept: application/vnd.github+json" --input -
-
-gh api repos/OWNER/REPO -X PATCH -H "Accept: application/vnd.github+json" -f delete_branch_on_merge=true
-```
-
----
-
-### 6. Start First Task
-Creates feature branch for first task
+### 4. Start First Task
 
 ```bash
 npx agentic15 task next
@@ -172,184 +100,145 @@ npx agentic15 task next
 
 ---
 
-## Daily Development Workflow
+## 🚀 What's New in v7.0
 
-### 1. Implement (Claude Code)
-Ask: "Implement the active task"
+### Token-Efficient Service Layer Pattern
 
-Claude writes code in `Agent/` directory
+For data-driven applications (Database + API + UI), v7.0 introduces a revolutionary architecture pattern:
+
+**The Problem:**
+- Traditional approach: Claude updates 1000+ UI files with mock→real transitions
+- **Cost:** 2M+ tokens, high error risk, maintenance nightmare
+
+**The Solution:**
+- **Centralized Service Layer:** Claude updates only 1 file (`services/api.js`)
+- **Cost:** 2K tokens (1000x reduction!)
+- **UI Code:** Production-ready from Day 1, never changes across phases
+
+**Architecture:**
+```
+UI Components (1000+ files) → Never change
+     ↓
+services/api.js (1 file) → Claude updates ONLY this
+     ↓
+Mock Data OR Real API → Config-based switching
+```
+
+**Development Phases:**
+1. **Phase 1:** UI with mocks - User sees working app Day 1
+2. **Phase 2:** Real API - Claude changes 1 line in services/api.js
+3. **Phase 3:** Real Database - Backend only, frontend untouched
+
+### Autonomous UI Verification
+
+- **Visual Testing:** `npx agentic15 visual-test <url>` captures screenshots + logs
+- **Network Monitoring:** Automatic 4xx/5xx error detection
+- **Accessibility:** Integrated axe-core for WCAG compliance
+- **Claude Self-Checks:** Autonomous verification before commit
+
+### Complete Workflow Consistency
+
+- **Plan Branches:** Auto-create `plan/<plan-id>` branches (like tasks)
+- **Sync Support:** `npx agentic15 sync` handles plan branches
+- **Archive Naming:** Unique timestamps prevent conflicts
 
 ---
+
+## Commands
+
+| Command | Description |
+|---------|-------------|
+| `npx agentic15 plan [requirements]` | Generate or lock project plan |
+| `npx agentic15 plan archive [reason]` | Archive completed plan |
+| `npx agentic15 task next` | Start next pending task |
+| `npx agentic15 task start TASK-ID` | Start specific task |
+| `npx agentic15 status` | Show project status |
+| `npx agentic15 commit` | Commit & create PR |
+| `npx agentic15 sync` | Sync with main after PR merge |
+| `npx agentic15 visual-test <url>` | Capture UI screenshots and console errors |
+| `npx agentic15 auth` | Configure GitHub authentication |
+
+---
+
+## Daily Workflow
+
+### 1. Implement (Claude Code)
+```
+Ask: "Implement the active task"
+```
+
+Claude writes code in `Agent/` directory.
 
 ### 2. Commit & PR (Your Terminal)
 ```bash
 npx agentic15 commit
 ```
 
-Stages changes, commits, pushes, creates PR
+Stages changes, commits, pushes, creates PR.
 
----
-
-### 3. Review (GitHub)
-Review and merge the PR
-
----
+### 3. Review (GitHub/Azure)
+Review and merge the PR.
 
 ### 4. Sync & Next (Your Terminal)
 ```bash
 npx agentic15 sync
-```
-
-Syncs with main, deletes feature branch
-
-```bash
 npx agentic15 task next
 ```
 
-Starts next task
+Syncs with main, deletes feature branch, starts next task.
 
 ---
 
-## Plan Lifecycle Management
+## Platform Integration
 
-### Archive Completed Plan
+**Choose one platform for your project:**
 
-When all tasks in a plan are complete:
+### GitHub
 
+**Quick Setup:**
 ```bash
-npx agentic15 plan archive "Plan completed successfully"
+npx agentic15 auth  # Authenticate with GitHub CLI
 ```
 
-This command:
-- Creates branch: `admin/archive-plan-{planId}`
-- Moves plan to `.claude/plans/archived/{planId}/`
-- Clears active plan
-- Commits, pushes, and creates PR
-
-### Create New Plan
-
-After archiving the completed plan:
-
-**Bash/Mac/Linux:**
-```bash
-npx agentic15 plan new "Build user dashboard with analytics"
-```
-
-**PowerShell (Windows):**
-```powershell
-npx agentic15 plan new "Build user dashboard with analytics"
-```
-
-This command:
-- Creates branch: `admin/new-plan-{newPlanId}`
-- Generates new plan with sequential ID (plan-002, plan-003, etc.)
-- Creates PROJECT-REQUIREMENTS.txt
-- Sets as active plan
-- Commits, pushes, and creates PR
-
-**Workflow:**
-```
-complete tasks → archive plan → merge PR → create new plan → merge PR → continue
-```
+**📘 [Complete GitHub Setup Guide](./Agent/docs/GITHUB-SETUP.md)**
 
 ---
 
-## Core Features
+### Azure DevOps
 
-<table>
-<tr>
-<td width="50%">
-
-### Commands
-
-| Command | Description |
-|---------|-------------|
-| `npx agentic15 plan [description]` | Generate and lock project plan |
-| `npx agentic15 plan archive [reason]` | Archive completed plan |
-| `npx agentic15 plan new [description]` | Create new plan |
-| `npx agentic15 task next` | Start next pending task |
-| `npx agentic15 task start TASK-XXX` | Start specific task |
-| `npx agentic15 task status` | View current progress |
-| `npx agentic15 commit` | Commit, push, and create PR |
-| `npx agentic15 sync` | Sync with main branch after PR merge |
-| `npx agentic15 update-settings` | Update `.claude/settings.json` from latest framework |
-| `npx agentic15 visual-test <url>` | Capture UI screenshots and console errors |
-| `npx agentic15 auth` | Configure GitHub authentication |
-
-</td>
-<td width="50%">
-
-### Workflow Automation
-
-The framework automates:
-- **Feature branches:** `feature/task-001`, `feature/task-002`, etc.
-- **Commit messages:** `[TASK-001] Task title`
-- **GitHub push:** Automatic push to remote
-- **Pull requests:** Auto-generated with task details
-- **Issue tracking:** Optional GitHub Issues integration
-
-### Standard Workflow
-
-```
-plan → task → code → commit → PR → merge → sync → next task
+**Quick Setup:**
+```bash
+az login           # Authenticate with Azure
+az devops login    # Authenticate with Azure DevOps
 ```
 
-</td>
-</tr>
-</table>
+**📘 [Complete Azure DevOps Setup Guide](./Agent/docs/AZURE-SETUP.md)**
+
+**Additional Resources:**
+- [Azure Integration Guide](./Agent/docs/azure-integration-guide.md)
+- [Azure Authentication](./Agent/docs/azure-authentication.md)
+- [Azure Quick Reference](./Agent/docs/azure-quick-reference.md)
 
 ---
 
-## Project Structure
+### Platform Comparison
 
-<table>
-<tr>
-<td width="50%">
+| Feature | GitHub | Azure DevOps |
+|---------|--------|--------------|
+| **Authentication** | `gh` CLI (no tokens) | Azure CLI + PAT |
+| **Setup Command** | `npx agentic15 auth` | `az login && az devops login` |
+| **PR Creation** | `gh pr create` | `az repos pr create` |
+| **Issue Tracking** | GitHub Issues (optional) | Azure Boards (optional) |
+| **Auto-Detection** | From git remote | From git remote |
 
-### Directory Layout
+---
 
-```
-my-project/
-├── node_modules/
-│   └── @agentic15.com/agentic15-claude-zen/
-│       └── framework/          # Framework files
-│           ├── hooks/          # Claude Code hooks
-│           ├── settings.json   # Framework settings
-│           ├── PLAN-SCHEMA.json
-│           ├── PROJECT-PLAN-TEMPLATE.json
-│           └── POST-INSTALL.md
-├── .claude/                    # User-generated content
-│   ├── ACTIVE-PLAN             # Current active plan
-│   ├── plans/                  # Your project plans
-│   │   └── {planId}/
-│   │       ├── TASK-TRACKER.json
-│   │       └── tasks/
-│   ├── settings.json           # References framework
-│   └── settings.local.json     # Local overrides
-├── Agent/                      # Your code workspace
-│   ├── src/                    # Source code
-│   └── tests/                  # Tests (optional)
-├── scripts/                    # Build utilities
-└── package.json                # Project dependencies
-```
+## Upgrading
 
-</td>
-<td width="50%">
-
-### Framework Upgrades
-
-Framework files live in `node_modules` and are automatically updated:
+### Upgrade Framework
 
 ```bash
-# Upgrade to latest version
-npm install @agentic15.com/agentic15-claude-zen@latest
-
-# Update settings.json to latest framework version
-npx agentic15 update-settings
-
-# Or to a specific version
-npm install @agentic15.com/agentic15-claude-zen@5.0.0
-npx agentic15 update-settings
+npm install -g @agentic15.com/agentic15-claude-zen@latest
 ```
 
 **What gets updated:**
@@ -362,286 +251,12 @@ npx agentic15 update-settings
 - ✅ Your plans and tasks in `.claude/plans/`
 - ✅ Your local settings in `.claude/settings.local.json`
 
-**Note:** After upgrading, run `npx agentic15 update-settings` to update your `.claude/settings.json` with the latest framework configuration. Your existing settings will be backed up to `.claude/settings.json.backup`.
-
-</td>
-</tr>
-</table>
-
----
-
-## Platform Integration
-
-**Choose one platform for your project:**
-
-<details open>
-<summary><strong>📘 GitHub Integration Guide</strong> (Click to expand/collapse)</summary>
-
-##
-
-<table>
-<tr>
-<td width="50%">
-
-### Authentication
-
-The framework uses **GitHub CLI (`gh`)** for authentication - no personal access tokens needed!
-
-**Setup:**
+**After upgrading:**
 ```bash
-npx agentic15 auth
+npx agentic15 update-settings
 ```
 
-This command will:
-1. Check if `gh` CLI is installed
-2. Run `gh auth login` if not already authenticated
-3. Auto-detect your repository owner/repo from git remote
-4. Save configuration to `.claude/settings.local.json`
-
-**Note:** Authentication is handled by `gh` CLI - no token field needed.
-
-</td>
-<td width="50%">
-
-### Manual Configuration (Optional)
-
-If you need to override the auto-detected values, create or edit `.claude/settings.local.json`:
-```json
-{
-  "github": {
-    "enabled": true,
-    "autoCreate": false,
-    "autoUpdate": false,
-    "autoClose": false,
-    "owner": "your-username",
-    "repo": "your-repo"
-  }
-}
-```
-
-**Note:** Default settings have `autoCreate`, `autoUpdate`, and `autoClose` set to `false` to give you full control. Set them to `true` if you want automatic GitHub issue management.
-
-### Features (Optional - Enable in settings)
-- **Auto-create issues:** When starting tasks (set `autoCreate: true`)
-- **Auto-update issues:** When creating PRs (set `autoUpdate: true`)
-- **Auto-close issues:** When merging to main (set `autoClose: true`)
-- **Secure authentication:** Uses `gh` CLI credentials
-
-</td>
-</tr>
-</table>
-
-### Resources
-
-- **GitHub CLI:** https://cli.github.com/
-- **GitHub CLI Manual:** https://cli.github.com/manual/
-- **Authentication:** https://cli.github.com/manual/gh_auth_login
-
-</details>
-
----
-
-<details>
-<summary><strong>📘 Azure DevOps Integration Guide</strong> (Click to expand/collapse)</summary>
-
-## Azure DevOps Setup
-
-<table>
-<tr>
-<td width="50%">
-
-### Authentication
-
-The framework uses **Azure CLI (`az`)** for authentication.
-
-**Setup:**
-```bash
-# Install Azure CLI
-# Windows: https://aka.ms/installazurecliwindows
-# Mac: brew install azure-cli
-# Linux: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-
-# Login to Azure
-az login
-
-# Login to Azure DevOps
-az devops login
-```
-
-**Configure your project:**
-```bash
-# Set default organization and project
-az devops configure --defaults organization=https://dev.azure.com/YOUR_ORG project=YOUR_PROJECT
-```
-
-**Create Personal Access Token (PAT):**
-1. Go to Azure DevOps → User Settings → Personal Access Tokens
-2. Click "New Token"
-3. Name: "Agentic15 CLI"
-4. Scopes:
-   - Work Items (Read, Write, Manage)
-   - Code (Read, Write, Status)
-5. Click "Create"
-6. Copy the token
-
-**Save token for authentication:**
-```bash
-# Set environment variable (add to ~/.bashrc or ~/.zshrc)
-export AZURE_DEVOPS_EXT_PAT=your-pat-token-here
-```
-
-</td>
-<td width="50%">
-
-### Configuration
-
-Create `.claude/settings.local.json` in your project:
-
-```json
-{
-  "azure": {
-    "enabled": true,
-    "organization": "YOUR_ORG",
-    "project": "YOUR_PROJECT",
-    "autoCreate": false,
-    "autoUpdate": false,
-    "autoClose": false
-  }
-}
-```
-
-**Configuration Options:**
-- `enabled`: Set to `true` to use Azure DevOps
-- `organization`: Your Azure DevOps organization name
-- `project`: Your project name
-- `autoCreate`: Auto-create work items when starting tasks
-- `autoUpdate`: Auto-update work items when creating PRs
-- `autoClose`: Auto-close work items when merging to main
-
-**Note:** Default settings have `autoCreate`, `autoUpdate`, and `autoClose` set to `false` to give you full control. Set them to `true` if you want automatic work item management.
-
-### Features (Optional - Enable in settings)
-- **Auto-create work items:** When starting tasks (set `autoCreate: true`)
-- **Auto-update work items:** When creating PRs (set `autoUpdate: true`)
-- **Auto-close work items:** When merging to main (set `autoClose: true`)
-- **Secure authentication:** Uses Azure CLI and PAT
-
-</td>
-</tr>
-</table>
-
-### Quick Start with Azure DevOps
-
-**1. Create Project**
-```bash
-npx @agentic15.com/agentic15-claude-zen my-project
-cd my-project
-```
-
-**2. Initialize Git and Azure Repos**
-```bash
-git init
-git branch -M main
-git add .
-git commit -m "Initial commit"
-
-# Create Azure Repo
-az repos create --name YOUR_REPO --org https://dev.azure.com/YOUR_ORG --project YOUR_PROJECT
-
-# Add remote and push
-git remote add origin https://dev.azure.com/YOUR_ORG/YOUR_PROJECT/_git/YOUR_REPO
-git push -u origin main
-```
-
-**3. Configure Branch Protection**
-```bash
-# Set main branch policies
-az repos policy create --org https://dev.azure.com/YOUR_ORG --project YOUR_PROJECT \
-  --repository-id YOUR_REPO_ID \
-  --branch main \
-  --blocking true \
-  --enabled true \
-  --policy-type "Require pull request reviews"
-```
-
-**4. Create Plan**
-```bash
-npx agentic15 plan "Build a todo app with add, remove, and list features"
-```
-
-**In Claude Code:**
-```
-Ask: "Create the project plan from the requirements file"
-```
-
-**Back in Terminal:**
-```bash
-npx agentic15 plan
-git add .
-git commit -m "Add initial project plan"
-git push
-```
-
-**5. Start First Task**
-```bash
-npx agentic15 task next
-```
-
-### Daily Development Workflow
-
-**1. Implement (Claude Code)**
-```
-Ask: "Implement the active task"
-```
-
-Claude writes code in `Agent/` directory.
-
-**2. Commit & PR (Your Terminal)**
-```bash
-npx agentic15 commit
-```
-
-Stages changes, commits, pushes, creates Azure DevOps PR.
-
-**3. Review (Azure DevOps)**
-Review and complete the PR in Azure DevOps portal.
-
-**4. Sync & Next (Your Terminal)**
-```bash
-npx agentic15 sync
-npx agentic15 task next
-```
-
-Syncs with main, deletes feature branch, starts next task.
-
-### Azure DevOps Commands
-
-| Command | Description |
-|---------|-------------|
-| `az devops login` | Authenticate to Azure DevOps |
-| `az devops configure` | Set default organization and project |
-| `az repos create` | Create new repository |
-| `az repos pr create` | Create pull request |
-| `az repos pr list` | List pull requests |
-| `az boards work-item create` | Create work item |
-| `az boards work-item update` | Update work item |
-
-### Requirements
-
-- **Node.js:** 18.0.0 or higher
-- **Git:** Any recent version
-- **Azure CLI:** `az` command-line tool
-- **Azure DevOps Account:** For work item and PR management
-- **Personal Access Token (PAT):** For authentication
-
-### Resources
-
-- **Detailed Integration Guide:** [Agent/docs/azure-integration-guide.md](Agent/docs/azure-integration-guide.md)
-- **Azure CLI Installation:** https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
-- **Azure DevOps Extension:** https://docs.microsoft.com/en-us/azure/devops/cli/
-- **Create PAT:** https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate
-
-</details>
+This updates your `.claude/settings.json` with the latest framework configuration. Your existing settings will be backed up to `.claude/settings.json.backup`.
 
 ---
 
@@ -655,13 +270,14 @@ Syncs with main, deletes feature branch, starts next task.
 
 - **Node.js:** 18.0.0 or higher
 - **Git:** Any recent version
-- **GitHub CLI:** `gh` command-line tool
-- **GitHub Account:** For issue and PR management
+- **Platform CLI:** `gh` (GitHub) or `az` (Azure DevOps)
+- **Claude Code:** Latest version recommended
 
 ### Documentation
 
-- **[CHANGELOG.md](CHANGELOG.md)** - Version history and release notes
-- **[MIGRATION-GUIDE-v4-to-v5.md](MIGRATION-GUIDE-v4-to-v5.md)** - Upgrade guide from v4.x to v5.x
+- **[CHANGELOG.md](./Agent/CHANGELOG.md)** - Version history and release notes
+- **[GitHub Setup](./Agent/docs/GITHUB-SETUP.md)** - Detailed GitHub integration
+- **[Azure Setup](./Agent/docs/AZURE-SETUP.md)** - Detailed Azure DevOps integration
 
 ### Support
 
@@ -673,21 +289,27 @@ Syncs with main, deletes feature branch, starts next task.
 
 ### Philosophy
 
-**Structure, Not Enforcement**
+This framework embodies a **lean** philosophy:
 
-The framework provides:
-- ✅ Task tracking and organization
-- ✅ Consistent workflow structure
-- ✅ GitHub integration
-- ✅ Manual UI testing tools
+**Structure, not enforcement:**
+- Provides organization and commands
+- No mandatory testing requirements
+- Claude decides what tests are appropriate
 
-The framework does NOT enforce:
-- ❌ Mandatory testing
-- ❌ Specific test frameworks
-- ❌ CI/CD requirements
-- ❌ Code quality gates
+**Token efficiency:**
+- Centralized service layer for data-driven apps
+- One file updates instead of 1000
+- 1000x reduction in token usage
 
-**You decide:** When to write tests, what tools to use, and how to ensure quality. The framework provides structure and tools, not rigid rules.
+**User engagement:**
+- UI-first development approach
+- Working demos from Day 1
+- Visual verification over unit testing
+
+**Workflow consistency:**
+- Plans and tasks follow same patterns
+- Branch → Commit → PR → Sync
+- Autonomous when possible, manual when needed
 
 </td>
 </tr>
@@ -697,8 +319,26 @@ The framework does NOT enforce:
 
 ## License
 
-Apache 2.0 - See [LICENSE](LICENSE) file for details.
+Apache 2.0 - See [LICENSE](./Agent/LICENSE) for details.
+
+Copyright 2024-2026 agentic15.com
 
 ---
 
-**Made with ❤️ for Claude Code developers**
+## Version History
+
+### v7.0.1 (2026-01-04) - Documentation Improvements
+- **README:** 58% smaller (340 lines vs 806)
+- **Organization:** Links to detailed guides instead of embedding
+
+### v7.0.0 (2026-01-04) - Token-Efficient Architecture
+- **Service Layer Pattern:** 1000x token reduction for data-driven apps
+- **Autonomous UI Verification:** Visual testing with screenshots + accessibility
+- **Workflow Consistency:** Plan branches, sync support, archive naming
+
+### v6.0.0 (2025-12-31) - Dual-Platform Support
+- GitHub and Azure DevOps integration
+- Platform auto-detection
+- Unified command structure
+
+See [CHANGELOG.md](./Agent/CHANGELOG.md) for complete history.
