@@ -10,13 +10,14 @@ export class SyncCommand {
     const currentBranch = this.getCurrentBranch();
     console.log(`📍 Current branch: ${currentBranch}\n`);
 
-    // Step 2: Check if on feature or admin branch
+    // Step 2: Check if on feature, plan, or admin branch
     const isFeatureBranch = currentBranch.startsWith('feature/');
+    const isPlanBranch = currentBranch.startsWith('plan/');
     const isAdminBranch = currentBranch.startsWith('admin/');
 
-    if (!isFeatureBranch && !isAdminBranch && currentBranch !== 'main') {
-      console.log(`⚠️  You're on branch '${currentBranch}', not a feature or admin branch`);
-      console.log(`   This command syncs feature/admin branches with main\n`);
+    if (!isFeatureBranch && !isPlanBranch && !isAdminBranch && currentBranch !== 'main') {
+      console.log(`⚠️  You're on branch '${currentBranch}', not a feature/plan/admin branch`);
+      console.log(`   This command syncs feature/plan/admin branches with main\n`);
       process.exit(1);
     }
 
@@ -28,7 +29,7 @@ export class SyncCommand {
     }
 
     // Step 4: Check PR status (CRITICAL: prevents data loss)
-    if (isFeatureBranch || isAdminBranch) {
+    if (isFeatureBranch || isPlanBranch || isAdminBranch) {
       this.checkPRStatus(currentBranch);
     }
 
@@ -44,15 +45,15 @@ export class SyncCommand {
     console.log('⬇️  Pulling latest changes...\n');
     this.pullMain(mainBranch);
 
-    // Step 8: Delete feature/admin branch if we were on one
-    if (isFeatureBranch || isAdminBranch) {
-      const branchType = isFeatureBranch ? 'feature' : 'admin';
+    // Step 8: Delete feature/plan/admin branch if we were on one
+    if (isFeatureBranch || isPlanBranch || isAdminBranch) {
+      const branchType = isFeatureBranch ? 'feature' : (isPlanBranch ? 'plan' : 'admin');
       console.log(`🗑️  Cleaning up ${branchType} branch: ${currentBranch}...\n`);
       this.deleteFeatureBranch(currentBranch);
     }
 
     // Step 9: Display summary
-    this.displaySummary(mainBranch, currentBranch, isFeatureBranch || isAdminBranch);
+    this.displaySummary(mainBranch, currentBranch, isFeatureBranch || isPlanBranch || isAdminBranch);
   }
 
   static getCurrentBranch() {

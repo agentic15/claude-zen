@@ -107,6 +107,43 @@ export class PlanCommand {
     try {
       // Create plan ID
       const planId = this.getNextPlanId();
+
+      // Create branch for plan (like task workflow)
+      const mainBranch = this.getMainBranch();
+      console.log(`📥 Syncing with remote ${mainBranch}...\n`);
+
+      try {
+        // Switch to main branch
+        console.log(`   → Switching to ${mainBranch}`);
+        execSync(`git checkout ${mainBranch}`, { stdio: 'inherit' });
+
+        // Pull latest changes from remote
+        console.log(`   → Pulling latest changes`);
+        execSync(`git pull origin ${mainBranch}`, { stdio: 'inherit' });
+
+        console.log(`\n✓ ${mainBranch} is up to date\n`);
+      } catch (error) {
+        console.log(`\n⚠️  Warning: Could not sync with remote ${mainBranch}`);
+        console.log(`   Continuing with local ${mainBranch}...\n`);
+      }
+
+      // Create feature branch for plan
+      const branchName = `plan/${planId}`;
+      console.log(`🌿 Creating branch: ${branchName}\n`);
+
+      try {
+        execSync(`git checkout -b ${branchName}`, { stdio: 'inherit' });
+        console.log(`✓ Created and switched to ${branchName}\n`);
+      } catch (error) {
+        // Branch might already exist
+        try {
+          execSync(`git checkout ${branchName}`, { stdio: 'inherit' });
+          console.log(`✓ Switched to existing branch ${branchName}\n`);
+        } catch (e) {
+          console.log(`\n❌ Failed to create/checkout branch: ${branchName}\n`);
+          process.exit(1);
+        }
+      }
       const planPath = join(process.cwd(), '.claude', 'plans', planId);
 
       // Create plan directory
@@ -304,10 +341,12 @@ GENERATED: ${new Date().toISOString()}
       writeFileSync(activePlanPath, planId);
 
       console.log(`✅ Plan requirements created: ${planId}`);
+      console.log(`   Branch: plan/${planId}`);
       console.log(`   Location: .claude/plans/${planId}/PROJECT-REQUIREMENTS.txt\n`);
       console.log('💡 Next steps:');
       console.log(`   1. Tell Claude: "Create the project plan"`);
-      console.log(`   2. When Claude is done, run: npx agentic15 plan\n`);
+      console.log(`   2. When Claude is done, run: npx agentic15 plan`);
+      console.log(`   3. Then commit and create PR (like task workflow)\n`);
     } catch (error) {
       console.log(`\n❌ Failed to generate plan: ${error.message}\n`);
       process.exit(1);
