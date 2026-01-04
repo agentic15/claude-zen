@@ -5,9 +5,9 @@
   "lockedAt": "2026-01-04T17:40:30.095Z",
   "statistics": {
     "totalTasks": 12,
-    "completed": 1,
+    "completed": 2,
     "inProgress": 0,
-    "pending": 11
+    "pending": 10
   },
   "taskFiles": [
     {
@@ -23,8 +23,10 @@
       "id": "TASK-002",
       "title": "Create skill base wrapper utility",
       "phase": "implementation",
-      "status": "pending",
-      "description": "Build reusable utility for wrapping npm package commands into skills"
+      "status": "completed",
+      "description": "Build reusable utility for wrapping npm package commands into skills",
+      "startedAt": "2026-01-04T23:06:30.859Z",
+      "completedAt": "2026-01-04T23:12:08.653Z"
     },
     {
       "id": "TASK-003",

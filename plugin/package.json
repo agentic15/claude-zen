@@ -2,7 +2,7 @@
   "name": "@agentic15.com/claude-code-zen-plugin",
   "version": "1.0.0",
   "description": "Claude Code skills plugin for Agentic15 framework - provides native /agentic15:* slash commands",
-  "type": "claude-plugin",
+  "type": "module",
   "main": "index.js",
   "keywords": [
     "claude-code",
@@ -52,6 +52,6 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Tests not yet implemented\" && exit 0"
+    "test": "node --test tests/skill-wrapper.test.js"
   }
 }
