@@ -5,7 +5,8 @@
       "Bash(mkdir:*)",
       "Bash(npm create:*)",
       "Bash(npm pack:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(npm test)"
     ]
   },
   "github": {
@@ -18,7 +19,7 @@
   },
   "azureDevOps": {
     "enabled": true,
-    "autoCreate":false,
+    "autoCreate": false,
     "autoUpdate": false,
     "autoClose": false,
     "organization": "agentic15",
