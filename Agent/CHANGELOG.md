@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Copyright 2024-2025 agentic15.com
 
+## [6.1.0] - 2026-01-04
+
+### Summary
+Minor release adding autonomous UI verification workflow and plan branch consistency.
+
+### ✨ Added
+
+**Autonomous UI Verification Workflow**
+- **Visual Test Enhancements**: Network error logging (4xx/5xx responses) with timestamps
+- **Accessibility Testing**: Integrated axe-core for WCAG compliance checking
+- **Plan Generation Philosophy**: Embedded lean testing guidelines (5-10 focused tests, not 50-100)
+- **UI Verification Checkpoint**: All generated tasks now include UI verification in completion criteria
+- **Claude Self-Checks**: Claude autonomously runs `npx agentic15 visual-test` and analyzes results
+
+**Plan Branch Consistency**
+- **Auto-Branch Creation**: Plan commands now auto-create branches (`plan/<plan-id>`)
+- **Workflow Consistency**: Plans follow same workflow as tasks (branch → commit → PR)
+- **Sync Support**: `npx agentic15 sync` now handles plan branches
+- **Permission Updates**: Template settings.json includes `visual-test` in allow list
+
+### 🔧 Changed
+- **PlanCommand**: Now creates branch before plan generation (matches task workflow)
+- **SyncCommand**: Recognizes and handles `plan/*` branches alongside `feature/*` and `admin/*`
+- **Settings Template**: Updated with specific deny rules instead of blanket `npx agentic15:*` ban
+
+### 📝 Documentation
+- **Testing Philosophy**: Plan generation now includes necessity vs luxury testing guidelines
+- **Documentation Philosophy**: Claude-facing decisions embedded where Claude reads them
+
+---
+
 ## [6.0.1] - 2025-12-31
 
 ### Summary

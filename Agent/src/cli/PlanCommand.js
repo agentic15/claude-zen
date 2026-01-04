@@ -516,8 +516,14 @@ GENERATED: ${new Date().toISOString()}
       try {
         execSync(`git checkout -b ${branchName}`, { stdio: 'inherit' });
       } catch (error) {
-        console.log(`\n❌ Failed to create branch: ${error.message}\n`);
-        process.exit(1);
+        // Branch might already exist, try to checkout
+        try {
+          execSync(`git checkout ${branchName}`, { stdio: 'inherit' });
+          console.log(`✓ Switched to existing branch ${branchName}\n`);
+        } catch (e) {
+          console.log(`\n❌ Failed to create/checkout branch: ${branchName}\n`);
+          process.exit(1);
+        }
       }
 
       // Create archived directory
@@ -526,9 +532,19 @@ GENERATED: ${new Date().toISOString()}
         mkdirSync(archivedDir, { recursive: true});
       }
 
-      // Move plan to archived
-      const archivedPlanPath = join(archivedDir, planId);
-      console.log(`   Moving plan to: .claude/plans/archived/${planId}`);
+      // Generate unique archived plan name if already exists
+      let archivedPlanPath = join(archivedDir, planId);
+      let archivedPlanName = planId;
+
+      if (existsSync(archivedPlanPath)) {
+        // Append timestamp to make unique
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+        archivedPlanName = `${planId}-${timestamp}`;
+        archivedPlanPath = join(archivedDir, archivedPlanName);
+        console.log(`   ⚠️  Plan already archived, using unique name: ${archivedPlanName}`);
+      }
+
+      console.log(`   Moving plan to: .claude/plans/archived/${archivedPlanName}`);
 
       try {
         renameSync(planPath, archivedPlanPath);
@@ -542,7 +558,7 @@ GENERATED: ${new Date().toISOString()}
         archivedAt: new Date().toISOString(),
         reason: reason || 'Plan completed',
         originalPath: `.claude/plans/${planId}`,
-        archivedPath: `.claude/plans/archived/${planId}`
+        archivedPath: `.claude/plans/archived/${archivedPlanName}`
       };
 
       const metadataPath = join(archivedPlanPath, 'ARCHIVE-META.json');
