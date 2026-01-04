@@ -1,0 +1,27 @@
+{
+  "id": "TASK-002",
+  "title": "Create skill base wrapper utility",
+  "description": "Build reusable utility for wrapping npm package commands into skills",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-001"
+  ],
+  "estimatedHours": 2,
+  "completionCriteria": [
+    "SkillWrapper utility created in utils/skill-wrapper.js",
+    "Handles error formatting for Claude Code",
+    "Provides success message templates",
+    "Validates .claude/ directory exists",
+    "Works with all command types (plan, task, commit, etc.)",
+    "5-10 tests for wrapper utility"
+  ],
+  "artifacts": {
+    "code": [
+      "utils/skill-wrapper.js"
+    ],
+    "tests": [
+      "tests/skill-wrapper.test.js"
+    ]
+  }
+}

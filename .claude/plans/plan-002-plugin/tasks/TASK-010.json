@@ -1,0 +1,34 @@
+{
+  "id": "TASK-010",
+  "title": "End-to-end workflow testing",
+  "description": "Test complete workflow using all skills together",
+  "status": "pending",
+  "phase": "testing",
+  "dependencies": [
+    "TASK-003",
+    "TASK-004",
+    "TASK-005",
+    "TASK-006",
+    "TASK-007",
+    "TASK-008",
+    "TASK-009"
+  ],
+  "estimatedHours": 3,
+  "completionCriteria": [
+    "Test workflow: /agentic15:plan → create plan → /agentic15:plan (lock) → /agentic15:task-next → /agentic15:commit → /agentic15:sync",
+    "Test all error scenarios (no plan, invalid task, etc.)",
+    "Verify skills work in Claude Code environment",
+    "Test skill discovery in Claude Code",
+    "Verify no conflicts with other plugins",
+    "All skills show helpful error messages",
+    "Success paths work without errors"
+  ],
+  "artifacts": {
+    "tests": [
+      "tests/integration/workflow.test.js"
+    ],
+    "documentation": [
+      "docs/testing-results.md"
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "TASK-012",
+  "title": "Package and publish preparation",
+  "description": "Prepare plugin for npm publishing",
+  "status": "pending",
+  "phase": "deployment",
+  "dependencies": [
+    "TASK-011"
+  ],
+  "estimatedHours": 2,
+  "completionCriteria": [
+    "Package.json version set to 1.0.0",
+    "All dependencies correct (@agentic15.com/agentic15-claude-zen ^7.0.1)",
+    "Package builds successfully",
+    "Package size verified under 50kB",
+    "README.md synced and complete",
+    "CHANGELOG.md created with v1.0.0 entry",
+    "License file included",
+    "npm pack dry-run succeeds"
+  ],
+  "artifacts": {
+    "code": [
+      "package.json"
+    ],
+    "documentation": [
+      "CHANGELOG.md",
+      "LICENSE"
+    ]
+  }
+}

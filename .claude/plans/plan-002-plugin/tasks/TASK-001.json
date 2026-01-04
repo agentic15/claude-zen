@@ -1,0 +1,27 @@
+{
+  "id": "TASK-001",
+  "title": "Create plugin package structure",
+  "description": "Set up the @agentic15.com/claude-code-zen-plugin package with proper structure and configuration",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [],
+  "estimatedHours": 3,
+  "completionCriteria": [
+    "Package.json created with name @agentic15.com/claude-code-zen-plugin",
+    "Package type set to 'claude-plugin'",
+    "Dependency on @agentic15.com/agentic15-claude-zen ^7.0.1",
+    "Directory structure: skills/, tests/, README.md",
+    "Plugin namespace configured as 'agentic15'",
+    "Package size under 50kB verified"
+  ],
+  "artifacts": {
+    "code": [
+      "package.json",
+      "skills/.gitkeep",
+      "tests/.gitkeep"
+    ],
+    "documentation": [
+      "README.md"
+    ]
+  }
+}

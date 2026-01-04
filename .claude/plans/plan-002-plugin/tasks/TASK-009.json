@@ -1,0 +1,28 @@
+{
+  "id": "TASK-009",
+  "title": "Implement agentic15:visual-test skill",
+  "description": "Create /agentic15:visual-test skill for UI verification",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-002"
+  ],
+  "estimatedHours": 2,
+  "completionCriteria": [
+    "Skill file: skills/visual-test.js with agentic15:visual-test namespace",
+    "Accepts required URL parameter",
+    "Calls VisualTestCommand.execute(url)",
+    "Shows generated file paths for screenshots and logs",
+    "Error handling for invalid URL, Playwright not installed, server not running",
+    "Success message lists all captured artifacts",
+    "5-10 focused tests"
+  ],
+  "artifacts": {
+    "code": [
+      "skills/visual-test.js"
+    ],
+    "tests": [
+      "tests/visual-test.test.js"
+    ]
+  }
+}
