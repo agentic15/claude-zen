@@ -1,0 +1,156 @@
+/**
+ * Centralized API Service Layer
+ *
+ * This file is the ONLY place Claude updates when switching between phases.
+ * UI components NEVER change - they always import from this file.
+ *
+ * PHASE CONTROL: Change this constant to switch phases
+ */
+const CURRENT_PHASE = 1; // 1 = Mock | 2 = Real API | 3 = Real API + DB
+
+import { mockData } from './mock-data.js';
+
+/**
+ * API Service
+ *
+ * All UI components use this service to access data.
+ * Phase switching happens automatically based on CURRENT_PHASE.
+ */
+export const API = {
+
+  // ============================================
+  // EXAMPLE: Products Entity
+  // Copy this pattern for other entities
+  // ============================================
+  products: {
+    /**
+     * Get all products
+     * Phase 1: Returns mock data
+     * Phase 2+: Calls real API endpoint
+     */
+    async list(filters = {}) {
+      if (CURRENT_PHASE === 1) {
+        // Phase 1: Return mock data
+        let products = [...mockData.products];
+
+        // Apply filters to mock data
+        if (filters.category) {
+          products = products.filter(p => p.category === filters.category);
+        }
+        if (filters.search) {
+          products = products.filter(p =>
+            p.name.toLowerCase().includes(filters.search.toLowerCase())
+          );
+        }
+
+        return products;
+      }
+
+      // Phase 2+: Real API
+      const queryParams = new URLSearchParams(filters).toString();
+      const url = `/api/products${queryParams ? '?' + queryParams : ''}`;
+      const res = await fetch(url);
+      return res.json();
+    },
+
+    /**
+     * Get single product by ID
+     */
+    async get(id) {
+      if (CURRENT_PHASE === 1) {
+        return mockData.products.find(p => p.id === id);
+      }
+
+      const res = await fetch(`/api/products/${id}`);
+      return res.json();
+    },
+
+    /**
+     * Create new product
+     */
+    async create(product) {
+      if (CURRENT_PHASE === 1) {
+        const newProduct = {
+          id: Date.now(),
+          createdAt: new Date().toISOString(),
+          ...product
+        };
+        mockData.products.push(newProduct);
+        return newProduct;
+      }
+
+      const res = await fetch('/api/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(product)
+      });
+      return res.json();
+    },
+
+    /**
+     * Update existing product
+     */
+    async update(id, updates) {
+      if (CURRENT_PHASE === 1) {
+        const index = mockData.products.findIndex(p => p.id === id);
+        if (index !== -1) {
+          mockData.products[index] = {
+            ...mockData.products[index],
+            ...updates,
+            updatedAt: new Date().toISOString()
+          };
+          return mockData.products[index];
+        }
+        throw new Error('Product not found');
+      }
+
+      const res = await fetch(`/api/products/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updates)
+      });
+      return res.json();
+    },
+
+    /**
+     * Delete product
+     */
+    async delete(id) {
+      if (CURRENT_PHASE === 1) {
+        const index = mockData.products.findIndex(p => p.id === id);
+        if (index !== -1) {
+          mockData.products.splice(index, 1);
+          return { success: true };
+        }
+        throw new Error('Product not found');
+      }
+
+      const res = await fetch(`/api/products/${id}`, {
+        method: 'DELETE'
+      });
+      return res.json();
+    }
+  },
+
+  // ============================================
+  // Add more entities here following same pattern:
+  // users: { list, get, create, update, delete },
+  // orders: { list, get, create, update, delete },
+  // etc.
+  // ============================================
+};
+
+/**
+ * Error Handling Wrapper (optional but recommended)
+ * Wraps API calls with consistent error handling
+ */
+export async function apiCall(apiMethod, ...args) {
+  try {
+    return await apiMethod(...args);
+  } catch (error) {
+    console.error('API Error:', error);
+    // You can add global error handling here
+    // e.g., toast notifications, error tracking, etc.
+    throw error;
+  }
+}
