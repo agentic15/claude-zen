@@ -320,6 +320,143 @@ Remember: Future Claude sessions need context about DECISIONS,
 not tutorials about how to use the code.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DATA-DRIVEN APPLICATIONS - CENTRALIZED SERVICE LAYER PATTERN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+For applications with Database + API + UI:
+
+🎯 CRITICAL: Use UI-First with Centralized Service Layer
+
+WHY: Prevents token waste and confusion:
+  ❌ BAD: Markers in 1000 UI files (2M+ tokens to update)
+  ✅ GOOD: One service file (2K tokens to update)
+
+ARCHITECTURE:
+  UI Components (1000+ files) → NEVER CHANGE ACROSS PHASES
+       ↓
+  services/api.js (1 file) → Claude updates ONLY this
+       ↓
+  Mock Data OR Real API → Config-based switching
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FILE STRUCTURE (Always create this for data-driven apps):
+
+src/
+├── components/          # UI components - NEVER change
+├── services/
+│   ├── api.js          # ← Claude updates ONLY here
+│   ├── mock-data.js    # Realistic mock data
+│   └── config.js       # Phase switching
+└── pages/              # Pages/routes - use services/api.js
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PHASE STRATEGY:
+
+PHASE 1: UI with Centralized Mock Service
+  - Create services/api.js with CURRENT_PHASE = 1
+  - All UI components import from services/api.js
+  - Mock data returns immediately (no backend needed)
+  - User sees working UI on Day 1
+  - Visual verification works immediately
+
+PHASE 2: Real API Integration
+  - Claude changes ONE line: CURRENT_PHASE = 1 → 2
+  - Implement backend endpoints
+  - UI components unchanged (still use services/api.js)
+  - End-to-end testing
+
+PHASE 3: Database Integration
+  - Backend connects to real database
+  - Frontend unchanged (backend handles it)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SERVICES/API.JS PATTERN (Always use this structure):
+
+export const API = {
+  [entity]: {
+    async list() {
+      if (CURRENT_PHASE === 1) return mockData.[entity];
+      const res = await fetch('/api/[entity]');
+      return res.json();
+    },
+
+    async get(id) {
+      if (CURRENT_PHASE === 1) {
+        return mockData.[entity].find(item => item.id === id);
+      }
+      const res = await fetch(\`/api/[entity]/\${id}\`);
+      return res.json();
+    },
+
+    async create(data) {
+      if (CURRENT_PHASE === 1) {
+        const newItem = { id: Date.now(), ...data };
+        mockData.[entity].push(newItem);
+        return newItem;
+      }
+      const res = await fetch('/api/[entity]', {
+        method: 'POST',
+        body: JSON.stringify(data)
+      });
+      return res.json();
+    }
+  }
+};
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+UI COMPONENTS PATTERN (Never change across phases):
+
+import { API } from '../services/api';
+
+function MyComponent() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    // ✅ This NEVER changes - works in all phases
+    API.[entity].list().then(setData);
+  }, []);
+
+  const handleCreate = async (formData) => {
+    // ✅ This NEVER changes - works in all phases
+    const newItem = await API.[entity].create(formData);
+  };
+}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK BREAKDOWN PATTERN (For data-driven apps):
+
+PHASE 1: UI with Centralized Mock Service (Week 1)
+├── TASK-001: Set up service layer (services/api.js, mock-data.js)
+├── TASK-002: [Entity] screens (use API.[entity].*)
+├── TASK-003: [Entity] screens (use API.[entity].*)
+└── TASK-00X: Visual verification (all screens working)
+
+PHASE 2: Real API Integration (Week 2)
+├── TASK-00X: Update services/api.js to Phase 2
+├── TASK-00X: Backend /api/[entity] endpoints
+└── TASK-00X: End-to-end testing
+
+PHASE 3: Database Integration (Week 3)
+├── TASK-00X: Database schema
+├── TASK-00X: Connect backend to database
+└── TASK-00X: Production deployment
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BENEFITS of this approach:
+✅ UI code is production-ready from Day 1
+✅ Claude only updates 1 file to switch phases (not 1000 files)
+✅ Token-efficient (2K tokens vs 2M tokens)
+✅ Easy testing (switch CURRENT_PHASE for different test scenarios)
+✅ Can demo to users immediately
+✅ Parallel work (backend team can work independently)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 7. After creating the plan, tell the user to run:
    npx agentic15 plan

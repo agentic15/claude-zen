@@ -5,12 +5,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Copyright 2024-2025 agentic15.com
+Copyright 2024-2026 agentic15.com
 
-## [6.1.0] - 2026-01-04
+## [7.0.0] - 2026-01-04
+
+### 🎉 MAJOR RELEASE - Token-Efficient Architecture & Autonomous UI Verification
+
+This major release fundamentally improves how data-driven applications are built with Claude, introducing a centralized service layer pattern that reduces token usage by 1000x and ensures production-ready code from Day 1.
 
 ### Summary
-Minor release adding autonomous UI verification workflow and plan branch consistency.
+Major architectural improvements for data-driven applications, autonomous UI verification, and complete workflow consistency.
+
+### 🚀 New Architecture Pattern
+
+**Centralized Service Layer for Data-Driven Apps** ⭐ **FLAGSHIP FEATURE**
+- **Token Efficiency**: 2K tokens to switch phases (not 2M tokens updating 1000 files)
+- **One File Updates**: Claude updates only `services/api.js` to transition mock → API → database
+- **Production-Ready UI**: UI components never change across development phases
+- **Phase-Based Development**: UI-first with mocks → Real API → Database integration
+- **Template Files**: Pre-built `api.js.template` and `mock-data.js.template`
+- **Embedded in Plan Generation**: All data-driven app plans automatically use this pattern
+
+**Architecture:**
+```
+UI Components (1000+ files) → Never change
+     ↓
+services/api.js (1 file) → Claude updates only this
+     ↓
+Mock Data OR Real API → Config-based switching
+```
+
+**Impact:**
+- ✅ Users see working UI on Day 1
+- ✅ No confusion about mock vs real data
+- ✅ Claude doesn't waste tokens reading 1000 files
+- ✅ UI code is production-ready from start
+
+---
 
 ### ✨ Added
 
@@ -29,12 +60,37 @@ Minor release adding autonomous UI verification workflow and plan branch consist
 
 ### 🔧 Changed
 - **PlanCommand**: Now creates branch before plan generation (matches task workflow)
+- **PlanCommand**: Archive with unique naming (timestamp) when plan already archived
 - **SyncCommand**: Recognizes and handles `plan/*` branches alongside `feature/*` and `admin/*`
 - **Settings Template**: Updated with specific deny rules instead of blanket `npx agentic15:*` ban
 
-### 📝 Documentation
-- **Testing Philosophy**: Plan generation now includes necessity vs luxury testing guidelines
-- **Documentation Philosophy**: Claude-facing decisions embedded where Claude reads them
+### 📝 Philosophy & Guidance
+- **Service Layer Pattern**: Complete architecture guidance embedded in plan generation
+- **Testing Philosophy**: Necessity vs luxury testing guidelines (5-10 tests, not 50-100)
+- **Documentation Philosophy**: Claude-facing decisions only, no human tutorials
+- **Development Phases**: UI-first → API → Database progression strategy
+
+### 📦 Templates
+- **NEW**: `templates/services/api.js.template` - Centralized service layer boilerplate
+- **NEW**: `templates/services/mock-data.js.template` - Realistic mock data structure
+
+---
+
+### 💡 Why Version 7.0.0?
+
+This is a **major version** because it introduces a fundamental architectural shift in how data-driven applications are developed:
+
+**Before (6.x):**
+- Claude updates 1000 UI files with markers
+- 2M+ tokens to transition mock → real
+- High error risk, maintenance nightmare
+
+**After (7.0):**
+- Claude updates 1 service file
+- 2K tokens to transition phases
+- Production-ready UI from Day 1
+
+This architectural pattern is now the **default approach** for all data-driven applications, fundamentally changing the development workflow.
 
 ---
 

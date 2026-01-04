@@ -1,6 +1,6 @@
 {
   "name": "@agentic15.com/agentic15-claude-zen",
-  "version": "6.1.0",
+  "version": "7.0.0",
   "description": "Structured AI-assisted development framework for Claude Code with dual-platform support (GitHub and Azure DevOps)",
   "main": "src/index.js",
   "bin": {

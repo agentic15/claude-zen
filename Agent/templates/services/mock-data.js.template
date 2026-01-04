@@ -1,0 +1,175 @@
+/**
+ * Mock Data for Phase 1 Development
+ *
+ * This file contains realistic mock data that matches your production data structure.
+ * Keep this data structure identical to what your real API will return.
+ *
+ * IMPORTANT: Make this data realistic!
+ * - Use real-looking names, emails, dates
+ * - Include edge cases (long names, special characters, etc.)
+ * - Match your production data schema exactly
+ */
+
+export const mockData = {
+
+  // ============================================
+  // Products Example
+  // ============================================
+  products: [
+    {
+      id: 1,
+      name: "Wireless Bluetooth Headphones",
+      description: "High-quality noise-cancelling headphones with 30-hour battery life",
+      price: 129.99,
+      stock: 45,
+      category: "Electronics",
+      image: "https://via.placeholder.com/300x300?text=Headphones",
+      rating: 4.5,
+      reviews: 128,
+      createdAt: "2025-01-01T10:00:00Z",
+      updatedAt: "2025-12-15T14:30:00Z"
+    },
+    {
+      id: 2,
+      name: "Ergonomic Desk Chair",
+      description: "Premium office chair with lumbar support and adjustable armrests",
+      price: 349.99,
+      stock: 12,
+      category: "Furniture",
+      image: "https://via.placeholder.com/300x300?text=Chair",
+      rating: 4.8,
+      reviews: 89,
+      createdAt: "2025-02-10T09:15:00Z",
+      updatedAt: "2025-12-20T11:45:00Z"
+    },
+    {
+      id: 3,
+      name: "Stainless Steel Water Bottle",
+      description: "24oz insulated bottle keeps drinks cold for 24 hours",
+      price: 24.99,
+      stock: 156,
+      category: "Home & Kitchen",
+      image: "https://via.placeholder.com/300x300?text=Bottle",
+      rating: 4.3,
+      reviews: 342,
+      createdAt: "2025-03-05T13:20:00Z",
+      updatedAt: "2025-12-18T16:10:00Z"
+    },
+    {
+      id: 4,
+      name: "4K Webcam with Microphone",
+      description: "Professional webcam for video calls and streaming",
+      price: 89.99,
+      stock: 0, // Out of stock example
+      category: "Electronics",
+      image: "https://via.placeholder.com/300x300?text=Webcam",
+      rating: 4.6,
+      reviews: 56,
+      createdAt: "2025-04-12T08:30:00Z",
+      updatedAt: "2026-01-02T10:00:00Z"
+    }
+  ],
+
+  // ============================================
+  // Users Example
+  // ============================================
+  users: [
+    {
+      id: 1,
+      name: "John Doe",
+      email: "john.doe@example.com",
+      role: "admin",
+      avatar: "https://ui-avatars.com/api/?name=John+Doe",
+      createdAt: "2024-06-01T12:00:00Z",
+      lastLogin: "2026-01-04T09:15:00Z"
+    },
+    {
+      id: 2,
+      name: "Jane Smith",
+      email: "jane.smith@example.com",
+      role: "user",
+      avatar: "https://ui-avatars.com/api/?name=Jane+Smith",
+      createdAt: "2024-08-15T14:30:00Z",
+      lastLogin: "2026-01-03T16:45:00Z"
+    },
+    {
+      id: 3,
+      name: "Bob Wilson",
+      email: "bob.wilson@example.com",
+      role: "user",
+      avatar: "https://ui-avatars.com/api/?name=Bob+Wilson",
+      createdAt: "2024-11-20T10:00:00Z",
+      lastLogin: "2025-12-28T11:20:00Z"
+    }
+  ],
+
+  // ============================================
+  // Orders Example
+  // ============================================
+  orders: [
+    {
+      id: 1001,
+      userId: 2,
+      items: [
+        { productId: 1, quantity: 1, price: 129.99 },
+        { productId: 3, quantity: 2, price: 24.99 }
+      ],
+      total: 179.97,
+      status: "delivered",
+      createdAt: "2025-12-10T14:20:00Z",
+      deliveredAt: "2025-12-15T10:30:00Z"
+    },
+    {
+      id: 1002,
+      userId: 3,
+      items: [
+        { productId: 2, quantity: 1, price: 349.99 }
+      ],
+      total: 349.99,
+      status: "pending",
+      createdAt: "2026-01-02T09:15:00Z",
+      deliveredAt: null
+    },
+    {
+      id: 1003,
+      userId: 2,
+      items: [
+        { productId: 4, quantity: 1, price: 89.99 }
+      ],
+      total: 89.99,
+      status: "shipped",
+      createdAt: "2026-01-03T11:00:00Z",
+      deliveredAt: null
+    }
+  ],
+
+  // ============================================
+  // Add more entities here
+  // ============================================
+
+  // categories: [...],
+  // reviews: [...],
+  // cart: [...],
+  // etc.
+};
+
+/**
+ * Helper: Get user by email (for auth simulation)
+ */
+export function findUserByEmail(email) {
+  return mockData.users.find(u => u.email === email);
+}
+
+/**
+ * Helper: Get orders for specific user
+ */
+export function getOrdersByUser(userId) {
+  return mockData.orders.filter(o => o.userId === userId);
+}
+
+/**
+ * Helper: Get products by category
+ */
+export function getProductsByCategory(category) {
+  return mockData.products.filter(p => p.category === category);
+}
