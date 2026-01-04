@@ -1,0 +1,28 @@
+{
+  "id": "TASK-007",
+  "title": "Implement agentic15:sync skill",
+  "description": "Create /agentic15:sync skill for syncing with main after PR merge",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-002"
+  ],
+  "estimatedHours": 2,
+  "completionCriteria": [
+    "Skill file: skills/sync.js with agentic15:sync namespace",
+    "Calls SyncCommand.execute()",
+    "Verifies PR is merged before syncing",
+    "Deletes feature branch after sync",
+    "Error handling for unmerged PR, no feature branch",
+    "Success message shows clean state achieved",
+    "5-10 focused tests"
+  ],
+  "artifacts": {
+    "code": [
+      "skills/sync.js"
+    ],
+    "tests": [
+      "tests/sync.test.js"
+    ]
+  }
+}

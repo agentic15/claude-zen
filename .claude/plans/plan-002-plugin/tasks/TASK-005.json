@@ -1,0 +1,28 @@
+{
+  "id": "TASK-005",
+  "title": "Implement agentic15:task-start skill",
+  "description": "Create /agentic15:task-start skill for starting specific task by ID",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-002"
+  ],
+  "estimatedHours": 2,
+  "completionCriteria": [
+    "Skill file: skills/task-start.js with agentic15:task-start namespace",
+    "Accepts required TASK-ID parameter",
+    "Calls TaskCommand.start(taskId)",
+    "Validates task ID format (TASK-XXX)",
+    "Error handling for invalid ID, task not found, task already completed",
+    "Shows task details after starting",
+    "5-10 focused tests"
+  ],
+  "artifacts": {
+    "code": [
+      "skills/task-start.js"
+    ],
+    "tests": [
+      "tests/task-start.test.js"
+    ]
+  }
+}

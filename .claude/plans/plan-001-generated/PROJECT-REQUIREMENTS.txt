@@ -1,0 +1,410 @@
+PROJECT REQUIREMENTS
+Create Claude Code Plugin for Agentic15 Framework
+
+  OBJECTIVE:
+  Build @agentic15.com/claude-code-zen-plugin - a Claude Code skills package that provides native slash commands (/agentic15:plan, /agentic15:task, etc.) as an alternative interface to the existing npm CLI.
+
+  SCOPE:
+  Create a separate plugin package that wraps the existing @agentic15.com/agentic15-claude-zen npm package core functionality into Claude Code skills with 'agentic15:' prefix.
+
+  CORE SKILLS TO IMPLEMENT:
+  1. /agentic15:plan [requirements] - Create or lock project plan
+  2. /agentic15:task-next - Start next pending task
+  3. /agentic15:task-start TASK-ID - Start specific task
+  4. /agentic15:commit - Commit changes and create PR
+  5. /agentic15:sync - Sync with main after PR merge
+  6. /agentic15:status - Show project status
+  7. /agentic15:visual-test <url> - Run UI verification
+
+  BRANDING:
+  - All skills prefixed with 'agentic15:' namespace
+  - Prevents conflicts with other plugins
+  - Clear brand identity in Claude Code
+  - Pattern: /agentic15:command-name
+
+  TECHNICAL ARCHITECTURE:
+  - Package name: @agentic15.com/claude-code-zen-plugin
+  - Plugin namespace: agentic15
+  - Depends on: @agentic15.com/agentic15-claude-zen ^7.0.1
+  - Type: claude-plugin
+  - Skills reuse core logic from npm package (PlanCommand, TaskCommand, etc.)
+  - No code duplication - thin wrapper layer only
+
+  SKILL NAMING CONVENTION:
+  - Format: agentic15:command-name
+  - Examples: agentic15:plan, agentic15:task-next, agentic15:commit
+  - Consistent with plugin:skill pattern (like commit-commands:commit)
+  - Short, memorable, branded
+
+  REQUIREMENTS:
+  1. Each skill must be a separate file in skills/ directory
+  2. Skill names follow 'agentic15:skill-name' pattern
+  3. Skills import and call existing command classes from npm package
+  4. Error handling with clear user-facing messages
+  5. Success messages show next steps
+  6. Skills work in any directory with .claude/ folder
+  7. No terminal required - everything through Claude Code
+  8. Maintain same workflow as npm CLI version
+
+  DELIVERABLES:
+  1. Plugin package structure (package.json, skills/, README.md)
+  2. 7 core skill files with agentic15: prefix
+  3. Installation instructions
+  4. Testing with sample project
+  5. Documentation for users choosing plugin vs CLI
+
+  CONSTRAINTS:
+  - Follow lean philosophy (minimal code, maximum value)
+  - Reuse existing npm package code - NO duplication
+  - Skills are thin wrappers only
+  - Keep package size under 50kB
+  - No new dependencies beyond the npm package
+  - All skills must use agentic15: namespace
+
+  SUCCESS CRITERIA:
+  - User can run /agentic15:plan and get same result as npx agentic15 plan
+  - All 7 skills work correctly with agentic15: prefix
+  - Skills are discoverable in Claude Code skill list
+  - Error messages are helpful
+  - No context switching to terminal needed
+  - Claude can run agentic15: skills autonomously
+
+  TESTING:
+  - Test each skill in isolation
+  - Test complete workflow (agentic15:plan → agentic15:task-next → agentic15:commit → agentic15:sync)
+  - Verify integration with npm package
+  - Test error scenarios (no plan, no task, etc.)
+  - Verify skill discovery in Claude Code
+
+  LEAN APPROACH:
+  - 5-10 tests per skill (not 50-100)
+  - Focus on user flows, not edge cases
+  - Visual verification where applicable
+  - Ship MVP first, iterate based on usage
+
+  WORKFLOW EXAMPLE:
+  User: /agentic15:plan \"Build todo app\"
+  Claude: ✅ Plan created
+  User: Create the project plan
+  Claude: [Creates plan]
+  User: /agentic15:plan
+  Claude: ✅ Plan locked
+  User: /agentic15:task-next
+  Claude: ✅ Started TASK-001
+  User: /agentic15:commit
+  Claude: ✅ PR created
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Create Claude Code Plugin for Agentic15 Framework
+
+Generated: 2026-01-04T17:23:58.728Z
+PLAN ID: plan-001-generated
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ROLE DEFINITIONS - CRITICAL TO UNDERSTAND
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👤 HUMAN'S ROLE (Developer/User):
+   • RUN all agentic15 CLI commands (plan, task, commit, sync)
+   • MANAGE git operations (merge PRs, resolve conflicts, push, pull)
+   • REVIEW and approve code changes
+   • MAKE decisions about project direction
+   • DEPLOY applications
+
+🤖 CLAUDE'S ROLE (AI Assistant):
+   • READ files, documentation, and codebase
+   • WRITE code in ./Agent/** and ./scripts/**
+   • CREATE project plans and task breakdowns
+   • EXPLAIN code and architecture decisions
+   • SUGGEST improvements and best practices
+
+🚫 WHAT CLAUDE MUST NOT DO:
+   ❌ Run agentic15 commands (plan, task, commit, sync, status)
+   ❌ Run git commands (commit, push, checkout, merge, branch)
+   ❌ Make assumptions about what the human will do
+   ❌ Tell the human to "run git commit" or similar git commands
+
+✅ WORKFLOW AFTER CREATING PROJECT PLAN:
+   1. Claude creates PROJECT-PLAN.json
+   2. Claude tells human: "Run: npx agentic15 plan"
+   3. Human runs the command to lock the plan
+   4. Human runs: npx agentic15 task next
+   5. Claude writes code for the task
+   6. Human runs: npx agentic15 commit (this handles git operations)
+   7. Human merges the PR
+   8. Repeat steps 4-7 for each task
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+INSTRUCTIONS FOR CLAUDE - CREATE PROJECT PLAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Please analyze the requirements above and create a LEAN, PRACTICAL project plan.
+
+⚠️  CRITICAL: This is a LEAN framework - prioritize NECESSITY over LUXURY.
+
+1. Read the PLAN-SCHEMA.json to understand the plan structure
+2. Read the PROJECT-PLAN-TEMPLATE.json for the format
+3. Create a PROJECT-PLAN.json file in this directory with:
+   - Clear project/subproject/milestone hierarchy
+   - Detailed tasks with IDs (TASK-001, TASK-002, etc.)
+   - Proper dependencies between tasks
+   - Realistic time estimates
+   - Phases: design, implementation, testing, deployment
+   - Completion criteria for each task
+
+4. Structure the plan to follow these phases:
+   - DESIGN: Architecture, UI/UX, database schema
+   - IMPLEMENTATION: Core features, API, frontend
+   - TESTING: MINIMAL necessary tests (see testing philosophy below)
+   - DEPLOYMENT: Build, CI/CD, minimal documentation
+
+5. Ensure tasks are:
+   - Granular (2-8 hours each)
+   - Clearly defined with specific deliverables
+   - Properly sequenced with dependencies
+   - Grouped logically by feature/component
+
+6. CRITICAL: Every task MUST include UI verification checkpoint in completionCriteria:
+   Add this as the LAST item in completionCriteria for ALL tasks:
+
+   "UI Verification: If you modified UI code (.jsx, .tsx, .vue, .css, .html), run 'npx agentic15 visual-test <url>' and verify screenshots/logs show no errors"
+
+   This enables Claude to self-check and verify UI changes autonomously.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TESTING PHILOSOPHY - READ CAREFULLY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ DO (Necessity-Level Testing):
+• Write 5-10 FOCUSED tests per task (NOT 50-100)
+• Test core logic and critical paths ONLY
+• For UI tasks: Use VISUAL VERIFICATION (screenshots, console logs)
+• For UI tasks: Write Playwright tests for USER FLOWS, not every edge case
+• TDD is good, but tests should be ESSENTIAL, not exhaustive
+
+❌ DON'T (Luxury/Over-Engineering):
+• Don't test every edge case "just in case"
+• Don't test every possible user input combination
+• Don't test things visual verification will catch
+• Don't create test utilities, helpers, or abstractions for simple tests
+• Don't write tests for trivial getters/setters
+• Don't aim for 100% code coverage - aim for 80% confidence
+
+🎯 UI TESTING SPECIAL RULES:
+Claude CANNOT SEE the UI - you're blind to visual bugs!
+
+• Rely on SCREENSHOTS + CONSOLE LOGS for UI verification
+• Write Playwright tests for key USER JOURNEYS only (login, checkout, etc.)
+• Don't unit test every React prop, CSS value, or DOM element
+• Don't test styling with code - use visual verification
+• Focus: Does the FLOW work? Can users complete their task?
+
+Example - Login Form Testing:
+  ✅ GOOD (5 tests):
+     - Submit with valid credentials → success
+     - Submit with invalid credentials → error shown
+     - Required fields validation works
+     - Form accessible via keyboard
+     - Error messages displayed correctly
+
+  ❌ BAD (50+ tests):
+     - Test every CSS class applied
+     - Test every prop passed to button component
+     - Test onChange handler called with exact args
+     - Test form state after every keystroke
+     - Test every edge case (123 character email, etc.)
+
+Remember: You'll verify UI with SCREENSHOTS after task completion.
+Write tests for LOGIC, use VISUAL VERIFICATION for appearance.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DOCUMENTATION PHILOSOPHY - CLAUDE-FACING, NOT HUMAN-FACING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ DO Document (For Claude's Memory):
+• Architectural decisions and WHY they were made
+• Infrastructure choices (which database, why this framework, etc.)
+• Complex business logic that isn't obvious from code
+• Gotchas and edge cases discovered during development
+• Integration points and external dependencies
+• Authentication/authorization strategy
+• Deployment configuration and environment setup
+
+Format: Brief markdown files in Agent/docs/ explaining DECISIONS, not tutorials
+
+Example Good Documentation:
+  Agent/docs/architecture-decisions.md
+  "We chose PostgreSQL over MongoDB because we need ACID transactions
+   for payment processing. The schema is normalized to 3NF."
+
+❌ DON'T Create (Human-Facing Fluff):
+• Comprehensive API documentation (code comments are enough)
+• User guides or tutorials (not Claude's job)
+• "Getting Started" guides (developers can read code)
+• Detailed README files (keep minimal: what, why, how to run)
+• Change logs (git history exists)
+• Contribution guidelines
+• Code of conduct documents
+
+❌ DON'T Over-Document:
+• Don't document obvious code ("this function adds two numbers")
+• Don't create documentation tasks unless absolutely necessary
+• Don't write documentation for documentation's sake
+• If the code is self-explanatory, don't document it
+
+Example - Login Form:
+  ❌ BAD: Create "Login Form Documentation" with screenshots, API docs, usage guide
+  ✅ GOOD: Add comment in code: "// Uses bcrypt with 12 rounds for password hashing"
+
+Remember: Future Claude sessions need context about DECISIONS,
+not tutorials about how to use the code.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DATA-DRIVEN APPLICATIONS - CENTRALIZED SERVICE LAYER PATTERN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+For applications with Database + API + UI:
+
+🎯 CRITICAL: Use UI-First with Centralized Service Layer
+
+WHY: Prevents token waste and confusion:
+  ❌ BAD: Markers in 1000 UI files (2M+ tokens to update)
+  ✅ GOOD: One service file (2K tokens to update)
+
+ARCHITECTURE:
+  UI Components (1000+ files) → NEVER CHANGE ACROSS PHASES
+       ↓
+  services/api.js (1 file) → Claude updates ONLY this
+       ↓
+  Mock Data OR Real API → Config-based switching
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FILE STRUCTURE (Always create this for data-driven apps):
+
+src/
+├── components/          # UI components - NEVER change
+├── services/
+│   ├── api.js          # ← Claude updates ONLY here
+│   ├── mock-data.js    # Realistic mock data
+│   └── config.js       # Phase switching
+└── pages/              # Pages/routes - use services/api.js
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PHASE STRATEGY:
+
+PHASE 1: UI with Centralized Mock Service
+  - Create services/api.js with CURRENT_PHASE = 1
+  - All UI components import from services/api.js
+  - Mock data returns immediately (no backend needed)
+  - User sees working UI on Day 1
+  - Visual verification works immediately
+
+PHASE 2: Real API Integration
+  - Claude changes ONE line: CURRENT_PHASE = 1 → 2
+  - Implement backend endpoints
+  - UI components unchanged (still use services/api.js)
+  - End-to-end testing
+
+PHASE 3: Database Integration
+  - Backend connects to real database
+  - Frontend unchanged (backend handles it)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SERVICES/API.JS PATTERN (Always use this structure):
+
+export const API = {
+  [entity]: {
+    async list() {
+      if (CURRENT_PHASE === 1) return mockData.[entity];
+      const res = await fetch('/api/[entity]');
+      return res.json();
+    },
+
+    async get(id) {
+      if (CURRENT_PHASE === 1) {
+        return mockData.[entity].find(item => item.id === id);
+      }
+      const res = await fetch(`/api/[entity]/${id}`);
+      return res.json();
+    },
+
+    async create(data) {
+      if (CURRENT_PHASE === 1) {
+        const newItem = { id: Date.now(), ...data };
+        mockData.[entity].push(newItem);
+        return newItem;
+      }
+      const res = await fetch('/api/[entity]', {
+        method: 'POST',
+        body: JSON.stringify(data)
+      });
+      return res.json();
+    }
+  }
+};
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+UI COMPONENTS PATTERN (Never change across phases):
+
+import { API } from '../services/api';
+
+function MyComponent() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    // ✅ This NEVER changes - works in all phases
+    API.[entity].list().then(setData);
+  }, []);
+
+  const handleCreate = async (formData) => {
+    // ✅ This NEVER changes - works in all phases
+    const newItem = await API.[entity].create(formData);
+  };
+}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK BREAKDOWN PATTERN (For data-driven apps):
+
+PHASE 1: UI with Centralized Mock Service (Week 1)
+├── TASK-001: Set up service layer (services/api.js, mock-data.js)
+├── TASK-002: [Entity] screens (use API.[entity].*)
+├── TASK-003: [Entity] screens (use API.[entity].*)
+└── TASK-00X: Visual verification (all screens working)
+
+PHASE 2: Real API Integration (Week 2)
+├── TASK-00X: Update services/api.js to Phase 2
+├── TASK-00X: Backend /api/[entity] endpoints
+└── TASK-00X: End-to-end testing
+
+PHASE 3: Database Integration (Week 3)
+├── TASK-00X: Database schema
+├── TASK-00X: Connect backend to database
+└── TASK-00X: Production deployment
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BENEFITS of this approach:
+✅ UI code is production-ready from Day 1
+✅ Claude only updates 1 file to switch phases (not 1000 files)
+✅ Token-efficient (2K tokens vs 2M tokens)
+✅ Easy testing (switch CURRENT_PHASE for different test scenarios)
+✅ Can demo to users immediately
+✅ Parallel work (backend team can work independently)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+7. After creating the plan, tell the user to run:
+   npx agentic15 plan
+
+This will lock the plan and generate the task tracker.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+GENERATED: 2026-01-04T17:23:58.731Z

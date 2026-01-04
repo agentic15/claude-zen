@@ -1,0 +1,379 @@
+{
+  "version": "2.0",
+  "project": {
+    "id": "PROJ-001",
+    "name": "Claude Code Plugin for Agentic15",
+    "description": "Build Claude Code skills package that provides native /agentic15:* commands as an alternative to the npm CLI",
+    "status": "planning",
+    "createdAt": "2026-01-04T15:30:00Z",
+    "createdBy": "human",
+    "locked": false,
+    "subprojects": [
+      {
+        "id": "SUB-001",
+        "name": "Plugin Package Setup",
+        "description": "Initialize plugin package structure and configuration",
+        "status": "pending",
+        "dependencies": [],
+        "milestones": [
+          {
+            "id": "MILE-001",
+            "name": "Plugin Package Setup",
+            "description": "Initialize plugin package structure and configuration",
+            "status": "pending",
+            "dependencies": [],
+            "tasks": [
+              {
+                "id": "TASK-001",
+                "title": "Create plugin package structure",
+                "description": "Set up the @agentic15.com/claude-code-zen-plugin package with proper structure and configuration",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": [],
+                "estimatedHours": 3,
+                "completionCriteria": [
+                  "Package.json created with name @agentic15.com/claude-code-zen-plugin",
+                  "Package type set to 'claude-plugin'",
+                  "Dependency on @agentic15.com/agentic15-claude-zen ^7.0.1",
+                  "Directory structure: skills/, tests/, README.md",
+                  "Plugin namespace configured as 'agentic15'",
+                  "Package size under 50kB verified"
+                ],
+                "artifacts": {
+                  "code": [
+                    "package.json",
+                    "skills/.gitkeep",
+                    "tests/.gitkeep"
+                  ],
+                  "documentation": [
+                    "README.md"
+                  ]
+                }
+              },
+              {
+                "id": "TASK-002",
+                "title": "Create skill base wrapper utility",
+                "description": "Build reusable utility for wrapping npm package commands into skills",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-001"],
+                "estimatedHours": 2,
+                "completionCriteria": [
+                  "SkillWrapper utility created in utils/skill-wrapper.js",
+                  "Handles error formatting for Claude Code",
+                  "Provides success message templates",
+                  "Validates .claude/ directory exists",
+                  "Works with all command types (plan, task, commit, etc.)",
+                  "5-10 tests for wrapper utility"
+                ],
+                "artifacts": {
+                  "code": [
+                    "utils/skill-wrapper.js"
+                  ],
+                  "tests": [
+                    "tests/skill-wrapper.test.js"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "SUB-002",
+        "name": "Core Skills Implementation",
+        "description": "Implement the 7 branded agentic15:* skills",
+        "status": "pending",
+        "dependencies": ["SUB-001"],
+        "milestones": [
+          {
+            "id": "MILE-002",
+            "name": "Core Skills Implementation",
+            "description": "Implement all 7 branded skills with agentic15: namespace",
+            "status": "pending",
+            "dependencies": ["MILE-001"],
+            "tasks": [
+              {
+                "id": "TASK-003",
+                "title": "Implement agentic15:plan skill",
+                "description": "Create /agentic15:plan skill for plan creation and locking",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-002"],
+                "estimatedHours": 2,
+                "completionCriteria": [
+                  "Skill file: skills/plan.js with agentic15:plan namespace",
+                  "Accepts optional requirements parameter",
+                  "Calls PlanCommand.generatePlan(requirements) when requirements provided",
+                  "Calls PlanCommand.lockPlan() when no requirements",
+                  "Error handling for missing plan, invalid requirements",
+                  "Success messages show next steps",
+                  "5-10 focused tests"
+                ],
+                "artifacts": {
+                  "code": [
+                    "skills/plan.js"
+                  ],
+                  "tests": [
+                    "tests/plan.test.js"
+                  ]
+                }
+              },
+              {
+                "id": "TASK-004",
+                "title": "Implement agentic15:task-next skill",
+                "description": "Create /agentic15:task-next skill for starting next pending task",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-002"],
+                "estimatedHours": 2,
+                "completionCriteria": [
+                  "Skill file: skills/task-next.js with agentic15:task-next namespace",
+                  "Calls TaskCommand.startNext()",
+                  "Shows task details (ID, title, description)",
+                  "Error handling for no pending tasks, no locked plan",
+                  "Success message shows what Claude should do next",
+                  "5-10 focused tests"
+                ],
+                "artifacts": {
+                  "code": [
+                    "skills/task-next.js"
+                  ],
+                  "tests": [
+                    "tests/task-next.test.js"
+                  ]
+                }
+              },
+              {
+                "id": "TASK-005",
+                "title": "Implement agentic15:task-start skill",
+                "description": "Create /agentic15:task-start skill for starting specific task by ID",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-002"],
+                "estimatedHours": 2,
+                "completionCriteria": [
+                  "Skill file: skills/task-start.js with agentic15:task-start namespace",
+                  "Accepts required TASK-ID parameter",
+                  "Calls TaskCommand.start(taskId)",
+                  "Validates task ID format (TASK-XXX)",
+                  "Error handling for invalid ID, task not found, task already completed",
+                  "Shows task details after starting",
+                  "5-10 focused tests"
+                ],
+                "artifacts": {
+                  "code": [
+                    "skills/task-start.js"
+                  ],
+                  "tests": [
+                    "tests/task-start.test.js"
+                  ]
+                }
+              },
+              {
+                "id": "TASK-006",
+                "title": "Implement agentic15:commit skill",
+                "description": "Create /agentic15:commit skill for committing and creating PR",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-002"],
+                "estimatedHours": 2,
+                "completionCriteria": [
+                  "Skill file: skills/commit.js with agentic15:commit namespace",
+                  "Calls CommitCommand.execute()",
+                  "Shows PR URL after creation",
+                  "Error handling for no changes, no active task, branch protection",
+                  "Success message shows PR link and next steps",
+                  "5-10 focused tests"
+                ],
+                "artifacts": {
+                  "code": [
+                    "skills/commit.js"
+                  ],
+                  "tests": [
+                    "tests/commit.test.js"
+                  ]
+                }
+              },
+              {
+                "id": "TASK-007",
+                "title": "Implement agentic15:sync skill",
+                "description": "Create /agentic15:sync skill for syncing with main after PR merge",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-002"],
+                "estimatedHours": 2,
+                "completionCriteria": [
+                  "Skill file: skills/sync.js with agentic15:sync namespace",
+                  "Calls SyncCommand.execute()",
+                  "Verifies PR is merged before syncing",
+                  "Deletes feature branch after sync",
+                  "Error handling for unmerged PR, no feature branch",
+                  "Success message shows clean state achieved",
+                  "5-10 focused tests"
+                ],
+                "artifacts": {
+                  "code": [
+                    "skills/sync.js"
+                  ],
+                  "tests": [
+                    "tests/sync.test.js"
+                  ]
+                }
+              },
+              {
+                "id": "TASK-008",
+                "title": "Implement agentic15:status skill",
+                "description": "Create /agentic15:status skill for showing project status",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-002"],
+                "estimatedHours": 2,
+                "completionCriteria": [
+                  "Skill file: skills/status.js with agentic15:status namespace",
+                  "Calls StatusCommand.execute()",
+                  "Shows plan name, progress, active task",
+                  "Displays recently completed tasks",
+                  "Shows next step suggestion",
+                  "Error handling for no plan",
+                  "5-10 focused tests"
+                ],
+                "artifacts": {
+                  "code": [
+                    "skills/status.js"
+                  ],
+                  "tests": [
+                    "tests/status.test.js"
+                  ]
+                }
+              },
+              {
+                "id": "TASK-009",
+                "title": "Implement agentic15:visual-test skill",
+                "description": "Create /agentic15:visual-test skill for UI verification",
+                "status": "pending",
+                "phase": "implementation",
+                "dependencies": ["TASK-002"],
+                "estimatedHours": 2,
+                "completionCriteria": [
+                  "Skill file: skills/visual-test.js with agentic15:visual-test namespace",
+                  "Accepts required URL parameter",
+                  "Calls VisualTestCommand.execute(url)",
+                  "Shows generated file paths for screenshots and logs",
+                  "Error handling for invalid URL, Playwright not installed, server not running",
+                  "Success message lists all captured artifacts",
+                  "5-10 focused tests"
+                ],
+                "artifacts": {
+                  "code": [
+                    "skills/visual-test.js"
+                  ],
+                  "tests": [
+                    "tests/visual-test.test.js"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "SUB-003",
+        "name": "Integration & Documentation",
+        "description": "Integration testing and user documentation",
+        "status": "pending",
+        "dependencies": ["SUB-002"],
+        "milestones": [
+          {
+            "id": "MILE-003",
+            "name": "Integration & Documentation",
+            "description": "Complete integration testing and prepare for publishing",
+            "status": "pending",
+            "dependencies": ["MILE-002"],
+            "tasks": [
+              {
+                "id": "TASK-010",
+                "title": "End-to-end workflow testing",
+                "description": "Test complete workflow using all skills together",
+                "status": "pending",
+                "phase": "testing",
+                "dependencies": ["TASK-003", "TASK-004", "TASK-005", "TASK-006", "TASK-007", "TASK-008", "TASK-009"],
+                "estimatedHours": 3,
+                "completionCriteria": [
+                  "Test workflow: /agentic15:plan → create plan → /agentic15:plan (lock) → /agentic15:task-next → /agentic15:commit → /agentic15:sync",
+                  "Test all error scenarios (no plan, invalid task, etc.)",
+                  "Verify skills work in Claude Code environment",
+                  "Test skill discovery in Claude Code",
+                  "Verify no conflicts with other plugins",
+                  "All skills show helpful error messages",
+                  "Success paths work without errors"
+                ],
+                "artifacts": {
+                  "tests": [
+                    "tests/integration/workflow.test.js"
+                  ],
+                  "documentation": [
+                    "docs/testing-results.md"
+                  ]
+                }
+              },
+              {
+                "id": "TASK-011",
+                "title": "Create installation and usage documentation",
+                "description": "Write documentation for plugin installation and usage",
+                "status": "pending",
+                "phase": "deployment",
+                "dependencies": ["TASK-010"],
+                "estimatedHours": 2,
+                "completionCriteria": [
+                  "README.md with installation instructions",
+                  "Usage examples for each skill",
+                  "Comparison: Plugin vs npm CLI approach",
+                  "Troubleshooting section",
+                  "Claude-facing documentation (decisions, why)",
+                  "No unnecessary tutorials (lean philosophy)",
+                  "Installation steps for Claude Code",
+                  "Skill discovery documentation"
+                ],
+                "artifacts": {
+                  "documentation": [
+                    "README.md",
+                    "docs/skills-reference.md"
+                  ]
+                }
+              },
+              {
+                "id": "TASK-012",
+                "title": "Package and publish preparation",
+                "description": "Prepare plugin for npm publishing",
+                "status": "pending",
+                "phase": "deployment",
+                "dependencies": ["TASK-011"],
+                "estimatedHours": 2,
+                "completionCriteria": [
+                  "Package.json version set to 1.0.0",
+                  "All dependencies correct (@agentic15.com/agentic15-claude-zen ^7.0.1)",
+                  "Package builds successfully",
+                  "Package size verified under 50kB",
+                  "README.md synced and complete",
+                  "CHANGELOG.md created with v1.0.0 entry",
+                  "License file included",
+                  "npm pack dry-run succeeds"
+                ],
+                "artifacts": {
+                  "code": [
+                    "package.json"
+                  ],
+                  "documentation": [
+                    "CHANGELOG.md",
+                    "LICENSE"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

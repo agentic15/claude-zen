@@ -1,0 +1,27 @@
+{
+  "id": "TASK-004",
+  "title": "Implement agentic15:task-next skill",
+  "description": "Create /agentic15:task-next skill for starting next pending task",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-002"
+  ],
+  "estimatedHours": 2,
+  "completionCriteria": [
+    "Skill file: skills/task-next.js with agentic15:task-next namespace",
+    "Calls TaskCommand.startNext()",
+    "Shows task details (ID, title, description)",
+    "Error handling for no pending tasks, no locked plan",
+    "Success message shows what Claude should do next",
+    "5-10 focused tests"
+  ],
+  "artifacts": {
+    "code": [
+      "skills/task-next.js"
+    ],
+    "tests": [
+      "tests/task-next.test.js"
+    ]
+  }
+}

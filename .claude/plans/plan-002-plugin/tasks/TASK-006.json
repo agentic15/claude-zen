@@ -1,0 +1,27 @@
+{
+  "id": "TASK-006",
+  "title": "Implement agentic15:commit skill",
+  "description": "Create /agentic15:commit skill for committing and creating PR",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-002"
+  ],
+  "estimatedHours": 2,
+  "completionCriteria": [
+    "Skill file: skills/commit.js with agentic15:commit namespace",
+    "Calls CommitCommand.execute()",
+    "Shows PR URL after creation",
+    "Error handling for no changes, no active task, branch protection",
+    "Success message shows PR link and next steps",
+    "5-10 focused tests"
+  ],
+  "artifacts": {
+    "code": [
+      "skills/commit.js"
+    ],
+    "tests": [
+      "tests/commit.test.js"
+    ]
+  }
+}

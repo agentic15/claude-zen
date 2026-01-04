@@ -1,0 +1,101 @@
+PROJECT REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Create Claude Code Plugin for Agentic15 Framework
+
+OBJECTIVE:
+Build @agentic15.com/claude-code-zen-plugin - a Claude Code skills package that provides native slash commands (/agentic15:plan, /agentic15:task, etc.) as an alternative interface to the existing npm CLI.
+
+SCOPE:
+Create a separate plugin package that wraps the existing @agentic15.com/agentic15-claude-zen npm package core functionality into Claude Code skills with 'agentic15:' prefix.
+
+CORE SKILLS TO IMPLEMENT:
+1. /agentic15:plan [requirements] - Create or lock project plan
+2. /agentic15:task-next - Start next pending task
+3. /agentic15:task-start TASK-ID - Start specific task
+4. /agentic15:commit - Commit changes and create PR
+5. /agentic15:sync - Sync with main after PR merge
+6. /agentic15:status - Show project status
+7. /agentic15:visual-test <url> - Run UI verification
+
+BRANDING:
+- All skills prefixed with 'agentic15:' namespace
+- Prevents conflicts with other plugins
+- Clear brand identity in Claude Code
+- Pattern: /agentic15:command-name
+
+TECHNICAL ARCHITECTURE:
+- Package name: @agentic15.com/claude-code-zen-plugin
+- Plugin namespace: agentic15
+- Depends on: @agentic15.com/agentic15-claude-zen ^7.0.1
+- Type: claude-plugin
+- Skills reuse core logic from npm package (PlanCommand, TaskCommand, etc.)
+- No code duplication - thin wrapper layer only
+
+SKILL NAMING CONVENTION:
+- Format: agentic15:command-name
+- Examples: agentic15:plan, agentic15:task-next, agentic15:commit
+- Consistent with plugin:skill pattern (like commit-commands:commit)
+- Short, memorable, branded
+
+REQUIREMENTS:
+1. Each skill must be a separate file in skills/ directory
+2. Skill names follow 'agentic15:skill-name' pattern
+3. Skills import and call existing command classes from npm package
+4. Error handling with clear user-facing messages
+5. Success messages show next steps
+6. Skills work in any directory with .claude/ folder
+7. No terminal required - everything through Claude Code
+8. Maintain same workflow as npm CLI version
+
+DELIVERABLES:
+1. Plugin package structure (package.json, skills/, README.md)
+2. 7 core skill files with agentic15: prefix
+3. Installation instructions
+4. Testing with sample project
+5. Documentation for users choosing plugin vs CLI
+
+CONSTRAINTS:
+- Follow lean philosophy (minimal code, maximum value)
+- Reuse existing npm package code - NO duplication
+- Skills are thin wrappers only
+- Keep package size under 50kB
+- No new dependencies beyond the npm package
+- All skills must use agentic15: namespace
+
+SUCCESS CRITERIA:
+- User can run /agentic15:plan and get same result as npx agentic15 plan
+- All 7 skills work correctly with agentic15: prefix
+- Skills are discoverable in Claude Code skill list
+- Error messages are helpful
+- No context switching to terminal needed
+- Claude can run agentic15: skills autonomously
+
+TESTING:
+- Test each skill in isolation
+- Test complete workflow (agentic15:plan → agentic15:task-next → agentic15:commit → agentic15:sync)
+- Verify integration with npm package
+- Test error scenarios (no plan, no task, etc.)
+- Verify skill discovery in Claude Code
+
+LEAN APPROACH:
+- 5-10 tests per skill (not 50-100)
+- Focus on user flows, not edge cases
+- Visual verification where applicable
+- Ship MVP first, iterate based on usage
+
+WORKFLOW EXAMPLE:
+User: /agentic15:plan "Build todo app"
+Claude: ✅ Plan created
+User: Create the project plan
+Claude: [Creates plan]
+User: /agentic15:plan
+Claude: ✅ Plan locked
+User: /agentic15:task-next
+Claude: ✅ Started TASK-001
+User: /agentic15:commit
+Claude: ✅ PR created
+
+Generated: 2026-01-04T15:30:00Z
+PLAN ID: plan-002-plugin
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

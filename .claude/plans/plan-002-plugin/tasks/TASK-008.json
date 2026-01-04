@@ -1,0 +1,28 @@
+{
+  "id": "TASK-008",
+  "title": "Implement agentic15:status skill",
+  "description": "Create /agentic15:status skill for showing project status",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-002"
+  ],
+  "estimatedHours": 2,
+  "completionCriteria": [
+    "Skill file: skills/status.js with agentic15:status namespace",
+    "Calls StatusCommand.execute()",
+    "Shows plan name, progress, active task",
+    "Displays recently completed tasks",
+    "Shows next step suggestion",
+    "Error handling for no plan",
+    "5-10 focused tests"
+  ],
+  "artifacts": {
+    "code": [
+      "skills/status.js"
+    ],
+    "tests": [
+      "tests/status.test.js"
+    ]
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "planId": "plan-002-plugin",
+  "projectName": "agentic15-claude-zen",
+  "activeTask": null,
+  "lockedAt": "2026-01-04T17:40:30.095Z",
+  "statistics": {
+    "totalTasks": 12,
+    "completed": 0,
+    "inProgress": 0,
+    "pending": 12
+  },
+  "taskFiles": [
+    {
+      "id": "TASK-001",
+      "title": "Create plugin package structure",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Set up the @agentic15.com/claude-code-zen-plugin package with proper structure and configuration"
+    },
+    {
+      "id": "TASK-002",
+      "title": "Create skill base wrapper utility",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Build reusable utility for wrapping npm package commands into skills"
+    },
+    {
+      "id": "TASK-003",
+      "title": "Implement agentic15:plan skill",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Create /agentic15:plan skill for plan creation and locking"
+    },
+    {
+      "id": "TASK-004",
+      "title": "Implement agentic15:task-next skill",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Create /agentic15:task-next skill for starting next pending task"
+    },
+    {
+      "id": "TASK-005",
+      "title": "Implement agentic15:task-start skill",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Create /agentic15:task-start skill for starting specific task by ID"
+    },
+    {
+      "id": "TASK-006",
+      "title": "Implement agentic15:commit skill",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Create /agentic15:commit skill for committing and creating PR"
+    },
+    {
+      "id": "TASK-007",
+      "title": "Implement agentic15:sync skill",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Create /agentic15:sync skill for syncing with main after PR merge"
+    },
+    {
+      "id": "TASK-008",
+      "title": "Implement agentic15:status skill",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Create /agentic15:status skill for showing project status"
+    },
+    {
+      "id": "TASK-009",
+      "title": "Implement agentic15:visual-test skill",
+      "phase": "implementation",
+      "status": "pending",
+      "description": "Create /agentic15:visual-test skill for UI verification"
+    },
+    {
+      "id": "TASK-010",
+      "title": "End-to-end workflow testing",
+      "phase": "testing",
+      "status": "pending",
+      "description": "Test complete workflow using all skills together"
+    },
+    {
+      "id": "TASK-011",
+      "title": "Create installation and usage documentation",
+      "phase": "deployment",
+      "status": "pending",
+      "description": "Write documentation for plugin installation and usage"
+    },
+    {
+      "id": "TASK-012",
+      "title": "Package and publish preparation",
+      "phase": "deployment",
+      "status": "pending",
+      "description": "Prepare plugin for npm publishing"
+    }
+  ]
+}

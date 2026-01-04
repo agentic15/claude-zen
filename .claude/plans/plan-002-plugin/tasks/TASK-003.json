@@ -1,0 +1,28 @@
+{
+  "id": "TASK-003",
+  "title": "Implement agentic15:plan skill",
+  "description": "Create /agentic15:plan skill for plan creation and locking",
+  "status": "pending",
+  "phase": "implementation",
+  "dependencies": [
+    "TASK-002"
+  ],
+  "estimatedHours": 2,
+  "completionCriteria": [
+    "Skill file: skills/plan.js with agentic15:plan namespace",
+    "Accepts optional requirements parameter",
+    "Calls PlanCommand.generatePlan(requirements) when requirements provided",
+    "Calls PlanCommand.lockPlan() when no requirements",
+    "Error handling for missing plan, invalid requirements",
+    "Success messages show next steps",
+    "5-10 focused tests"
+  ],
+  "artifacts": {
+    "code": [
+      "skills/plan.js"
+    ],
+    "tests": [
+      "tests/plan.test.js"
+    ]
+  }
+}

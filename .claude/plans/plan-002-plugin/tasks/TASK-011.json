@@ -1,0 +1,27 @@
+{
+  "id": "TASK-011",
+  "title": "Create installation and usage documentation",
+  "description": "Write documentation for plugin installation and usage",
+  "status": "pending",
+  "phase": "deployment",
+  "dependencies": [
+    "TASK-010"
+  ],
+  "estimatedHours": 2,
+  "completionCriteria": [
+    "README.md with installation instructions",
+    "Usage examples for each skill",
+    "Comparison: Plugin vs npm CLI approach",
+    "Troubleshooting section",
+    "Claude-facing documentation (decisions, why)",
+    "No unnecessary tutorials (lean philosophy)",
+    "Installation steps for Claude Code",
+    "Skill discovery documentation"
+  ],
+  "artifacts": {
+    "documentation": [
+      "README.md",
+      "docs/skills-reference.md"
+    ]
+  }
+}
