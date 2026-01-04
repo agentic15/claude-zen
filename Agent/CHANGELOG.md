@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Copyright 2024-2026 agentic15.com
 
+## [7.0.1] - 2026-01-04
+
+### Fixed
+- **README.md**: Reduced from 806 lines to 340 lines (58% smaller)
+- **Documentation**: Removed embedded platform guides, added links to separate docs
+- **Organization**: GitHub and Azure DevOps setup now link to detailed guides instead of embedding 400+ lines
+
+### Changed
+- **README.md**: Clean, lean structure (9.0kB vs 20.8kB)
+- **Platform Integration**: Quick setup + links instead of full embedded documentation
+
+---
+
 ## [7.0.0] - 2026-01-04
 
 ### 🎉 MAJOR RELEASE - Token-Efficient Architecture & Autonomous UI Verification
