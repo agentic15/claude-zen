@@ -5,9 +5,9 @@
   "lockedAt": "2026-01-03T16:01:21.745Z",
   "statistics": {
     "totalTasks": 10,
-    "completed": 8,
+    "completed": 9,
     "inProgress": 0,
-    "pending": 2
+    "pending": 1
   },
   "taskFiles": [
     {
@@ -86,8 +86,10 @@
       "id": "TASK-009",
       "title": "Create sample UI task for testing",
       "phase": "testing",
-      "status": "pending",
-      "description": "Build a simple HTML page to test the workflow"
+      "status": "completed",
+      "description": "Build a simple HTML page to test the workflow",
+      "startedAt": "2026-01-03T18:14:29.216Z",
+      "completedAt": "2026-01-04T13:26:52.679Z"
     },
     {
       "id": "TASK-010",
