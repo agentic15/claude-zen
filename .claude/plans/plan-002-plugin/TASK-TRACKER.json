@@ -5,9 +5,9 @@
   "lockedAt": "2026-01-04T17:40:30.095Z",
   "statistics": {
     "totalTasks": 12,
-    "completed": 3,
+    "completed": 4,
     "inProgress": 0,
-    "pending": 9
+    "pending": 8
   },
   "taskFiles": [
     {
@@ -41,8 +41,10 @@
       "id": "TASK-004",
       "title": "Implement agentic15:task-next skill",
       "phase": "implementation",
-      "status": "pending",
-      "description": "Create /agentic15:task-next skill for starting next pending task"
+      "status": "completed",
+      "description": "Create /agentic15:task-next skill for starting next pending task",
+      "startedAt": "2026-01-05T12:03:07.639Z",
+      "completedAt": "2026-01-05T12:07:17.393Z"
     },
     {
       "id": "TASK-005",
