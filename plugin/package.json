@@ -52,6 +52,6 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node --test tests/skill-wrapper.test.js"
+    "test": "node --test tests/**/*.test.js"
   }
 }
