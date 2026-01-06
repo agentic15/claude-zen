@@ -5,6 +5,7 @@
 [![npm version](https://badge.fury.io/js/@agentic15.com%2Fagentic15-claude-zen.svg)](https://www.npmjs.com/package/@agentic15.com/agentic15-claude-zen)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
+> **Latest:** v7.0.1 - Token-Efficient Architecture & Autonomous UI Verification
 
 ---
 
@@ -20,14 +21,13 @@ Agentic15 Claude Zen is a structured development framework designed to work seam
 
 **Philosophy:** Structure, not enforcement. The framework provides commands and organization, while Claude decides when tests are appropriate.
 
-Includes integrated Claude Code plugin with 7 native skills for seamless workflow automation directly in your Claude Code conversations.
+**NEW in v7.0:** Token-efficient service layer pattern for data-driven apps - reduces Claude's token usage by 1000x when transitioning from mock to real data.
 
 </td>
 <td width="50%">
 
 ### Key Benefits
 
-- ✅ **Claude Code skills** - Native `/agentic15:*` commands
 - ✅ **Task tracking** and organization
 - ✅ **Consistent workflow** structure
 - ✅ **Dual-platform support** - GitHub or Azure DevOps
@@ -36,7 +36,7 @@ Includes integrated Claude Code plugin with 7 native skills for seamless workflo
 - ✅ **Token-efficient architecture** - 2K tokens (not 2M)
 - ✅ **Service layer pattern** - Production-ready from Day 1
 - ✅ **Flexible** - no mandatory testing
-- ✅ **CLI + Plugin** - One package, dual interface
+- ✅ **Claude Code optimized** hooks
 
 </td>
 </tr>
@@ -100,11 +100,11 @@ npx agentic15 task next
 
 ---
 
-## Token-Efficient Architecture
+## 🚀 What's New in v7.0
 
-### Service Layer Pattern
+### Token-Efficient Service Layer Pattern
 
-For data-driven applications (Database + API + UI), the framework includes a token-efficient architecture pattern:
+For data-driven applications (Database + API + UI), v7.0 introduces a revolutionary architecture pattern:
 
 **The Problem:**
 - Traditional approach: Claude updates 1000+ UI files with mock→real transitions
@@ -144,63 +144,7 @@ Mock Data OR Real API → Config-based switching
 
 ---
 
-## Claude Code Skills
-
-Integrated Claude Code plugin provides native `/agentic15:*` skills for workflow automation.
-
-### Installation
-
-**Option 1: Local (Recommended)**
-```bash
-npm install --save-dev @agentic15.com/agentic15-claude-zen
-```
-Skills automatically available in Claude Code - no configuration needed!
-
-**Option 2: Global**
-```bash
-npm install -g @agentic15.com/agentic15-claude-zen
-```
-Then add to `.claude/settings.json`:
-```json
-{
-  "plugins": {
-    "@agentic15.com/agentic15-claude-zen": {
-      "enabled": true
-    }
-  }
-}
-```
-
-### Available Skills
-
-Use these directly in Claude Code conversations:
-
-| Skill | Description |
-|-------|-------------|
-| `/agentic15:plan "requirements"` | Create and lock project plan |
-| `/agentic15:task-next` | Start next pending task |
-| `/agentic15:task-start TASK-ID` | Start specific task |
-| `/agentic15:commit` | Commit task and create PR |
-| `/agentic15:sync` | Sync with main after PR merge |
-| `/agentic15:status` | Show project status |
-| `/agentic15:visual-test <url>` | Capture UI screenshots |
-
-**Example Workflow:**
-```
-/agentic15:plan "Build REST API with authentication"
-/agentic15:task-next
-[Work with Claude on the task...]
-/agentic15:commit
-/agentic15:sync
-```
-
-📖 See [SKILLS-REFERENCE.md](./SKILLS-REFERENCE.md) for complete skill documentation.
-
----
-
-## CLI Commands
-
-For terminal/script usage:
+## Commands
 
 | Command | Description |
 |---------|-------------|
@@ -379,4 +323,22 @@ Apache 2.0 - See [LICENSE](./Agent/LICENSE) for details.
 
 Copyright 2024-2026 agentic15.com
 
-See [CHANGELOG.md](./Agent/CHANGELOG.md) for version history.
+---
+
+## Version History
+
+### v7.0.1 (2026-01-04) - Documentation Improvements
+- **README:** 58% smaller (340 lines vs 806)
+- **Organization:** Links to detailed guides instead of embedding
+
+### v7.0.0 (2026-01-04) - Token-Efficient Architecture
+- **Service Layer Pattern:** 1000x token reduction for data-driven apps
+- **Autonomous UI Verification:** Visual testing with screenshots + accessibility
+- **Workflow Consistency:** Plan branches, sync support, archive naming
+
+### v6.0.0 (2025-12-31) - Dual-Platform Support
+- GitHub and Azure DevOps integration
+- Platform auto-detection
+- Unified command structure
+
+See [CHANGELOG.md](./Agent/CHANGELOG.md) for complete history.
