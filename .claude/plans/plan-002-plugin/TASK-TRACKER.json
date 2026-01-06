@@ -5,9 +5,9 @@
   "lockedAt": "2026-01-04T17:40:30.095Z",
   "statistics": {
     "totalTasks": 12,
-    "completed": 8,
+    "completed": 9,
     "inProgress": 0,
-    "pending": 4
+    "pending": 3
   },
   "taskFiles": [
     {
@@ -86,8 +86,10 @@
       "id": "TASK-009",
       "title": "Implement agentic15:visual-test skill",
       "phase": "implementation",
-      "status": "pending",
-      "description": "Create /agentic15:visual-test skill for UI verification"
+      "status": "completed",
+      "description": "Create /agentic15:visual-test skill for UI verification",
+      "startedAt": "2026-01-06T00:56:17.952Z",
+      "completedAt": "2026-01-06T00:58:35.407Z"
     },
     {
       "id": "TASK-010",
