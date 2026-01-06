@@ -1,0 +1,19 @@
+{
+  "planId": "plan-001-test",
+  "projectName": "Test Project",
+  "activeTask": null,
+  "taskFiles": [
+    {
+      "id": "TASK-001",
+      "title": "Test Task 1",
+      "status": "completed",
+      "completedAt": "2026-01-06T00:18:36.916Z"
+    }
+  ],
+  "statistics": {
+    "totalTasks": 1,
+    "completed": 1,
+    "inProgress": 0,
+    "pending": 0
+  }
+}

@@ -1,13 +1,13 @@
 {
   "planId": "plan-002-plugin",
   "projectName": "agentic15-claude-zen",
-  "activeTask": null,
+  "activeTask": "TASK-006",
   "lockedAt": "2026-01-04T17:40:30.095Z",
   "statistics": {
     "totalTasks": 12,
     "completed": 5,
-    "inProgress": 0,
-    "pending": 7
+    "inProgress": 1,
+    "pending": 6
   },
   "taskFiles": [
     {
@@ -59,8 +59,9 @@
       "id": "TASK-006",
       "title": "Implement agentic15:commit skill",
       "phase": "implementation",
-      "status": "pending",
-      "description": "Create /agentic15:commit skill for committing and creating PR"
+      "status": "in_progress",
+      "description": "Create /agentic15:commit skill for committing and creating PR",
+      "startedAt": "2026-01-06T00:13:39.559Z"
     },
     {
       "id": "TASK-007",
