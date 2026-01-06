@@ -1,6 +1,6 @@
 {
   "name": "@agentic15.com/agentic15-claude-zen",
-  "version": "7.0.1",
+  "version": "8.2.0",
   "description": "Structured AI-assisted development framework for Claude Code with dual-platform support (GitHub and Azure DevOps)",
   "main": "src/index.js",
   "bin": {
@@ -12,16 +12,20 @@
     "test": "node test/integration.test.js",
     "test:e2e": "node test/e2e-verification.test.js",
     "test:site": "node test/verify-test-site.js",
+    "test:plugin": "node --test plugin/tests/**/*.test.js",
+    "test:all": "npm run test && npm run test:plugin",
     "sync-readme": "node -e \"import('fs').then(fs => fs.copyFileSync('../README.md', 'README.md'))\"",
     "prepublishOnly": "npm run sync-readme"
   },
   "keywords": [
     "agentic15",
     "claude-code",
+    "claude-plugin",
     "claude-zen",
     "ai-assisted-development",
     "project-scaffold",
     "workflow-enforcement",
+    "workflow-automation",
     "task-tracking",
     "development-framework",
     "quality-automation",
@@ -29,7 +33,8 @@
     "test-driven-development",
     "github-integration",
     "azure-devops",
-    "dual-platform"
+    "dual-platform",
+    "skills"
   ],
   "author": "Agentic15 <developers@agentic15.com>",
   "license": "Apache-2.0",
@@ -44,12 +49,26 @@
   "publishConfig": {
     "access": "public"
   },
+  "claudePlugin": {
+    "namespace": "agentic15",
+    "skills": [
+      "plan",
+      "task-next",
+      "task-start",
+      "commit",
+      "sync",
+      "status",
+      "visual-test"
+    ]
+  },
   "files": [
     "bin/",
     "src/",
     "framework/",
     "templates/",
     "templates/.gitignore",
+    "plugin/",
+    ".claude-plugin/",
     "README.md",
     "CHANGELOG.md",
     "LICENSE"

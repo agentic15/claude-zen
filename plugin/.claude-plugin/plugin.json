@@ -1,0 +1,20 @@
+{
+  "name": "agentic15-claude-zen-plugin",
+  "version": "1.0.0",
+  "description": "Claude Code skills plugin for Agentic15 framework - provides native /agentic15:* slash commands",
+  "author": {
+    "name": "Agentic15",
+    "email": "developers@agentic15.com"
+  },
+  "homepage": "https://github.com/agentic15/claude-zen",
+  "repository": "https://github.com/agentic15/claude-zen",
+  "license": "Apache-2.0",
+  "keywords": [
+    "agentic15",
+    "workflow",
+    "task-management",
+    "ai-development",
+    "claude-code",
+    "productivity"
+  ]
+}

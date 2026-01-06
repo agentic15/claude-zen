@@ -7,7 +7,8 @@
       "Bash(npm pack:*)",
       "Bash(node:*)",
       "Bash(npm test)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(test:*)"
     ]
   },
   "github": {
