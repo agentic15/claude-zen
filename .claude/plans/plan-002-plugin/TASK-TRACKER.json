@@ -5,9 +5,9 @@
   "lockedAt": "2026-01-04T17:40:30.095Z",
   "statistics": {
     "totalTasks": 12,
-    "completed": 7,
+    "completed": 8,
     "inProgress": 0,
-    "pending": 5
+    "pending": 4
   },
   "taskFiles": [
     {
@@ -77,8 +77,10 @@
       "id": "TASK-008",
       "title": "Implement agentic15:status skill",
       "phase": "implementation",
-      "status": "pending",
-      "description": "Create /agentic15:status skill for showing project status"
+      "status": "completed",
+      "description": "Create /agentic15:status skill for showing project status",
+      "startedAt": "2026-01-06T00:51:30.928Z",
+      "completedAt": "2026-01-06T00:54:50.910Z"
     },
     {
       "id": "TASK-009",
