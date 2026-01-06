@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Copyright 2024-2026 agentic15.com
 
+## [9.0.1] - 2026-01-06
+
+### Fixed
+- **README.md**: Cleaned up version-specific clutter (66 lines removed)
+- **Documentation**: Converted from version history to pure user guide
+- **Organization**: All version information now exclusively in CHANGELOG.md
+
+### Changed
+- **README.md**: Now version-agnostic (279 lines vs 345 lines)
+- **Structure**: User guide focused on how to use the framework, not what's new
+- **Philosophy**: Removed marketing metrics, kept timeless benefits
+
+---
+
 ## [9.0.0] - 2026-01-06
 
 ### 🎉 MAJOR RELEASE - Codebase Cleanup

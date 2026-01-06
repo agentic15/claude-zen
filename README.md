@@ -5,8 +5,6 @@
 [![npm version](https://badge.fury.io/js/@agentic15.com%2Fagentic15-claude-zen.svg)](https://www.npmjs.com/package/@agentic15.com/agentic15-claude-zen)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-> **Latest:** v7.0.1 - Token-Efficient Architecture & Autonomous UI Verification
-
 ---
 
 ## Overview
@@ -21,8 +19,6 @@ Agentic15 Claude Zen is a structured development framework designed to work seam
 
 **Philosophy:** Structure, not enforcement. The framework provides commands and organization, while Claude decides when tests are appropriate.
 
-**NEW in v7.0:** Token-efficient service layer pattern for data-driven apps - reduces Claude's token usage by 1000x when transitioning from mock to real data.
-
 </td>
 <td width="50%">
 
@@ -32,11 +28,10 @@ Agentic15 Claude Zen is a structured development framework designed to work seam
 - ✅ **Consistent workflow** structure
 - ✅ **Dual-platform support** - GitHub or Azure DevOps
 - ✅ **Automated PRs** and issue tracking
-- ✅ **Autonomous UI verification** - Screenshots + accessibility
-- ✅ **Token-efficient architecture** - 2K tokens (not 2M)
-- ✅ **Service layer pattern** - Production-ready from Day 1
-- ✅ **Flexible** - no mandatory testing
-- ✅ **Claude Code optimized** hooks
+- ✅ **UI verification** - Screenshots and accessibility testing
+- ✅ **Token-efficient** - Optimized for Claude Code
+- ✅ **Flexible** - No mandatory testing requirements
+- ✅ **Production-ready** - Service layer patterns built-in
 
 </td>
 </tr>
@@ -97,50 +92,6 @@ npx agentic15 plan
 ```bash
 npx agentic15 task next
 ```
-
----
-
-## 🚀 What's New in v7.0
-
-### Token-Efficient Service Layer Pattern
-
-For data-driven applications (Database + API + UI), v7.0 introduces a revolutionary architecture pattern:
-
-**The Problem:**
-- Traditional approach: Claude updates 1000+ UI files with mock→real transitions
-- **Cost:** 2M+ tokens, high error risk, maintenance nightmare
-
-**The Solution:**
-- **Centralized Service Layer:** Claude updates only 1 file (`services/api.js`)
-- **Cost:** 2K tokens (1000x reduction!)
-- **UI Code:** Production-ready from Day 1, never changes across phases
-
-**Architecture:**
-```
-UI Components (1000+ files) → Never change
-     ↓
-services/api.js (1 file) → Claude updates ONLY this
-     ↓
-Mock Data OR Real API → Config-based switching
-```
-
-**Development Phases:**
-1. **Phase 1:** UI with mocks - User sees working app Day 1
-2. **Phase 2:** Real API - Claude changes 1 line in services/api.js
-3. **Phase 3:** Real Database - Backend only, frontend untouched
-
-### Autonomous UI Verification
-
-- **Visual Testing:** `npx agentic15 visual-test <url>` captures screenshots + logs
-- **Network Monitoring:** Automatic 4xx/5xx error detection
-- **Accessibility:** Integrated axe-core for WCAG compliance
-- **Claude Self-Checks:** Autonomous verification before commit
-
-### Complete Workflow Consistency
-
-- **Plan Branches:** Auto-create `plan/<plan-id>` branches (like tasks)
-- **Sync Support:** `npx agentic15 sync` handles plan branches
-- **Archive Naming:** Unique timestamps prevent conflicts
 
 ---
 
@@ -298,8 +249,8 @@ This framework embodies a **lean** philosophy:
 
 **Token efficiency:**
 - Centralized service layer for data-driven apps
-- One file updates instead of 1000
-- 1000x reduction in token usage
+- Optimized patterns reduce token usage
+- Production-ready code from the start
 
 **User engagement:**
 - UI-first development approach
@@ -325,20 +276,4 @@ Copyright 2024-2026 agentic15.com
 
 ---
 
-## Version History
-
-### v7.0.1 (2026-01-04) - Documentation Improvements
-- **README:** 58% smaller (340 lines vs 806)
-- **Organization:** Links to detailed guides instead of embedding
-
-### v7.0.0 (2026-01-04) - Token-Efficient Architecture
-- **Service Layer Pattern:** 1000x token reduction for data-driven apps
-- **Autonomous UI Verification:** Visual testing with screenshots + accessibility
-- **Workflow Consistency:** Plan branches, sync support, archive naming
-
-### v6.0.0 (2025-12-31) - Dual-Platform Support
-- GitHub and Azure DevOps integration
-- Platform auto-detection
-- Unified command structure
-
-See [CHANGELOG.md](./Agent/CHANGELOG.md) for complete history.
+**For version history and release notes, see [CHANGELOG.md](./Agent/CHANGELOG.md)**
