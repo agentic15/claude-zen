@@ -7,6 +7,175 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Copyright 2024-2026 agentic15.com
 
+## [8.2.0] - 2026-01-05
+
+### 📚 Documentation
+
+**Skills Documentation Complete**
+- **Claude Code Skills Section**: Added comprehensive skills documentation to README
+- **Skills Table**: All 7 skills listed with descriptions and usage examples
+- **Installation Guide**: Local and global installation options
+- **Example Workflow**: Practical usage example showing skill workflow
+- **Separation**: Clear distinction between Claude Code skills and CLI commands
+- **Clean Documentation**: Removed version-specific references (moved to CHANGELOG)
+
+### 🔧 Changed
+
+**README Structure**
+- Split into "Claude Code Skills" and "CLI Commands" sections
+- Skills-first approach in documentation
+- Evergreen documentation without version references
+- All version history moved to CHANGELOG.md
+
+---
+
+## [8.1.1] - 2026-01-05
+
+### 🐛 Fixed
+
+**README Publishing Issue**
+- Fixed prepublishOnly script overwriting updated README
+- Root README.md now contains skills documentation
+- Ensures published package shows v8.x and Claude Code skills
+
+---
+
+## [8.1.0] - 2026-01-05
+
+### 📚 Documentation
+
+**README.md Enhanced**
+- **Claude Code Skills Section**: Added comprehensive skills documentation to main README
+- **Installation Options**: Clear guide for local vs global installation
+- **Skills Table**: All 7 skills listed with descriptions
+- **Example Workflow**: Added practical usage example for skills
+- **CLI vs Skills**: Separated CLI commands and Claude Code skills sections
+- **Version Update**: Updated to v8.1.0 throughout README
+
+**Additional Documentation**
+- **SKILLS-REFERENCE.md**: Complete reference guide for all skills
+- **Installation Clarity**: Updated all docs to clarify npx doesn't provide skills
+
+### 🔧 Changed
+
+**README.md Structure**
+- Split "Commands" section into "Claude Code Skills" and "CLI Commands"
+- Added skills-first approach (skills before CLI in documentation)
+- Updated version badge and tagline
+
+---
+
+## [8.0.0] - 2026-01-05
+
+### 🎉 MAJOR RELEASE - Integrated Claude Code Plugin
+
+**BREAKING CHANGES**: This release integrates the Claude Code plugin directly into the framework package. Users upgrading from v7.x will need to update their configuration.
+
+### Summary
+The Claude Code plugin has been integrated into the main framework package, eliminating the need for a separate `@agentic15.com/claude-code-zen-plugin` package. Users now get both CLI and Claude Code skills in a single installation.
+
+### 💥 Breaking Changes
+
+**Plugin Integration**
+- **Package Consolidation**: Claude Code plugin now included in `@agentic15.com/agentic15-claude-zen`
+- **Settings Update Required**: Users must update `.claude/settings.json` to use `@agentic15.com/agentic15-claude-zen` instead of `@agentic15.com/claude-code-zen-plugin`
+- **Installation Change**: Single package installation instead of two separate packages
+
+**Migration Required**:
+```bash
+# OLD (v7.x)
+npm install -g @agentic15.com/agentic15-claude-zen
+npm install -g @agentic15.com/claude-code-zen-plugin
+
+# NEW (v8.0) - Choose one method:
+npx @agentic15.com/agentic15-claude-zen init  # No install (recommended)
+npm install --save-dev @agentic15.com/agentic15-claude-zen  # Local install
+npm install -g @agentic15.com/agentic15-claude-zen  # Global install
+```
+
+**Settings Update**:
+```json
+// OLD (.claude/settings.json)
+{
+  "plugins": {
+    "@agentic15.com/claude-code-zen-plugin": {
+      "enabled": true
+    }
+  }
+}
+
+// NEW (.claude/settings.json)
+{
+  "plugins": {
+    "@agentic15.com/agentic15-claude-zen": {
+      "enabled": true
+    }
+  }
+}
+```
+
+### ✨ Added
+
+**Integrated Claude Code Plugin**
+- **7 Skills**: `/agentic15:plan`, `/agentic15:task-next`, `/agentic15:task-start`, `/agentic15:commit`, `/agentic15:sync`, `/agentic15:status`, `/agentic15:visual-test`
+- **Plugin Architecture**: `plugin/` directory with skills, utilities, and tests
+- **Marketplace Support**: `.claude-plugin/` configuration for Claude marketplace distribution
+- **Skill Documentation**: Markdown documentation for all 7 skills
+- **Test Suite**: 85 validation-only tests (100% pass rate, no side effects)
+- **Plugin Entry Point**: `plugin/index.js` with skill exports and metadata
+
+**Package Configuration**
+- **claudePlugin Metadata**: Added namespace and skill list to package.json
+- **Test Scripts**: `test:plugin` and `test:all` commands
+- **Keywords**: Added `claude-plugin`, `workflow-automation`, `skills`
+
+**Documentation**
+- **INSTALLATION.md**: Complete installation guide for both NPM and marketplace
+- **PUBLISHING.md**: Publishing instructions for dual distribution
+- **E2E-TESTING-GUIDE.md**: End-to-end testing workflows
+- **INTEGRATION-SUMMARY.md**: Detailed integration documentation
+
+### 🔧 Changed
+
+**Package Structure**
+- **Size**: Increased from ~350KB to 446KB (unpacked) due to plugin integration
+- **Files**: Added `plugin/` and `.claude-plugin/` directories to published package
+- **Total Files**: 80 files (70 framework + 10 plugin)
+
+**Marketplace Configuration**
+- **Source Path**: Updated from `./plugin` to `./Agent`
+- **Package Name**: Unified naming as `agentic15-claude-zen`
+
+### 📦 Package Statistics
+
+**Version**: 8.0.0
+**Size**: 101.4 KB (compressed), 446.1 KB (unpacked)
+**Total Files**: 80
+**Tests**: 85 plugin tests + existing framework tests
+
+### 🎯 Benefits
+
+- **Single Installation**: One package provides both CLI and Claude Code integration
+- **Version Synchronization**: Framework and plugin always in sync
+- **Simpler Maintenance**: Single package.json, version, and publish command
+- **Better UX**: No confusion about which packages to install
+- **Consistent Naming**: Package name matches repository
+
+### 📖 Migration Guide
+
+See `INTEGRATION-SUMMARY.md` for complete migration instructions.
+
+For existing users:
+1. Uninstall old plugin (if installed): `npm uninstall -g @agentic15.com/claude-code-zen-plugin`
+2. Choose installation method:
+   - **npx** (no install): `npx @agentic15.com/agentic15-claude-zen@8.0.0 status`
+   - **Local**: `npm install --save-dev @agentic15.com/agentic15-claude-zen@8.0.0`
+   - **Global**: `npm install -g @agentic15.com/agentic15-claude-zen@8.0.0`
+3. Update `.claude/settings.json` plugin name (if using explicit config)
+4. Verify: `/plugin list` and `/agentic15:status`
+
+---
+
 ## [7.0.1] - 2026-01-04
 
 ### Fixed
