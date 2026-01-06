@@ -5,9 +5,9 @@
   "lockedAt": "2026-01-04T17:40:30.095Z",
   "statistics": {
     "totalTasks": 12,
-    "completed": 4,
+    "completed": 5,
     "inProgress": 0,
-    "pending": 8
+    "pending": 7
   },
   "taskFiles": [
     {
@@ -50,8 +50,10 @@
       "id": "TASK-005",
       "title": "Implement agentic15:task-start skill",
       "phase": "implementation",
-      "status": "pending",
-      "description": "Create /agentic15:task-start skill for starting specific task by ID"
+      "status": "completed",
+      "description": "Create /agentic15:task-start skill for starting specific task by ID",
+      "startedAt": "2026-01-06T00:07:10.048Z",
+      "completedAt": "2026-01-06T00:09:46.298Z"
     },
     {
       "id": "TASK-006",
