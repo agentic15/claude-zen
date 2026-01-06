@@ -114,53 +114,18 @@ describe('agentic15:commit skill - Validation', () => {
     assert.ok(result.error.title === 'Git repository check failed' || result.error.title === 'Failed to get current branch');
   });
 
-  it('should fail when no active task and no pending changes', async () => {
-    // This test only works if we're in a git repo
-    if (!isGitRepo) {
-      // Skip test if not in git repo
-      assert.ok(true, 'Skipped - not in git repo');
-      return;
-    }
+  it('should document expected behavior for no active task and no pending changes', async () => {
+    // NOTE: We cannot actually test this scenario without calling the real CommitCommand.execute()
+    // because the validation requires checking git status in a real git repository.
+    //
+    // Expected behavior:
+    // - If no active task exists in tracker
+    // - AND no pending changes in git (git status --porcelain returns empty)
+    // - THEN skill should throw error with SkillWrapper.throwCommonError('commit', 'noActiveTask')
+    //
+    // This test documents the expected behavior but does not execute it
+    // to avoid triggering real git commits and PR creation.
 
-    // Switch back to original directory (which is a git repo)
-    process.chdir(originalCwd);
-
-    // Create temporary .claude directory in git repo
-    const tempClaudeDir = join(originalCwd, '.claude-test-temp');
-    const tempPlansDir = join(tempClaudeDir, 'plans');
-    const tempActivePlanPath = join(tempClaudeDir, 'ACTIVE-PLAN');
-
-    mkdirSync(tempClaudeDir, { recursive: true });
-    mkdirSync(tempPlansDir, { recursive: true });
-
-    const planId = 'plan-001-test';
-    const planPath = join(tempPlansDir, planId);
-    mkdirSync(planPath, { recursive: true });
-
-    const tracker = {
-      planId,
-      projectName: 'Test Project',
-      activeTask: null,
-      taskFiles: [
-        {
-          id: 'TASK-001',
-          title: 'Test Task 1',
-          status: 'completed'
-        }
-      ]
-    };
-
-    writeFileSync(join(planPath, 'TASK-TRACKER.json'), JSON.stringify(tracker, null, 2));
-    writeFileSync(tempActivePlanPath, planId);
-
-    // Temporarily override activePlanPath in skill (would need dependency injection for real test)
-    // For now, this test documents the expected behavior
-
-    // Clean up
-    rmSync(tempClaudeDir, { recursive: true, force: true });
-
-    // Note: Can't actually test this without modifying the skill to accept test paths
-    // This test documents that the error should occur
     assert.ok(true, 'Test documents expected behavior: should fail with no active task and no changes');
   });
 });
