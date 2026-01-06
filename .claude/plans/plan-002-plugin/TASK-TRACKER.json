@@ -5,9 +5,9 @@
   "lockedAt": "2026-01-04T17:40:30.095Z",
   "statistics": {
     "totalTasks": 12,
-    "completed": 9,
+    "completed": 10,
     "inProgress": 0,
-    "pending": 3
+    "pending": 2
   },
   "taskFiles": [
     {
@@ -95,8 +95,10 @@
       "id": "TASK-010",
       "title": "End-to-end workflow testing",
       "phase": "testing",
-      "status": "pending",
-      "description": "Test complete workflow using all skills together"
+      "status": "completed",
+      "description": "Test complete workflow using all skills together",
+      "startedAt": "2026-01-06T00:59:30.929Z",
+      "completedAt": "2026-01-06T01:11:21.602Z"
     },
     {
       "id": "TASK-011",
