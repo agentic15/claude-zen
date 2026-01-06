@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Copyright 2024-2026 agentic15.com
 
+## [9.0.0] - 2026-01-06
+
+### 🎉 MAJOR RELEASE - Codebase Cleanup
+
+This major release marks a clean slate after abandoning Claude Code plugin skill development experiments.
+
+### Summary
+Version bump to 9.0.0 following cleanup of failed Claude Code plugin skill development attempt. Repository returned to clean state without skill implementation artifacts.
+
+### Changed
+- **Repository Cleanup**: Reverted PR #124 (skill development commits)
+- **Version Jump**: Skipped 8.x to mark fresh start after experimental work
+
+### Removed
+- All Claude Code plugin skill development artifacts
+- Failed skill directory structures and configurations
+
+### Notes
+- Claude Code plugin skill development was explored but abandoned
+- No functional changes to the core framework
+- All 7.0.1 features remain intact and functional
+
+---
+
 ## [7.0.1] - 2026-01-04
 
 ### Fixed
