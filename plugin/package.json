@@ -27,9 +27,13 @@
     "access": "public"
   },
   "files": [
+    "index.js",
     "skills/",
     "utils/",
+    ".claude-plugin/",
     "README.md",
+    "INSTALLATION.md",
+    "E2E-TESTING-GUIDE.md",
     "LICENSE"
   ],
   "claudePlugin": {
